@@ -1,0 +1,20 @@
+--- a/src/github.com/ncw/rclone/fs/config.go
++++ b/src/github.com/ncw/rclone/fs/config.go
+@@ -32,7 +32,7 @@
+ )
+ 
+ const (
+-	configFileName = ".rclone.conf"
++	configFileName = "rclone.conf"
+ 
+ 	// ConfigToken is the key used to store the token under
+ 	ConfigToken = "token"
+@@ -55,7 +55,7 @@
+ 	// ConfigFile is the config file data structure
+ 	ConfigFile *goconfig.ConfigFile
+ 	// HomeDir is the home directory of the user
+-	HomeDir = configHome()
++	HomeDir = "/opt/etc"
+ 	// ConfigPath points to the config file
+ 	ConfigPath = path.Join(HomeDir, configFileName)
+ 	// Config is the global config
