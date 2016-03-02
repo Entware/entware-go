@@ -11,6 +11,7 @@ PKG_NAME:=shell2http
 PKG_VERSION:=go
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/msoap/shell2http
+#PKG_SOURCE=GOARCH-shell2http-2016-03-02.tar.bz2
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
@@ -31,7 +32,7 @@ endef
 
 define Package/shell2http/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/shell2http $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
 endef
 
 $(eval $(call BuildPackage,shell2http))
