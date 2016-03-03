@@ -8,27 +8,31 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gotty
-PKG_VERSION:=go
+PKG_VERSION:=2016-03-02
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/yudai/gotty
+
+GOARCH=GOARCH_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+
+#!!! uncomment PKG_SOURCE to download fixed version
+#PKG_SOURCE=$(GOARCH)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/gotty
-	SECTION:=Go
-	CATEGORY:=Go
-	DEPENDS:=+libgo +libpthread
+	$(call Package/gopackage/Default)
 	TITLE:=GoTTY is a simple command line tool that turns your CLI tools into web applications.
 	URL:=https://github.com/yudai/gotty
-	MAINTAINER:=Entware team, http://entware.net
 endef
 
 define Package/gotty/description
  GoTTY - Share your terminal as a web application.
 endef
 
-define Build/Prepare
+# Use go get only when PKG_SOURCE is undefined!!!
+ifeq ($(PKG_SOURCE),)
+ define Build/Prepare
 	$(INSTALL_DIR) $(PKG_BUILD_DIR)
 	GOPATH=$(PKG_BUILD_DIR) gcc=$(TARGET_CC) ego get -d -x $(PKG_GOGET)
 	GOPATH=$(PKG_BUILD_DIR) gcc=$(TARGET_CC) ego get -d -x github.com/jteeuwen/go-bindata
@@ -36,7 +40,8 @@ define Build/Prepare
 		git submodule sync && git submodule update --init --recursive; \
 		GOPATH=$(PKG_BUILD_DIR) PATH=$(GOROOT)/bin:$(TARGET_PATH) godep restore \
 	)
-endef
+ endef
+endif
 
 
 define Package/gotty/install

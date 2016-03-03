@@ -8,21 +8,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shell2http
-PKG_VERSION:=go
+PKG_VERSION:=2016-03-02
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/msoap/shell2http
-#PKG_SOURCE=GOARCH-shell2http-2016-03-02.tar.bz2
+
+GOARCH=GOARCH_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+
+#!!! uncomment PKG_SOURCE to download fixed version
+#PKG_SOURCE=$(GOARCH)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/shell2http
-	SECTION:=Go
-	CATEGORY:=Go
-	DEPENDS:=+libgo +libpthread
+	$(call Package/gopackage/Default)
 	TITLE:=Execute shell commands via simple http server
 	URL:=https://github.com/msoap/shell2http
-	MAINTAINER:=Entware team, http://entware.net
 endef
 
 define Package/shell2http/description
