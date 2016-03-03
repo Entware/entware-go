@@ -12,10 +12,10 @@ PKG_VERSION:=2016-03-02
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/ncw/rclone
 
-GOARCH=GOARCH_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-#PKG_SOURCE=$(GOARCH)
+#PKG_SOURCE=$(GOPKG_SOURCE)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
