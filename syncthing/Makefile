@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=2016-03-02
+PKG_VERSION:=2016-03-04
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/syncthing/syncthing
 
@@ -35,9 +35,9 @@ endef
 # gccgo failes to build sincthing for GOARCH=386. So we use gc for it
 
 ifeq ($(ARCH),i386)
-  GO_COMPILE:=GOARCH=386 GOROOT=$(STAGING_DIR_HOST)/go $(STAGING_DIR_HOST)/go/bin/go build -o syncthing -x -v .
+  GO_COMPILE:=GOARCH=386 $(STAGING_DIR_HOST)/go/bin/go build -tags 'noupgrade' -o syncthing -x -v .
 else
-  GO_COMPILE:=gcc=$(TARGET_CC) ego build -o syncthing -x -v -compiler gccgo -gccgoflags '$(TARGET_GCCGOFLAGS)' .
+  GO_COMPILE:=gcc=$(TARGET_CC) ego build -tags 'noupgrade' -o syncthing -x -v -compiler gccgo -gccgoflags '$(TARGET_GCCGOFLAGS)' .
 endif
 
 ifeq ($(PKG_SOURCE),)
@@ -46,7 +46,10 @@ ifeq ($(PKG_SOURCE),)
 	mkdir -p $(PKG_BUILD_DIR)/src/github.com/syncthing
 	(	cd $(PKG_BUILD_DIR)/src/github.com/syncthing; \
 		git clone https://github.com/syncthing/syncthing; \
+		cd syncthing; \
+		git checkout 9259425a9ac13a2f5f0ee8733490536a7a5d4762; \
 	)
+	$(Build/Patch)
  endef
 endif
 
