@@ -1,0 +1,36 @@
+--- a/src/github.com/yudai/gotty/main.go
++++ b/src/github.com/yudai/gotty/main.go
+@@ -57,7 +57,7 @@
+ 		cliFlags,
+ 		cli.StringFlag{
+ 			Name:   "config",
+-			Value:  "~/.gotty",
++			Value:  "/opt/etc/gotty/gotty",
+ 			Usage:  "Config file path",
+ 			EnvVar: "GOTTY_CONFIG",
+ 		},
+@@ -74,7 +74,7 @@
+ 
+ 		configFile := c.String("config")
+ 		_, err := os.Stat(app.ExpandHomeDir(configFile))
+-		if configFile != "~/.gotty" || !os.IsNotExist(err) {
++		if configFile != "/opt/etc/gotty/gotty" || !os.IsNotExist(err) {
+ 			if err := app.ApplyConfigFile(&options, configFile); err != nil {
+ 				exit(err, 2)
+ 			}
+--- a/src/github.com/yudai/gotty/app/app.go
++++ b/src/github.com/yudai/gotty/app/app.go
+@@ -81,10 +81,10 @@
+ 	RandomUrlLength:     8,
+ 	IndexFile:           "",
+ 	EnableTLS:           false,
+-	TLSCrtFile:          "~/.gotty.crt",
+-	TLSKeyFile:          "~/.gotty.key",
++	TLSCrtFile:          "/opt/etc/gotty/gotty.crt",
++	TLSKeyFile:          "/opt/etc/gotty/gotty.key",
+ 	EnableTLSClientAuth: false,
+-	TLSCACrtFile:        "~/.gotty.ca.crt",
++	TLSCACrtFile:        "/opt/etc/gotty/gotty.ca.crt",
+ 	TitleFormat:         "GoTTY - {{ .Command }} ({{ .Hostname }})",
+ 	EnableReconnect:     false,
+ 	ReconnectTime:       10,

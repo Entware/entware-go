@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gotty
-PKG_VERSION:=2016-03-02
+PKG_VERSION:=0.0.12
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/yudai/gotty
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-#PKG_SOURCE=$(GOPKG_SOURCE)
+PKG_SOURCE=$(GOPKG_SOURCE)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
@@ -40,6 +40,7 @@ ifeq ($(PKG_SOURCE),)
 		git submodule sync && git submodule update --init --recursive; \
 		GOPATH=$(PKG_BUILD_DIR) PATH=$(GOROOT)/bin:$(TARGET_PATH) godep restore \
 	)
+	$(Build/Patch)
  endef
 endif
 
@@ -47,6 +48,9 @@ endif
 define Package/gotty/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/etc/$(PKG_NAME)
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/.gotty $(1)/opt/etc/$(PKG_NAME)/gotty
+	$(SED) 's!~/.!/opt/etc/gotty/!g' $(1)/opt/etc/$(PKG_NAME)/gotty
 endef
 
 $(eval $(call BuildPackage,gotty))
