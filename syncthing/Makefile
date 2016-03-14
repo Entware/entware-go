@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=2016-03-04
+PKG_VERSION:=0.12.20
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/syncthing/syncthing
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
+#PKG_SOURCE=$(GOPKG_SOURCE)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
@@ -47,7 +47,7 @@ ifeq ($(PKG_SOURCE),)
 	(	cd $(PKG_BUILD_DIR)/src/github.com/syncthing; \
 		git clone https://github.com/syncthing/syncthing; \
 		cd syncthing; \
-		git checkout 9259425a9ac13a2f5f0ee8733490536a7a5d4762; \
+		git checkout ea5808d833af70c7212194eda4a2c4a9f8fe0680; \
 	)
 	$(Build/Patch)
  endef
