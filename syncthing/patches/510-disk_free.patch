@@ -1,0 +1,26 @@
+--- a/src/github.com/syncthing/syncthing/lib/osutil/osutil.go
++++ b/src/github.com/syncthing/syncthing/lib/osutil/osutil.go
+@@ -16,7 +16,6 @@
+ 	"runtime"
+ 	"strings"
+ 
+-	"github.com/calmh/du"
+ 	"github.com/syncthing/syncthing/lib/sync"
+ )
+ 
+@@ -213,11 +212,11 @@
+ }
+ 
+ func DiskFreeBytes(path string) (free int64, err error) {
+-	u, err := du.Get(path)
+-	return u.FreeBytes, err
++	err = nil
++	return 4096*1024*1024, err
+ }
+ 
+ func DiskFreePercentage(path string) (freePct float64, err error) {
+-	u, err := du.Get(path)
+-	return (float64(u.FreeBytes) / float64(u.TotalBytes)) * 100, err
++	err = nil
++	return 100, err
+ }
