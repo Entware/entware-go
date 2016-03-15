@@ -15,7 +15,7 @@ PKG_GOGET:=github.com/asciinema/asciinema
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-#PKG_SOURCE=$(GOPKG_SOURCE)
+PKG_SOURCE=$(GOPKG_SOURCE)
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
