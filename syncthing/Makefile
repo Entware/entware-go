@@ -32,7 +32,7 @@ define Package/syncthing/description
  third party and how it's transmitted over the Internet.
 endef
 
-# gccgo failes to build sincthing for GOARCH=386. So we use gc for it
+# gccgo fails to build syncthing for GOARCH=386. So we use gc for it
 
 ifeq ($(ARCH),i386)
   GO_COMPILE:=GOARCH=386 $(STAGING_DIR_HOST)/go/bin/go build -tags 'noupgrade' -o syncthing -x -v .
@@ -59,7 +59,6 @@ define Build/Compile
 		$(GO_COMPILE) ; \
 	)
 endef
-
 
 define Package/syncthing/install
 	$(INSTALL_DIR) $(1)/opt/bin
