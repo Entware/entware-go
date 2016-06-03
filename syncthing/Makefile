@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=0.12.20
+PKG_VERSION:=0.13.4
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/syncthing/syncthing
 
@@ -47,16 +47,21 @@ ifeq ($(PKG_SOURCE),)
 	(	cd $(PKG_BUILD_DIR)/src/github.com/syncthing; \
 		git clone https://github.com/syncthing/syncthing; \
 		cd syncthing; \
-		git checkout ea5808d833af70c7212194eda4a2c4a9f8fe0680; \
+		git checkout 9bb5988b4ed726a7eb7662dce01580b0e82dab02; \
 	)
 	$(Build/Patch)
+	$(CP) $(PKG_BUILD_DIR)/src/github.com/syncthing/syncthing/vendor/* $(PKG_BUILD_DIR)/src/
+	rm -rf $(PKG_BUILD_DIR)/src/github.com/golang/snappy/*
+	$(CP) ./files/snappy/* $(PKG_BUILD_DIR)/src/github.com/golang/snappy/
  endef
 endif
 
 define Build/Compile
-	(cd $(PKG_BUILD_DIR)/src/github.com/syncthing/syncthing/cmd/syncthing; \
-		GOPATH=$(PKG_BUILD_DIR)/src/$(PKG_GOGET)/Godeps/_workspace:$(PKG_BUILD_DIR) \
-		$(GO_COMPILE) ; \
+	( \
+		cd $(PKG_BUILD_DIR)/src/github.com/syncthing/syncthing; \
+		GOPATH=$(PKG_BUILD_DIR) PATH=$(GOROOT)/bin:$(TARGET_PATH) ./build.sh assets; \
+		cd $(PKG_BUILD_DIR)/src/github.com/syncthing/syncthing/cmd/syncthing; \
+		GOPATH=$(PKG_BUILD_DIR) $(GO_COMPILE) ; \
 	)
 endef
 

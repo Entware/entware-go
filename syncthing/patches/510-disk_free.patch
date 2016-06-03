@@ -1,14 +1,14 @@
 --- a/src/github.com/syncthing/syncthing/lib/osutil/osutil.go
 +++ b/src/github.com/syncthing/syncthing/lib/osutil/osutil.go
-@@ -16,7 +16,6 @@
- 	"runtime"
+@@ -17,7 +17,6 @@
  	"strings"
+ 	"syscall"
  
 -	"github.com/calmh/du"
  	"github.com/syncthing/syncthing/lib/sync"
  )
  
-@@ -213,11 +212,11 @@
+@@ -286,11 +285,11 @@
  }
  
  func DiskFreeBytes(path string) (free int64, err error) {

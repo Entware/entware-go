@@ -4,7 +4,7 @@ Strange but this bug is not always reproducable - sometimes everything works as 
 The patch forces saving config and reports user to manually restart syncthing.
 --- a/src/github.com/syncthing/syncthing/cmd/syncthing/gui.go
 +++ b/src/github.com/syncthing/syncthing/cmd/syncthing/gui.go
-@@ -309,33 +309,6 @@
+@@ -386,33 +386,6 @@
  }
  
  func (s *apiService) CommitConfiguration(from, to config.Configuration) bool {
@@ -38,17 +38,15 @@ The patch forces saving config and reports user to manually restart syncthing.
  	return true
  }
  
---- a/src/github.com/syncthing/syncthing/lib/connections/connections.go
-+++ b/src/github.com/syncthing/syncthing/lib/connections/connections.go
-@@ -450,24 +450,7 @@
+--- a/src/github.com/syncthing/syncthing/lib/connections/service.go
++++ b/src/github.com/syncthing/syncthing/lib/connections/service.go
+@@ -414,70 +414,7 @@
  }
  
- func (s *connectionService) CommitConfiguration(from, to config.Configuration) bool {
--	s.mut.Lock()
--	s.relaysEnabled = to.Options.RelaysEnabled
--	s.mut.Unlock()
--
+ func (s *Service) CommitConfiguration(from, to config.Configuration) bool {
 -	// We require a restart if a device as been removed.
+-
+-	restart := false
 -
 -	newDevices := make(map[protocol.DeviceID]bool, len(to.Devices))
 -	for _, dev := range to.Devices {
@@ -57,12 +55,60 @@ The patch forces saving config and reports user to manually restart syncthing.
 -
 -	for _, dev := range from.Devices {
 -		if !newDevices[dev.DeviceID] {
--			return false
+-			restart = true
 -		}
 -	}
 -
--	return true
+-	s.listenersMut.Lock()
+-	seen := make(map[string]struct{})
+-	for _, addr := range config.Wrap("", to).ListenAddresses() {
+-		if _, ok := s.listeners[addr]; ok {
+-			seen[addr] = struct{}{}
+-			continue
+-		}
+-
+-		uri, err := url.Parse(addr)
+-		if err != nil {
+-			l.Infof("Listener for %s: %v", addr, err)
+-			continue
+-		}
+-
+-		factory, err := s.getListenerFactory(to, uri)
+-		if err == errDisabled {
+-			l.Debugln("Listener for", uri, "is disabled")
+-			continue
+-		}
+-		if err != nil {
+-			l.Infof("Listener for %v: %v", uri, err)
+-			continue
+-		}
+-
+-		s.createListener(factory, uri)
+-		seen[addr] = struct{}{}
+-	}
+-
+-	for addr, listener := range s.listeners {
+-		if _, ok := seen[addr]; !ok || !listener.Factory().Enabled(to) {
+-			l.Debugln("Stopping listener", addr)
+-			s.Remove(s.listenerTokens[addr])
+-			delete(s.listenerTokens, addr)
+-			delete(s.listeners, addr)
+-		}
+-	}
+-	s.listenersMut.Unlock()
+-
+-	if to.Options.NATEnabled && s.natServiceToken == nil {
+-		l.Debugln("Starting NAT service")
+-		token := s.Add(s.natService)
+-		s.natServiceToken = &token
+-	} else if !to.Options.NATEnabled && s.natServiceToken != nil {
+-		l.Debugln("Stopping NAT service")
+-		s.Remove(*s.natServiceToken)
+-		s.natServiceToken = nil
+-	}
+-
+-	return !restart
 +	return false
  }
  
- // serviceFunc wraps a function to create a suture.Service without stop
+ func (s *Service) AllAddresses() []string {

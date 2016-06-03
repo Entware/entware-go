@@ -1,11 +1,11 @@
 --- a/src/github.com/syncthing/syncthing/lib/config/optionsconfiguration.go
 +++ b/src/github.com/syncthing/syncthing/lib/config/optionsconfiguration.go
-@@ -19,7 +19,7 @@
+@@ -18,7 +18,7 @@
  	ReconnectIntervalS      int      `xml:"reconnectionIntervalS" json:"reconnectionIntervalS" default:"60"`
  	RelaysEnabled           bool     `xml:"relaysEnabled" json:"relaysEnabled" default:"true"`
  	RelayReconnectIntervalM int      `xml:"relayReconnectIntervalM" json:"relayReconnectIntervalM" default:"10"`
 -	StartBrowser            bool     `xml:"startBrowser" json:"startBrowser" default:"true"`
 +	StartBrowser            bool     `xml:"startBrowser" json:"startBrowser" default:"false"`
- 	UPnPEnabled             bool     `xml:"upnpEnabled" json:"upnpEnabled" default:"true"`
- 	UPnPLeaseM              int      `xml:"upnpLeaseMinutes" json:"upnpLeaseMinutes" default:"60"`
- 	UPnPRenewalM            int      `xml:"upnpRenewalMinutes" json:"upnpRenewalMinutes" default:"30"`
+ 	NATEnabled              bool     `xml:"natEnabled" json:"natEnabled" default:"true"`
+ 	NATLeaseM               int      `xml:"natLeaseMinutes" json:"natLeaseMinutes" default:"60"`
+ 	NATRenewalM             int      `xml:"natRenewalMinutes" json:"natRenewalMinutes" default:"30"`
