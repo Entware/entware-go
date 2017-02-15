@@ -7,12 +7,12 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=shell2http
+PKG_NAME:=shell2http_nohf
 PKG_VERSION:=2017-01-29
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/msoap/shell2http
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+GOPKG_SOURCE=GO_shell2http-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 #PKG_SOURCE=$(GOPKG_SOURCE)
@@ -20,20 +20,23 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-define Package/shell2http
+GOARM=GOARM=5
+
+define Package/shell2http_nohf
 	$(call Package/gopackage/Default)
-	TITLE:=Execute shell commands via simple http server
+	DEPENDS:=@TARGET_armv7_3x
+	TITLE:=Execute shell commands via simple http server (arm version with no hard float)
 	URL:=https://github.com/msoap/shell2http
 endef
 
-define Package/shell2http/description
+define Package/shell2http_nohf/description
  Executing shell commands via simple http server (written in Go language).
  Settings through 2 command line arguments, path and shell command. By default bind to :8080.
 endef
 
-define Package/shell2http/install
+define Package/shell2http_nohf/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/shell2http $(1)/opt/bin
 endef
 
-$(eval $(call BuildPackage,shell2http))
+$(eval $(call BuildPackage,shell2http_nohf))

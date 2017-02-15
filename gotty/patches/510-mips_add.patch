@@ -1,0 +1,24 @@
+--- a/src/github.com/yudai/gotty/vendor/github.com/kr/pty/ztypes_mips.go
++++ b/src/github.com/yudai/gotty/vendor/github.com/kr/pty/ztypes_mips.go
+@@ -0,0 +1,9 @@
++// Created by cgo -godefs - DO NOT EDIT
++// cgo -godefs types.go
++
++package pty
++
++type (
++	_C_int  int32
++	_C_uint uint32
++)
+--- a/src/github.com/yudai/gotty/vendor/github.com/kr/pty/ztypes_mipsle.go
++++ b/src/github.com/yudai/gotty/vendor/github.com/kr/pty/ztypes_mipsle.go
+@@ -0,0 +1,9 @@
++// Created by cgo -godefs - DO NOT EDIT
++// cgo -godefs types.go
++
++package pty
++
++type (
++	_C_int  int32
++	_C_uint uint32
++)
