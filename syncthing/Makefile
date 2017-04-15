@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=0.14.21
+PKG_VERSION:=0.14.26
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/syncthing/syncthing
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=22a4d49ed0f4248239de45ca2e4ef4d46370bce3
+PKG_COMMIT=ac46db78d748f84b9cdcd81be4f033ea43112c88
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
