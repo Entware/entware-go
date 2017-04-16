@@ -18,6 +18,9 @@ GOPKG_SOURCE=GO_gotty-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 PKG_SOURCE=$(GOPKG_SOURCE)
 PKG_COMMIT=e721482e57bea8af9191a5732a8580b3c6c43d7d
 
+#do not build both packages in parallel
+PKG_BUILD_DEPENDS:=gotty
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 

@@ -17,6 +17,9 @@ GOPKG_SOURCE=GO_shell2http-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
 
+#do not build both packages in parallel
+PKG_BUILD_DEPENDS:=shell2http
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 

@@ -18,6 +18,9 @@ GOPKG_SOURCE=GO_syncthing-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 PKG_SOURCE=$(GOPKG_SOURCE)
 PKG_COMMIT=ac46db78d748f84b9cdcd81be4f033ea43112c88
 
+#do not build both packages in parallel
+PKG_BUILD_DEPENDS:=syncthing
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 

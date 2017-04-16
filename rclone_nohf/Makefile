@@ -18,6 +18,9 @@ GOPKG_SOURCE=GO_rclone-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 PKG_SOURCE=$(GOPKG_SOURCE)
 PKG_COMMIT=118e26f8e226485f0457f684dede58ed940dbb59
 
+#do not build both packages in parallel
+PKG_BUILD_DEPENDS:=rclone
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
