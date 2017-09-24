@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone_nohf
-PKG_VERSION:=1.36
+PKG_VERSION:=1.37
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/ncw/rclone
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_rclone-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=118e26f8e226485f0457f684dede58ed940dbb59
+PKG_COMMIT=a73ecec11f6a707273a44984e73e84b471a90710
 
 #do not build both packages in parallel
 PKG_BUILD_DEPENDS:=rclone
