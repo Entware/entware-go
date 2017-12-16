@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing_nohf
-PKG_VERSION:=0.14.38
+PKG_VERSION:=0.14.41
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/syncthing/syncthing
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_syncthing-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=a9aa375109184f0c124f8a1575c58baa2656a61b
+PKG_COMMIT=99b00b6a5e723f7b8214273d694d4ffc7a609bbc
 
 #do not build both packages in parallel
 PKG_BUILD_DEPENDS:=syncthing
