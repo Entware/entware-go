@@ -51,6 +51,8 @@ endef
 define Package/syncthing_nohf/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/github.com/syncthing/syncthing/syncthing $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
+	$(INSTALL_BIN) files/S92syncthing $(1)/opt/etc/init.d
 endef
 
 $(eval $(call BuildPackage,syncthing_nohf))
