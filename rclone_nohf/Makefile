@@ -28,7 +28,7 @@ GOARM=GOARM=5
 
 define Package/rclone_nohf
 	$(call Package/gopackage/Default)
-	DEPENDS:=@TARGET_armv7_3x
+	DEPENDS:=@TARGET_armv7_3x||@TARGET_armv7soft
 	TITLE:=Rclone is a command line program to sync files and directories to and from cloud storages (arm version with no hard float)
 	URL:=https://github.com/ncw/rclone
 endef

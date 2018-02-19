@@ -29,7 +29,7 @@ GOARM=GOARM=5
 
 define Package/gotty_nohf
 	$(call Package/gopackage/Default)
-	DEPENDS:=@TARGET_armv7_3x
+	DEPENDS:=@TARGET_armv7_3x||@TARGET_armv7soft
 	TITLE:=GoTTY is a simple command line tool that turns your CLI tools into web applications (arm version with no hard float)
 	URL:=https://github.com/yudai/gotty
 endef

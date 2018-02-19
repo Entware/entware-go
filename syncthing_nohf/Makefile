@@ -26,7 +26,7 @@ include $(INCLUDE_DIR)/golang.mk
 
 define Package/syncthing_nohf
 	$(call Package/gopackage/Default)
-	DEPENDS:=@TARGET_armv7_3x
+	DEPENDS:=@TARGET_armv7_3x||@TARGET_armv7soft
 	TITLE:=Utility for synchronization of a folder between a number of collaborating devices (arm version with no hard float)
 	URL:=https://syncthing.net/
 endef

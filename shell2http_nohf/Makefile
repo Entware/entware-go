@@ -27,7 +27,7 @@ GOARM=GOARM=5
 
 define Package/shell2http_nohf
 	$(call Package/gopackage/Default)
-	DEPENDS:=@TARGET_armv7_3x
+	DEPENDS:=@TARGET_armv7_3x||@TARGET_armv7soft
 	TITLE:=Execute shell commands via simple http server (arm version with no hard float)
 	URL:=https://github.com/msoap/shell2http
 endef
