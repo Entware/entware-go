@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone_nohf
-PKG_VERSION:=1.37
+PKG_VERSION:=1.39
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/ncw/rclone
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_rclone-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=a73ecec11f6a707273a44984e73e84b471a90710
+PKG_COMMIT=f34a9116d44705b8900a15d1fa3c6ee71f3afea8
 
 #do not build both packages in parallel
 PKG_BUILD_DEPENDS:=rclone
@@ -49,8 +49,9 @@ define Package/rclone_nohf/description
 endef
 
 define Package/rclone_nohf/install
-	$(INSTALL_DIR) $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/bin $(1)/opt/var/rclone
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/rclone $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/var/rclone
 endef
 
 $(eval $(call BuildPackage,rclone_nohf))
