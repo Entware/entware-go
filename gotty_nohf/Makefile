@@ -41,9 +41,9 @@ endef
 define Package/gotty_nohf/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/gotty $(1)/opt/bin
-	$(INSTALL_DIR) $(1)/opt/etc/$(PKG_NAME)
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/.gotty $(1)/opt/etc/$(PKG_NAME)/gotty
-	$(SED) 's!~/.!/opt/etc/gotty/!g' $(1)/opt/etc/$(PKG_NAME)/gotty
+	$(INSTALL_DIR) $(1)/opt/etc/gotty
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/.gotty $(1)/opt/etc/gotty/gotty
+	$(SED) 's!~/.!/opt/etc/gotty/!g' $(1)/opt/etc/gotty/gotty
 endef
 
 $(eval $(call BuildPackage,gotty_nohf))
