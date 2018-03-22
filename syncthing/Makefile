@@ -39,7 +39,7 @@ define Build/Compile
 		mkdir -p bin; \
 		cd src/$(PKG_GOGET); \
 		PATH="$(GOROOT)/bin:$$$$PATH" \
-		GOPATH=$(PKG_BUILD_DIR) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
+		GOPATH=$(PKG_BUILD_DIR) $(GOMIPS) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
 	)
 endef
 
