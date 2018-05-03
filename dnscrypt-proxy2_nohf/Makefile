@@ -45,8 +45,8 @@ endef
 
 
 define Package/dnscrypt-proxy2_nohf/install
-	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/dnscrypt-proxy/dnscrypt-proxy $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/dnscrypt-proxy/dnscrypt-proxy $(1)/opt/sbin
 endef
 
 $(eval $(call BuildPackage,dnscrypt-proxy2_nohf))
