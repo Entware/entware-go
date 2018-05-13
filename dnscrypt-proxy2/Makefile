@@ -23,6 +23,7 @@ include $(INCLUDE_DIR)/golang.mk
 
 define Package/dnscrypt-proxy2
 	$(call Package/gopackage/Default)
+	DEPENDS:=+ca-bundle
 	TITLE:=A flexible DNS proxy, with support for modern encrypted DNS protocols such as DNSCrypt v2 and DNS-over-HTTP/2
 	URL:=https://github.com/jedisct1/dnscrypt-proxy
 endef

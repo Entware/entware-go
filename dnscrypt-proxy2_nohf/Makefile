@@ -25,7 +25,7 @@ GOARM=GOARM=5
 
 define Package/dnscrypt-proxy2_nohf
 	$(call Package/gopackage/Default)
-	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
+	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6 +ca-bundle
 	TITLE:=A flexible DNS proxy, with support for modern encrypted DNS protocols such as DNSCrypt v2 and DNS-over-HTTP/2 (arm version with no hard float)
 	URL:=https://github.com/jedisct1/dnscrypt-proxy
 endef
