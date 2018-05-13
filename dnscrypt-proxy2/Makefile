@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
 PKG_VERSION:=2.0.11
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 PKG_GOGET:=github.com/jedisct1/dnscrypt-proxy
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
@@ -40,10 +40,16 @@ define Build/Compile
 	)
 endef
 
+define Package/dnscrypt-proxy2/conffiles
+/opt/etc/dnscrypt-proxy.toml
+endef
 
 define Package/dnscrypt-proxy2/install
 	$(INSTALL_DIR) $(1)/opt/sbin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/dnscrypt-proxy/dnscrypt-proxy $(1)/opt/sbin
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
+	$(INSTALL_BIN) files/S09dnscrypt-proxy2 $(1)/opt/etc/init.d
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/dnscrypt-proxy/example-dnscrypt-proxy.toml $(1)/opt/etc/dnscrypt-proxy.toml
 endef
 
 $(eval $(call BuildPackage,dnscrypt-proxy2))
