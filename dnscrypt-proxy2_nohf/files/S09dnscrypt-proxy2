@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ENABLED=yes
-PROCS=dnscrypt-proxy2
+PROCS=dnscrypt-proxy
 ARGS="-config /opt/etc/dnscrypt-proxy.toml"
 PREARGS=""
 DESC=$PROCS
