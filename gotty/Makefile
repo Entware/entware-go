@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gotty
-PKG_VERSION:=0.0.13-2017-03-29
+PKG_VERSION:=2.0.0-2017-12-13
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/yudai/gotty
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=e721482e57bea8af9191a5732a8580b3c6c43d7d
+PKG_COMMIT=a080c85cbc59226c94c6941ad8c395232d72d517
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
