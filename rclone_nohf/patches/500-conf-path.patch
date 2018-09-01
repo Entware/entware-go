@@ -1,5 +1,5 @@
---- a/src/github.com/ncw/rclone/fs/config.go
-+++ b/src/github.com/ncw/rclone/fs/config.go
+--- a/src/github.com/ncw/rclone/fs/config/config.go
++++ b/src/github.com/ncw/rclone/fs/config/config.go
 @@ -63,12 +63,12 @@
  	configData *goconfig.ConfigFile
  
