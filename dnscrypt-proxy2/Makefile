@@ -8,15 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
-PKG_VERSION:=2.0.16
-PKG_RELEASE:=2
+PKG_VERSION:=2.0.19
+PKG_RELEASE:=1
 PKG_GOGET:=github.com/jedisct1/dnscrypt-proxy
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=da5ee45b8ceb9233f4bc21b2a5f1eb7c875947cc
+PKG_COMMIT=33718400da679aa12d2b71c842a2b2ee5d0f6240
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
