@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shell2http_nohf
-PKG_VERSION:=2018-08-26
+PKG_VERSION:=2018-12-09
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/msoap/shell2http
 
