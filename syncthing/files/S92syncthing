@@ -12,6 +12,6 @@ PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:
 if [ ! -d /opt/etc/syncthing ]; then
    syncthing -generate="/opt/etc/syncthing"
    sed -i 's|127.0.0.1:8384|0.0.0.0:8384|' /opt/etc/syncthing/config.xml
-elif [[ -f /opt/etc/syncthing/config.xml -a "127.0.0.1:8384"=="127.0.0.1:8384" ]]; then
+elif [[ -f /opt/etc/syncthing/config.xml ]]; then
    sed -i 's|127.0.0.1:8384|0.0.0.0:8384|' /opt/etc/syncthing/config.xml
 fi
