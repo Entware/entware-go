@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2016 Entware
+# Copyright (C) 2011-2019 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -17,13 +17,30 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-define Package/shell2http
+ifeq ($(BUILD_VARIANT),nohf)
+GOARM=GOARM=5
+endif
+
+define Package/shell2http/Default
 	$(call Package/gopackage/Default)
 	TITLE:=Execute shell commands via simple http server
 	URL:=https://github.com/msoap/shell2http
+endef
+
+define Package/shell2http
+	$(call Package/shell2http/Default)
+	VARIANT:=hf
+endef
+
+define Package/shell2http_nohf
+	$(call Package/shell2http/Default)
+	VARIANT:=nohf
+	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
 endef
 
 define Package/shell2http/description
@@ -31,9 +48,14 @@ define Package/shell2http/description
  Settings through 2 command line arguments, path and shell command. By default bind to :8080.
 endef
 
+Package/shell2http_nohf/description=$(Package/shell2http/description)
+
 define Package/shell2http/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
 endef
 
+Package/shell2http_nohf/install=$(Package/shell2http/install)
+
 $(eval $(call BuildPackage,shell2http))
+$(eval $(call BuildPackage,shell2http_nohf))
