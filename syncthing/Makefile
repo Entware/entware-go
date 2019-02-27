@@ -18,13 +18,30 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 PKG_SOURCE=$(GOPKG_SOURCE)
 PKG_COMMIT=da39dfada33fe152c1d2297ff69dbf0739564516
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-define Package/syncthing
+ifeq ($(BUILD_VARIANT),nohf)
+GOARM=GOARM=5
+endif
+
+define Package/syncthing/Default
 	$(call Package/gopackage/Default)
 	TITLE:=Utility for synchronization of a folder between a number of collaborating devices.
 	URL:=https://syncthing.net/
+endef
+
+define Package/syncthing
+	$(call Package/syncthing/Default)
+	VARIANT:=hf
+endef
+
+define Package/syncthing_nohf
+	$(call Package/syncthing/Default)
+	VARIANT:=nohf
+#	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
 endef
 
 define Package/syncthing/description
@@ -33,13 +50,15 @@ define Package/syncthing/description
  third party and how it's transmitted over the Internet.
 endef
 
+Package/syncthing_nohf/description=$(Package/syncthing/description)
+
 define Build/Compile
 	( \
 		cd $(PKG_BUILD_DIR); \
 		mkdir -p bin; \
 		cd src/$(PKG_GOGET); \
 		PATH="$(GOROOT)/bin:$$$$PATH" \
-		GOPATH=$(PKG_BUILD_DIR) $(GOMIPS) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
+		GOPATH=$(PKG_BUILD_DIR) $(GOARM) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
 	)
 endef
 
@@ -51,4 +70,7 @@ define Package/syncthing/install
 	$(INSTALL_BIN) files/S92syncthing $(1)/opt/etc/init.d
 endef
 
+Package/syncthing_nohf/install=$(Package/syncthing/install)
+
 $(eval $(call BuildPackage,syncthing))
+$(eval $(call BuildPackage,syncthing_nohf))
