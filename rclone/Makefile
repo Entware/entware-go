@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2016 Entware
+# Copyright (C) 2011-2019 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -18,13 +18,30 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 PKG_SOURCE=$(GOPKG_SOURCE)
 PKG_COMMIT=d35bd15762f8f0f365fd3e1784e93add3bbdc61c
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-define Package/rclone
+ifeq ($(BUILD_VARIANT),nohf)
+GOARM=GOARM=5
+endif
+
+define Package/rclone/Default
 	$(call Package/gopackage/Default)
 	TITLE:=Rclone is a command line program to sync files and directories to and from cloud storages
 	URL:=https://github.com/ncw/rclone
+endef
+
+define Package/rclone
+	$(call Package/rclone/Default)
+	VARIANT:=hf
+endef
+
+define Package/rclone_nohf
+	$(call Package/rclone/Default)
+	VARIANT:=nohf
+	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
 endef
 
 define Package/rclone/description
@@ -42,10 +59,16 @@ define Package/rclone/description
     The local filesystem
 endef
 
+Package/rclone_nohf/description=$(Package/rclone/description)
+
 define Package/rclone/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/var/rclone
 endef
 
+Package/rclone_nohf/install=$(Package/rclone/install)
+
 $(eval $(call BuildPackage,rclone))
+$(eval $(call BuildPackage,rclone_nohf))
+
