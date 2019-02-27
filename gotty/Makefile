@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2016 Entware
+# Copyright (C) 2011-2019 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -18,18 +18,37 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 PKG_SOURCE=$(GOPKG_SOURCE)
 PKG_COMMIT=a080c85cbc59226c94c6941ad8c395232d72d517
 
+PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-define Package/gotty
+ifeq ($(BUILD_VARIANT),nohf)
+GOARM=GOARM=5
+endif
+
+define Package/gotty/Default
 	$(call Package/gopackage/Default)
 	TITLE:=GoTTY is a simple command line tool that turns your CLI tools into web applications.
 	URL:=https://github.com/yudai/gotty
 endef
 
+define Package/gotty
+	$(call Package/gotty/Default)
+	VARIANT:=hf
+endef
+
+define Package/gotty_nohf
+	$(call Package/gotty/Default)
+	VARIANT:=nohf
+	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
+endef
+
 define Package/gotty/description
  GoTTY - Share your terminal as a web application.
 endef
+
+Package/gotty_nohf/description=$(Package/gotty/description)
 
 define Package/gotty/install
 	$(INSTALL_DIR) $(1)/opt/bin
@@ -39,4 +58,7 @@ define Package/gotty/install
 	$(SED) 's!~/.!/opt/etc/gotty/!g' $(1)/opt/etc/$(PKG_NAME)/gotty
 endef
 
+Package/gotty_nohf/install=$(Package/gotty/install)
+
 $(eval $(call BuildPackage,gotty))
+$(eval $(call BuildPackage,gotty_nohf))
