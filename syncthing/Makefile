@@ -41,7 +41,7 @@ endef
 define Package/syncthing_nohf
 	$(call Package/syncthing/Default)
 	VARIANT:=nohf
-#	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
+	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
 endef
 
 define Package/syncthing/description
