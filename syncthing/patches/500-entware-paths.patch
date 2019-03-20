@@ -1,16 +1,16 @@
---- a/src/github.com/syncthing/syncthing/cmd/syncthing/locations.go
-+++ b/src/github.com/syncthing/syncthing/cmd/syncthing/locations.go
-@@ -7,9 +7,6 @@
- package main
+--- a/src/github.com/syncthing/syncthing/lib/locations/locations.go
++++ b/src/github.com/syncthing/syncthing/lib/locations/locations.go
+@@ -8,9 +8,7 @@
  
  import (
+ 	"fmt"
 -	"os"
--	"path/filepath"
+ 	"path/filepath"
 -	"runtime"
  	"strings"
  	"time"
  
-@@ -78,39 +75,12 @@
+@@ -114,39 +112,12 @@
  // out by various the environment variables present on each platform, or dies
  // trying.
  func defaultConfigDir() string {
@@ -24,7 +24,7 @@
 -	case "darwin":
 -		dir, err := fs.ExpandTilde("~/Library/Application Support/Syncthing")
 -		if err != nil {
--			l.Fatalln(err)
+-			panic(err)
 -		}
 -		return dir
 -
@@ -34,7 +34,7 @@
 -		}
 -		dir, err := fs.ExpandTilde("~/.config/syncthing")
 -		if err != nil {
--			l.Fatalln(err)
+-			panic(err)
 -		}
 -		return dir
 -	}
@@ -45,10 +45,10 @@
  func homeDir() string {
 -	home, err := fs.ExpandTilde("~")
 -	if err != nil {
--		l.Fatalln(err)
+-		panic(err)
 -	}
 -	return home
 +	return "/opt"
  }
  
- func timestampedLoc(key locationEnum) string {
+ func GetTimestamped(key LocationEnum) string {
