@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.46
+PKG_VERSION:=1.47.0
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/ncw/rclone
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=eb85ecc9c480175bd39a2009212ffa81eaebee7c
+PKG_COMMIT=a0d4fdb2fa34c7f6ac5a86021d16403713499aaf
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
