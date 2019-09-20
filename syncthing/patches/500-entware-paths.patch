@@ -10,7 +10,7 @@
  	"strings"
  	"time"
  
-@@ -114,39 +112,12 @@
+@@ -115,42 +113,12 @@
  // out by various the environment variables present on each platform, or dies
  // trying.
  func defaultConfigDir() string {
@@ -24,7 +24,8 @@
 -	case "darwin":
 -		dir, err := fs.ExpandTilde("~/Library/Application Support/Syncthing")
 -		if err != nil {
--			panic(err)
+-			fmt.Println(err)
+-			panic("Failed to get default config dir")
 -		}
 -		return dir
 -
@@ -34,7 +35,8 @@
 -		}
 -		dir, err := fs.ExpandTilde("~/.config/syncthing")
 -		if err != nil {
--			panic(err)
+-			fmt.Println(err)
+-			panic("Failed to get default config dir")
 -		}
 -		return dir
 -	}
@@ -45,7 +47,8 @@
  func homeDir() string {
 -	home, err := fs.ExpandTilde("~")
 -	if err != nil {
--		panic(err)
+-		fmt.Println(err)
+-		panic("Failed to get user home dir")
 -	}
 -	return home
 +	return "/opt"
