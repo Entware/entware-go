@@ -42,7 +42,7 @@ endef
 define Package/dnscrypt-proxy2_nohf
 	$(call Package/dnscrypt-proxy2/Default)
 	VARIANT:=nohf
-	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6 +ca-bundle
+	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2) +ca-bundle
 endef
 
 define Package/dnscrypt-proxy2/description

@@ -41,7 +41,7 @@ endef
 define Package/rclone_nohf
 	$(call Package/rclone/Default)
 	VARIANT:=nohf
-	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
+	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
 endef
 
 define Package/rclone/description

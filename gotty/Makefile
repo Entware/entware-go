@@ -41,7 +41,7 @@ endef
 define Package/gotty_nohf
 	$(call Package/gotty/Default)
 	VARIANT:=nohf
-	DEPENDS:=@TARGET_armv7_3_2||@TARGET_armv7_2_6
+	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
 endef
 
 define Package/gotty/description
