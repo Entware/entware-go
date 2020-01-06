@@ -9,15 +9,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.48.0
+PKG_VERSION:=1.50.2
 PKG_RELEASE:=1
-PKG_GOGET:=github.com/ncw/rclone
+PKG_GOGET:=github.com/rclone/rclone
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=245fed513ad33c7aacad2c6d591c81f646d44dc1
+PKG_COMMIT=373fb01725453a980ecb2afd413a16b86e69ab02
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -31,7 +31,7 @@ endif
 define Package/rclone/Default
 	$(call Package/gopackage/Default)
 	TITLE:=Rclone is a command line program to sync files and directories to and from cloud storages
-	URL:=https://github.com/ncw/rclone
+	URL:=https://github.com/rclone/rclone
 endef
 
 define Package/rclone
