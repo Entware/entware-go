@@ -8,15 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
-PKG_VERSION:=2.0.36
+PKG_VERSION:=2.0.39
 PKG_RELEASE:=1
-PKG_GOGET:=github.com/jedisct1/dnscrypt-proxy
+PKG_GOGET:=github.com/DNSCrypt/dnscrypt-proxy
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=48817a464282e177cd485cb15bb3a7ff91c4c523
+#PKG_SOURCE=$(GOPKG_SOURCE)
+PKG_COMMIT=170c6909967f6e7b0d6cc32f895e5a316754e9e7
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -30,7 +30,7 @@ endif
 define Package/dnscrypt-proxy2/Default
 	$(call Package/gopackage/Default)
 	TITLE:=A flexible DNS proxy, with support for modern encrypted DNS protocols such as DNSCrypt v2 and DNS-over-HTTP/2
-	URL:=https://github.com/jedisct1/dnscrypt-proxy
+	URL:=https://github.com/DNSCrypt/dnscrypt-proxy
 endef
 
 define Package/dnscrypt-proxy2
