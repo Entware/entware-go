@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=yggdrasil-go
-PKG_VERSION:=0.3.13
+PKG_VERSION:=0.3.14
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/yggdrasil-network/yggdrasil-go
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=d160eccab00443187e2343c707c60f37c7fbcfde
+PKG_COMMIT=78b5f88e4bb734d0dd6a138ff08d34ca39dcaea3
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
