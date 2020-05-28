@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nebula
-PKG_VERSION:=1.1.0
+PKG_VERSION:=1.2.0
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/slackhq/nebula
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=13941aa7232765efc671c6d0d6e1a8c0d4704603
+PKG_COMMIT=fb252db4a153ba7467d1d7320b3821d897640791
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -31,7 +31,7 @@ endif
 define Package/nebula/Default
 	$(call Package/gopackage/Default)
 	TITLE:=Nebula is a scalable overlay networking tool 
-	URL:=https://github.com/slackh/nebula
+	URL:=https://github.com/slackhq/nebula
 endef
 
 define Package/nebula
