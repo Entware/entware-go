@@ -31,7 +31,7 @@ endif
 define Package/yggdrasil-go/Default
 	$(call Package/gopackage/Default)
 	TITLE:=Encrypted IPv6 network
-	URL:=https://github.com/slackh/yggdrasil-go
+	URL:=https://yggdrasil-network.github.io/
 endef
 
 define Package/yggdrasil-go
