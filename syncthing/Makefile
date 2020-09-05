@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=1.6.0-rc.5
+PKG_VERSION:=1.8.0
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/syncthing/syncthing
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=8c741776997fd22e8017c19650e40f22802372bd
+PKG_COMMIT=89946b21be9dc8cb2bfeb592ef0dab738525065d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -60,7 +60,7 @@ define Build/Compile
 		$(CP) $(PKG_BUILD_DIR)/src/github.com/* src/github.com; \
 		cd src/$(PKG_GOGET); \
 		PATH="$(GOROOT)/bin:$$$$PATH" \
-		$(GOARM) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
+		GO111MODULE=on $(GOARM) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
 	)
 endef
 
