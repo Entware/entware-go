@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
-PKG_VERSION:=2.0.42
+PKG_VERSION:=2.0.44
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/DNSCrypt/dnscrypt-proxy
 
@@ -16,7 +16,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=89dd0de6afbae7f9e4f7f8cf1f70908d86be9bb2
+PKG_COMMIT=65f42918a1f85652ea4a378e20300d04b15ef2a8
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
