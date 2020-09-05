@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2020 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shell2http
-PKG_VERSION:=2018-12-09
+PKG_VERSION:=2020-08-22
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/msoap/shell2http
 
@@ -16,6 +16,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
+PKG_COMMIT=a30749e33d2b773c15b8f056d463e0238dd8acc2
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -49,6 +50,18 @@ define Package/shell2http/description
 endef
 
 Package/shell2http_nohf/description=$(Package/shell2http/description)
+
+define Build/Compile
+        (\
+                cd $(PKG_BUILD_DIR); \
+		mkdir -p bin; \
+		cd src/$(PKG_GOGET); \
+		GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
+		cp shell2http $(PKG_BUILD_DIR)/bin; \
+		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
+        )
+endef
+
 
 define Package/shell2http/install
 	$(INSTALL_DIR) $(1)/opt/bin
