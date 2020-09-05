@@ -1,6 +1,6 @@
 --- a/src/github.com/rclone/rclone/fs/config/config.go
 +++ b/src/github.com/rclone/rclone/fs/config/config.go
-@@ -63,12 +63,12 @@
+@@ -80,12 +80,12 @@
  	configData *goconfig.ConfigFile
  
  	// ConfigPath points to the config file

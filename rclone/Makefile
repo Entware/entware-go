@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.52.0
+PKG_VERSION:=1.53.0
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/rclone/rclone
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=6882aeff97d76a3a9fb88bec19d1212d33f87ad2
+PKG_COMMIT=510ac341e193976171d29b8aeb81a30a37cfd2a1
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -61,6 +61,18 @@ define Package/rclone/description
 endef
 
 Package/rclone_nohf/description=$(Package/rclone/description)
+
+define Build/Compile
+        (\
+                cd $(PKG_BUILD_DIR); \
+                mkdir -p bin; \
+                cd src/$(PKG_GOGET); \
+                GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
+                cp rclone $(PKG_BUILD_DIR)/bin; \
+                chmod -R +w $(PKG_BUILD_DIR)/pkg; \
+        )
+endef
+
 
 define Package/rclone/install
 	$(INSTALL_DIR) $(1)/opt/bin
