@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=v1.7.1
+PKG_VERSION:=v1.9.4
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/nextdns/nextdns
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=5693cc803f2e4134af4ca2fa0a213fe955db3881
+PKG_COMMIT=83adb6e9a75fd5b4ded2a7d4783010c4c493fbd9
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -31,7 +31,7 @@ endif
 define Package/nextdns/Default
 	$(call Package/gopackage/Default)
 	TITLE:=NextDNS CLI Client
-	URL:=https://github.com/iawia002/nextdns
+	URL:=https://github.com/nextdns/nextdns
 endef
 
 define Package/nextdns
