@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireguard-go
-PKG_VERSION:=v0.0.20200320
+PKG_VERSION:=v0.0.20201118
 PKG_RELEASE:=1
 PKG_GOGET:=git.zx2c4.com/wireguard-go
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=ae88e2a2cda0faab68ad667223cd26ffd54d1bee
+PKG_COMMIT=da19db415a588e72fb8b13e5b5aa0b97db7cc30b
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -31,7 +31,7 @@ endif
 define Package/wireguard-go/Default
 	$(call Package/gopackage/Default)
 	TITLE:=This is an implementation of WireGuard in Go
-	URL:=https://github.com/slackh/wireguard-go
+	URL:=https://git.zx2c4.com/wireguard-go/about/
 	DEPENDS:=@!LINUX_2_6_36
 endef
 
