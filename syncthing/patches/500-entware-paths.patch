@@ -1,14 +1,16 @@
 --- a/src/github.com/syncthing/syncthing/lib/locations/locations.go
 +++ b/src/github.com/syncthing/syncthing/lib/locations/locations.go
-@@ -10,7 +10,6 @@
+@@ -8,9 +8,7 @@
+ 
+ import (
  	"fmt"
- 	"os"
+-	"os"
  	"path/filepath"
 -	"runtime"
  	"strings"
  	"time"
  
-@@ -129,68 +128,18 @@
+@@ -126,68 +124,18 @@
  // out by various the environment variables present on each platform, or dies
  // trying.
  func defaultConfigDir(userHome string) string {
