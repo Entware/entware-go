@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=v1.9.4
+PKG_VERSION:=v1.10.1
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/nextdns/nextdns
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=83adb6e9a75fd5b4ded2a7d4783010c4c493fbd9
+PKG_COMMIT=42621d36862678900cc84c29dda6e90d7da42f8f
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
