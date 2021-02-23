@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireguard-go
-PKG_VERSION:=v0.0.20201118
+PKG_VERSION:=v0.0.20210212
 PKG_RELEASE:=1
 PKG_GOGET:=git.zx2c4.com/wireguard-go
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=da19db415a588e72fb8b13e5b5aa0b97db7cc30b
+PKG_COMMIT=7a0fb5bbb1720fdd9404a4cf41920e24a46e0dad
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
