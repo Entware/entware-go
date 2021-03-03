@@ -60,7 +60,7 @@ define Build/Compile
 		$(CP) $(PKG_BUILD_DIR)/src/github.com/* src/github.com; \
 		cd src/$(PKG_GOGET); \
 		PATH="$(GOROOT)/bin:$$$$PATH" \
-		GO111MODULE=on $(GOARM) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
+		CGO_ENABLED=0 GO111MODULE=on $(GOARM) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
 	)
 endef
 

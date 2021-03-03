@@ -64,7 +64,7 @@ Package/obfs4_nohf/description=$(Package/obfs4/description)
 define Build/Compile
 	(\
 		cd $(PKG_BUILD_DIR)/src/$(PKG_GOGET); \
-		GOOS=linux GOARCH=$(GOARCH) $(GOARM) \
+		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) \
 		GOPATH=$$$$PATH:$(PKG_BUILD_DIR)/src/$(PKG_GOGET) \
 		$(GOROOT)/bin/go build -ldflags="-s -w" \
 		-o obfs4proxy/obfs4proxy ./obfs4proxy; \

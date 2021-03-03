@@ -57,7 +57,7 @@ define Build/Compile
 	(\
 		cd $(PKG_BUILD_DIR); \
 		cd src/$(PKG_GOGET)/dnscrypt-proxy; \
-		GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v $(PKG_GOGET)/dnscrypt-proxy; \
+		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v $(PKG_GOGET)/dnscrypt-proxy; \
 	)
 endef
 

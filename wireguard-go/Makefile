@@ -57,7 +57,7 @@ define Build/Compile
                 cd $(PKG_BUILD_DIR); \
 		mkdir -p bin; \
 		cd src/$(PKG_GOGET); \
-		PATH="$(TARGET_PATH):$(GOROOT)/bin" GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) make; \
+		PATH="$(TARGET_PATH):$(GOROOT)/bin" CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) make; \
 		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
         )
 endef

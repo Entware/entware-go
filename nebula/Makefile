@@ -58,9 +58,9 @@ define Build/Compile
                 cd $(PKG_BUILD_DIR); \
 		mkdir -p bin; \
 		cd src/$(PKG_GOGET); \
-		GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X main.Build=$(PKG_VERSION) -s -w" -x -v $(PKG_GOGET)/cmd/nebula; \
+		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X main.Build=$(PKG_VERSION) -s -w" -x -v $(PKG_GOGET)/cmd/nebula; \
 		cp nebula $(PKG_BUILD_DIR)/bin; \
-		GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X main.Build=$(PKG_VERSION) -s -w" -x -v $(PKG_GOGET)/cmd/nebula-cert; \
+		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X main.Build=$(PKG_VERSION) -s -w" -x -v $(PKG_GOGET)/cmd/nebula-cert; \
 		cp nebula-cert $(PKG_BUILD_DIR)/bin; \
 		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
         )
