@@ -9,7 +9,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=torrserver
-PKG_VERSION:=1.2.83
+PKG_VERSION:=1.2.84
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/YouROK/TorrServer
 
@@ -17,7 +17,7 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=3302ad63712eaa895b66db14dbabd7ed1e2e1c90
+PKG_COMMIT=1d63286d3e1d3f26f368da82efe8d31beab4601e
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
