@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,8 +16,9 @@ PKG_GOGET:=github.com/yggdrasil-network/yggdrasil-go
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=d3672545a32ecd98b922efb7bb35fbf1b6d12951
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=aaaddd9abfae1efb14060b4e0489cc387de8656eff581e77166c6a4ccce2d602
+PKG_COMMIT:=d3672545a32ecd98b922efb7bb35fbf1b6d12951
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

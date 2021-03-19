@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,8 +16,9 @@ PKG_GOGET:=github.com/nextdns/nextdns
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=42621d36862678900cc84c29dda6e90d7da42f8f
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=006c9f52b831042342d9fdf6d7451583875c06549dbdb54df01c5d7bb98f1297
+PKG_COMMIT:=42621d36862678900cc84c29dda6e90d7da42f8f
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

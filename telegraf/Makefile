@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,8 +16,9 @@ PKG_GOGET:=github.com/influxdata/telegraf
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=74011e228c88682230d33f2d3881eb10feb996b2
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=f457a0b9ab17c7071c9f675a4e1c29ae91e0c17033409feafce961ccf958de7e
+PKG_COMMIT:=74011e228c88682230d33f2d3881eb10feb996b2
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

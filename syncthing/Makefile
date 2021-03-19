@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2016 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -15,8 +15,9 @@ PKG_GOGET:=github.com/syncthing/syncthing
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=f6fac3e949c882771b4b02ce3f586dd09b7555da
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=7840ee6cfcd7da1b2bb8888e36641d6720a2799d948b18dbf111c56eed332616
+PKG_COMMIT:=f6fac3e949c882771b4b02ce3f586dd09b7555da
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

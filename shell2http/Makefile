@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2020 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -15,8 +15,9 @@ PKG_GOGET:=github.com/msoap/shell2http
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=f6d86acea3ef445854c71a22ba4f99f15a157041
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=8bea5d2cf5f041a92114ab5b327a3ed7fe541ce158de5577acb61ef4f4c30508
+PKG_COMMIT:=f6d86acea3ef445854c71a22ba4f99f15a157041
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

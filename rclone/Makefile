@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,8 +16,9 @@ PKG_GOGET:=github.com/rclone/rclone
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=7f5ee5d81f12045d1565fd5dc6596bc81d44d431
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=ef90b9b79ba0f26ebe59ae4b5e987e0824602b023ba25d1be79d6125eb45b4bc
+PKG_COMMIT:=7f5ee5d81f12045d1565fd5dc6596bc81d44d431
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

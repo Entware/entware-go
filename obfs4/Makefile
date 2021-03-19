@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2020 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -15,8 +15,9 @@ PKG_GOGET:=gitlab.com/yawning/obfs4
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=b5a9f3c5d239b2b1d2d5877c043c5893635334a0
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=5b067ca7f4b0d41f6323fc58e4bcf16cac4ed154c96a8c6878156ab2e993fdf4
+PKG_COMMIT:=b5a9f3c5d239b2b1d2d5877c043c5893635334a0
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

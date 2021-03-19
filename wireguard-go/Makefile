@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,8 +16,9 @@ PKG_GOGET:=git.zx2c4.com/wireguard-go
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=7a0fb5bbb1720fdd9404a4cf41920e24a46e0dad
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=5440c243a90ead56eab52cd4e54c20768e82a0612d46afa6e0e70426bf6a9b3f
+PKG_COMMIT:=7a0fb5bbb1720fdd9404a4cf41920e24a46e0dad
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 

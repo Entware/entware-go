@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2011-2019 Entware
+# Copyright (C) 2011-2021 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -16,8 +16,9 @@ PKG_GOGET:=github.com/slackhq/nebula
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE=$(GOPKG_SOURCE)
-PKG_COMMIT=c71c84882eab6dfca63a9e2b9e346c545f81a55d
+PKG_SOURCE:=$(GOPKG_SOURCE)
+PKG_HASH:=f41ab1e2c81df6e3678dd023439d9fea422c046da4658b10ffb1c2763be592e6
+PKG_COMMIT:=c71c84882eab6dfca63a9e2b9e346c545f81a55d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
