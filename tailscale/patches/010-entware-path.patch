@@ -1,0 +1,35 @@
+--- a/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go	2021-03-29 21:01:20.545266302 +0300
++++ b/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go	2021-03-29 21:03:49.605266302 +0300
+@@ -248,7 +248,7 @@
+ 	existsInCache := false
+ 	cacheDir := os.Getenv("CACHE_DIRECTORY")
+ 	if cacheDir != "" {
+-		existsInCache, err = checkExists("/var/cache/tailscale")
++		existsInCache, err = checkExists("/opt/var/cache/tailscale")
+ 		if err != nil {
+ 			log.Printf("checking for configs in %s: %v", cacheDir, err)
+ 		}
+--- a/src/github.com/tailscale/tailscale/paths/paths.go	2021-03-29 20:59:31.681266302 +0300
++++ b/src/github.com/tailscale/tailscale/paths/paths.go	2021-03-29 21:04:44.301266302 +0300
+@@ -31,8 +31,8 @@
+ 	if runtime.GOOS == "darwin" {
+ 		return "/var/run/tailscaled.socket"
+ 	}
+-	if fi, err := os.Stat("/var/run"); err == nil && fi.IsDir() {
+-		return "/var/run/tailscale/tailscaled.sock"
++	if fi, err := os.Stat("/opt/var/run"); err == nil && fi.IsDir() {
++		return "/opt/var/run/tailscale/tailscaled.sock"
+ 	}
+ 	return "tailscaled.sock"
+ }
+--- a/src/github.com/tailscale/tailscale/paths/paths_unix.go	2021-03-29 20:59:31.681266302 +0300
++++ b/src/github.com/tailscale/tailscale/paths/paths_unix.go	2021-03-29 21:04:16.445266302 +0300
+@@ -20,7 +20,7 @@
+ func statePath() string {
+ 	switch runtime.GOOS {
+ 	case "linux":
+-		return "/var/lib/tailscale/tailscaled.state"
++		return "/opt/var/lib/tailscale/tailscaled.state"
+ 	case "freebsd", "openbsd":
+ 		return "/var/db/tailscale/tailscaled.state"
+ 	case "darwin":
