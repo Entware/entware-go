@@ -1,17 +1,15 @@
 --- a/src/github.com/rclone/rclone/fs/config/config.go
 +++ b/src/github.com/rclone/rclone/fs/config/config.go
-@@ -80,12 +80,12 @@
- 	configData *goconfig.ConfigFile
- 
- 	// ConfigPath points to the config file
--	ConfigPath = makeConfigPath()
-+	ConfigPath = "/opt/etc/rclone.config"
- 
+@@ -105,10 +105,10 @@
  	// CacheDir points to the cache directory.  Users of this
  	// should make a subdirectory and use MkdirAll() to create it
  	// and any parents.
 -	CacheDir = makeCacheDir()
 +	CacheDir = "/opt/var/rclone"
  
- 	// Config is the global config
- 	Config = &ConfigInfo{}
+ 	// ConfigPath points to the config file
+-	ConfigPath = makeConfigPath()
++	ConfigPath = "/opt/etc/rclone.config"
+ 
+ 	// Password can be used to configure the random password generator
+ 	Password = random.Password
