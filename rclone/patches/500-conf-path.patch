@@ -1,15 +1,20 @@
 --- a/src/github.com/rclone/rclone/fs/config/config.go
 +++ b/src/github.com/rclone/rclone/fs/config/config.go
-@@ -105,10 +105,10 @@
+@@ -105,7 +105,7 @@
  	// CacheDir points to the cache directory.  Users of this
  	// should make a subdirectory and use MkdirAll() to create it
  	// and any parents.
 -	CacheDir = makeCacheDir()
 +	CacheDir = "/opt/var/rclone"
  
- 	// ConfigPath points to the config file
--	ConfigPath = makeConfigPath()
-+	ConfigPath = "/opt/etc/rclone.config"
- 
  	// Password can be used to configure the random password generator
  	Password = random.Password
+@@ -121,7 +121,7 @@
+ 	// Set the function pointers up in fs
+ 	fs.ConfigFileGet = FileGetFlag
+ 	fs.ConfigFileSet = SetValueAndSave
+-	configPath = makeConfigPath()
++	configPath = "/opt/etc/rclone.config"
+ 	data = newDefaultStorage()
+ }
+ 
