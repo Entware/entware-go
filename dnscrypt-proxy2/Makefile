@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
-PKG_VERSION:=2.0.45
+PKG_VERSION:=2.1.0
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/DNSCrypt/dnscrypt-proxy
 
@@ -16,8 +16,8 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=f24020610847fe7411e1202a233c3851ce02c1c4de0957ed797cca4089f3537d
-PKG_COMMIT:=19dbd13c1b08a9477c5fa78e613f473364bdb5c5
+PKG_HASH:=94283b039caaee1afb0c98b822e70f283e2f646a03791c795830d800b6e5b7ee
+PKG_COMMIT:=9cb89ae41044bd168790f131c301d8fc81c8a98f
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -58,7 +58,7 @@ define Build/Compile
 	(\
 		cd $(PKG_BUILD_DIR); \
 		cd src/$(PKG_GOGET)/dnscrypt-proxy; \
-		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v $(PKG_GOGET)/dnscrypt-proxy; \
+		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -mod vendor -x -v; \
 	)
 endef
 
