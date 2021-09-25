@@ -4,12 +4,11 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-# The newer version has different dependency tracking
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tailscale
-PKG_VERSION:=1.12.3
+PKG_VERSION:=1.14.4
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/tailscale/tailscale
 
@@ -17,8 +16,8 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=46cfb84d8a5275afe1be80f629a23ffbea12f9963ec8bd6cd27ddd8e4249ecfa
-PKG_COMMIT:=2be791762ed8d183c2e6c877bfe0a6f1229ccf7b
+PKG_HASH:=4ffe3ee2469f2c1fa2cbd871b914c7395287d6c5dd1a2524ae55b832637d2c54
+PKG_COMMIT:=3020e58f5718df0371194fa34bd37eb10634df79
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
