@@ -5,11 +5,12 @@
 # See /LICENSE for more information.
 #
 # The newer version has different dependency tracking
+#
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=torrserver
-PKG_VERSION:=1.2.104
+PKG_VERSION:=1.2.109
 PKG_RELEASE:=1
 PKG_GOGET:=github.com/YouROK/TorrServer
 
@@ -17,10 +18,11 @@ GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=d7c5594977b873f199c9609f62b68a39bc339721d59db7e35776ed5d3a68ab58
-PKG_COMMIT:=9c22a4160d31f654bdf28c304c2e782a173da5b9
+PKG_HASH:=a8bbe3b09580e0d40bd3b7b1ccdc62e181e78cfb6b7c7149164cdca803f26e3c
+PKG_COMMIT:=42f27009ccd25a7e23cbeb7ca60c9d75e00554c1
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DEPENDS:=node-yarn/host
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
@@ -56,7 +58,9 @@ define Build/Compile
         (\
 		cd $(PKG_BUILD_DIR); \
 		mkdir -p bin; \
-		cd src/$(PKG_GOGET)/server; \
+		cd src/$(PKG_GOGET); \
+		PATH="$(GOROOT)/bin:$$$$PATH" LDFLAGS="'-s -w'" FAILURES="" go run gen_web.go; \
+		cd server; \
 		$(GOROOT)/bin/go mod tidy; \
 		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -tags disable_libutp -ldflags="-s -w" -x -v -o ${PKG_BUILD_DIR}/bin/${PKG_NAME} ./cmd; \
 		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
