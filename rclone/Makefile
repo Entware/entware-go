@@ -10,7 +10,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
 PKG_VERSION:=1.57.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 PKG_GOGET:=github.com/rclone/rclone
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
