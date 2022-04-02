@@ -8,17 +8,17 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=annie
-PKG_VERSION:=0.11
+PKG_NAME:=lux
+PKG_VERSION:=0.14.0
 PKG_RELEASE:=1
-PKG_GOGET:=github.com/iawia002/annie
+PKG_GOGET:=github.com/iawia002/lux
 
 GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
 
 #!!! uncomment PKG_SOURCE to download fixed version
 PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=848b1ce38d01f6ad36e1feac48461fb496a10b34e46ca5afe0f9079bba343299
-PKG_COMMIT:=3b82c8d2b10b2941657d559e64d858a4df0080d0
+PKG_HASH:=28214f889ea1245944370fb62628aadb0676b7b1018955d651fb9fe9d92ee9e2
+PKG_COMMIT:=b3422e84877a04f3fd4ac4e3a07b697ec44e0e9d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -29,28 +29,29 @@ ifeq ($(BUILD_VARIANT),nohf)
 GOARM=GOARM=5
 endif
 
-define Package/annie/Default
+define Package/lux/Default
 	$(call Package/gopackage/Default)
-	TITLE:=annie is a fast, simple and clean video downloader built with Go
-	URL:=https://github.com/iawia002/annie
+	DEPENDS:=+ffmpeg
+	TITLE:=lux is a fast, simple and clean video downloader built with Go
+	URL:=https://github.com/iawia002/lux
 endef
 
-define Package/annie
-	$(call Package/annie/Default)
+define Package/lux
+	$(call Package/lux/Default)
 	VARIANT:=hf
 endef
 
-define Package/annie_nohf
-	$(call Package/annie/Default)
+define Package/lux_nohf
+	$(call Package/lux/Default)
 	VARIANT:=nohf
 	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
 endef
 
-define Package/annie/description
+define Package/lux/description
  A fast, simple and clean video downloader (command line)
 endef
 
-Package/annie_nohf/description=$(Package/annie/description)
+Package/lux_nohf/description=$(Package/lux/description)
 
 define Build/Compile
         (\
@@ -58,19 +59,19 @@ define Build/Compile
 		mkdir -p bin; \
 		cd src/$(PKG_GOGET); \
 		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
-		cp annie $(PKG_BUILD_DIR)/bin; \
+		cp lux $(PKG_BUILD_DIR)/bin; \
 		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
         )
 endef
 
 
-define Package/annie/install
+define Package/lux/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/annie $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/lux $(1)/opt/bin
 endef
 
-Package/annie_nohf/install=$(Package/annie/install)
+Package/lux_nohf/install=$(Package/lux/install)
 
-$(eval $(call BuildPackage,annie))
-$(eval $(call BuildPackage,annie_nohf))
+$(eval $(call BuildPackage,lux))
+$(eval $(call BuildPackage,lux_nohf))
 
