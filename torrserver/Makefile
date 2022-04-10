@@ -62,7 +62,7 @@ define Build/Compile
 		PATH="$(GOROOT)/bin:$$$$PATH" LDFLAGS="'-s -w'" FAILURES="" go run gen_web.go; \
 		cd server; \
 		$(GOROOT)/bin/go mod tidy; \
-		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -tags disable_libutp -ldflags="-s -w" -x -v -o ${PKG_BUILD_DIR}/bin/${PKG_NAME} ./cmd; \
+		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -tags nosqlite -ldflags="-s -w" -x -v -o ${PKG_BUILD_DIR}/bin/${PKG_NAME} ./cmd; \
 		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
         )
 endef
