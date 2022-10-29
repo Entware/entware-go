@@ -68,7 +68,7 @@ define Build/Compile
                 cd $(PKG_BUILD_DIR); \
                 mkdir -p bin; \
                 cd src/$(PKG_GOGET); \
-                CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
+                CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -tags=noselfupdate -x -v; \
                 cp rclone $(PKG_BUILD_DIR)/bin; \
                 chmod -R +w $(PKG_BUILD_DIR)/pkg; \
         )
