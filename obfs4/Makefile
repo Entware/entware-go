@@ -8,42 +8,38 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=obfs4
-PKG_VERSION:=0.0.13
+PKG_VERSION:=0.0.14
 PKG_RELEASE:=1
+
 PKG_GOGET:=gitlab.com/yawning/obfs4
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=336a71d6e4cfd2d33e9c57797828007ad74975e9
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=8b555ace115ef48ec1b31973b8189d90d7514ec48e2a779713d3673232f03992
-PKG_COMMIT:=77af0cba934d73c4baeb709560bcfc9a9fbc661c
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=c3aa598023543ea18cde3fa0addf11a237b42cbb708645c6f282ec399cdf80ab
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/obfs4/Default
-	$(call Package/gopackage/Default)
+	SECTION:=net
+	CATEGORY:=Network
 	TITLE:=A Tor pluggable transport proxy, implementing obfs4
 	URL:=https://gitlab.com/yawning/obfs4
+	MAINTAINER:=Entware team, https://entware.net
+	DEPENDS:=+tor
 endef
 
 define Package/obfs4
 	$(call Package/obfs4/Default)
 	VARIANT:=hf
-	DEPENDS:=+tor
 endef
 
 define Package/obfs4_nohf
 	$(call Package/obfs4/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2) +tor
+	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
 endef
 
 define Package/obfs4/description
@@ -62,19 +58,11 @@ endef
 
 Package/obfs4_nohf/description=$(Package/obfs4/description)
 
-define Build/Compile
-	(\
-		cd $(PKG_BUILD_DIR)/src/$(PKG_GOGET); \
-		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) \
-		GOPATH=$$$$PATH:$(PKG_BUILD_DIR)/src/$(PKG_GOGET) \
-		$(GOROOT)/bin/go build -ldflags="-s -w" \
-		-o obfs4proxy/obfs4proxy ./obfs4proxy; \
-	)
-endef
+GO_TARGET:=./obfs4proxy
 
 define Package/obfs4/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/obfs4proxy/obfs4proxy $(1)/opt/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/obfs4proxy $(1)/opt/sbin
 endef
 
 Package/obfs4_nohf/install=$(Package/obfs4/install)
