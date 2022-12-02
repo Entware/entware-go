@@ -1,6 +1,6 @@
---- a/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go	2021-03-29 21:01:20.545266302 +0300
-+++ b/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go	2021-03-29 21:03:49.605266302 +0300
-@@ -248,7 +248,7 @@
+--- a/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go
++++ b/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go
+@@ -387,7 +387,7 @@ func tryFixLogStateLocation(dir, cmdname
  	existsInCache := false
  	cacheDir := os.Getenv("CACHE_DIRECTORY")
  	if cacheDir != "" {
@@ -9,11 +9,11 @@
  		if err != nil {
  			log.Printf("checking for configs in %s: %v", cacheDir, err)
  		}
---- a/src/github.com/tailscale/tailscale/paths/paths.go	2021-03-29 20:59:31.681266302 +0300
-+++ b/src/github.com/tailscale/tailscale/paths/paths.go	2021-03-29 21:04:44.301266302 +0300
-@@ -31,8 +31,8 @@
- 	if runtime.GOOS == "darwin" {
- 		return "/var/run/tailscaled.socket"
+--- a/src/github.com/tailscale/tailscale/paths/paths.go
++++ b/src/github.com/tailscale/tailscale/paths/paths.go
+@@ -42,8 +42,8 @@ func DefaultTailscaledSocket() string {
+ 	case distro.Gokrazy:
+ 		return "/perm/tailscaled/tailscaled.sock"
  	}
 -	if fi, err := os.Stat("/var/run"); err == nil && fi.IsDir() {
 -		return "/var/run/tailscale/tailscaled.sock"
@@ -22,9 +22,9 @@
  	}
  	return "tailscaled.sock"
  }
---- a/src/github.com/tailscale/tailscale/paths/paths_unix.go	2021-03-29 20:59:31.681266302 +0300
-+++ b/src/github.com/tailscale/tailscale/paths/paths_unix.go	2021-03-29 21:04:16.445266302 +0300
-@@ -20,7 +20,7 @@
+--- a/src/github.com/tailscale/tailscale/paths/paths_unix.go
++++ b/src/github.com/tailscale/tailscale/paths/paths_unix.go
+@@ -24,7 +24,7 @@ func init() {
  func statePath() string {
  	switch runtime.GOOS {
  	case "linux":
