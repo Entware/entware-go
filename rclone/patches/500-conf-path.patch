@@ -1,13 +1,13 @@
 --- a/src/github.com/rclone/rclone/fs/config/config.go
 +++ b/src/github.com/rclone/rclone/fs/config/config.go
-@@ -117,8 +117,8 @@
- 	// Set the function pointers up in fs
- 	fs.ConfigFileGet = FileGetFlag
- 	fs.ConfigFileSet = SetValueAndSave
+@@ -120,8 +120,8 @@ func init() {
+ 	fs.ConfigFileHasSection = func(section string) bool {
+ 		return LoadedData().HasSection(section)
+ 	}
 -	configPath = makeConfigPath()
 -	cacheDir = makeCacheDir() // Has fallback to tempDir, so set that first
 +	configPath = "/opt/etc/rclone.config"
-+	cacheDir = "/opt/var/rclone"
++	cacheDir = "/opt/var/cache/rclone"
  	data = newDefaultStorage()
  }
  

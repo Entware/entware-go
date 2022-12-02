@@ -9,30 +9,27 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.59.0
+PKG_VERSION:=1.60.1
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/rclone/rclone
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=ab8be2663fca662398983a9372f5ee1c39cb2862
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=e58288b7a1bd4a8bfaa23fbbcb3adaeb7dd587f27e629719f8d1f50c05ad2657
-PKG_COMMIT:=00a684d877548b47990a96cef8eeb1462a590c2a
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=f47286312aa7192177c5238d194ca9d019698fb8921e8fab3e17711e5e3d8aaf
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/rclone/Default
-	$(call Package/gopackage/Default)
-	TITLE:=Rclone is a command line program to sync files and directories to and from cloud storages
-	URL:=https://github.com/rclone/rclone
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=File Transfer
+	TITLE:=rsync for cloud storage
+	URL:=https://rclone.org
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/rclone
@@ -63,26 +60,18 @@ endef
 
 Package/rclone_nohf/description=$(Package/rclone/description)
 
-define Build/Compile
-        (\
-                cd $(PKG_BUILD_DIR); \
-                mkdir -p bin; \
-                cd src/$(PKG_GOGET); \
-                CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
-                cp rclone $(PKG_BUILD_DIR)/bin; \
-                chmod -R +w $(PKG_BUILD_DIR)/pkg; \
-        )
-endef
+GO_LDFLAGS += \
+	-X '$(PKG_GOGET)/fs.Version=$(PKG_VERSION)'
 
+GO_VARS += GO111MODULE=on
 
 define Package/rclone/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
-	$(INSTALL_DIR) $(1)/opt/var/rclone
+	$(INSTALL_DIR) $(1)/opt/var/cache/rclone
 endef
 
 Package/rclone_nohf/install=$(Package/rclone/install)
 
 $(eval $(call BuildPackage,rclone))
 $(eval $(call BuildPackage,rclone_nohf))
-
