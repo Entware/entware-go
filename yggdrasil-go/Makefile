@@ -9,30 +9,27 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=yggdrasil-go
-PKG_VERSION:=0.4.4
+PKG_VERSION:=0.4.7
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/yggdrasil-network/yggdrasil-go
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=14f1cd4696a37b0f7fdcb067fac337c46953f8af
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=33a4bcbb901cedd30e2703c177b09e845748e6534d1de92bab1c260be3a3c73d
-PKG_COMMIT:=41b4bf69cfa7b0a2e0f7904867e49160f9283cea
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=ce8ac6fe3ee42ce77c51ae5b624da98965d13e911672e62484c4f4a5a4e53a58
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/yggdrasil-go/Default
-	$(call Package/gopackage/Default)
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=Routing and Redirection
 	TITLE:=Encrypted IPv6 network
 	URL:=https://yggdrasil-network.github.io/
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/yggdrasil-go
@@ -47,29 +44,29 @@ define Package/yggdrasil-go_nohf
 endef
 
 define Package/yggdrasil-go/description
- Yggdrasil is an early-stage implementation of a fully end-to-end encrypted IPv6 network.
+  Yggdrasil builds end-to-end encrypted networks with IPv6.
+  Beyond the similarities with cjdns is a different routing
+  algorithm. This globally-agreed spanning tree uses greedy
+  routing in a metric space. Back-pressure routing techniques
+  allow advanced link aggregation bonding on per-stream basis.
+  In turn, a single stream will span across multiple network
+  interfaces simultaneously with much greater throughput.
 endef
 
 Package/yggdrasil-go_nohf/description=$(Package/yggdrasil-go/description)
 
-define Build/Compile
-        (\
-                cd $(PKG_BUILD_DIR); \
-		mkdir -p bin; \
-		cd src/$(PKG_GOGET); \
-		PATH="$(TARGET_PATH):$(GOROOT)/bin" CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) ./build; \
-		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
-        )
-endef
+GO_LDFLAGS += \
+	-X '$(PKG_GOGET)/src/version.buildName=yggdrasil-entware' \
+	-X '$(PKG_GOGET)/src/version.buildVersion=$(PKG_VERSION)'
+
+GO_TARGET:=./cmd/yggdrasil ./cmd/yggdrasilctl
 
 define Package/yggdrasil-go/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/yggdrasil $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/src/$(PKG_GOGET)/yggdrasilctl $(1)/opt/sbin
+	$(INSTALL_BIN) $(GO_INSTALL_DIR)/yggdrasil{,ctl} $(1)/opt/sbin
 endef
 
 Package/yggdrasil-go_nohf/install=$(Package/yggdrasil-go/install)
 
 $(eval $(call BuildPackage,yggdrasil-go))
 $(eval $(call BuildPackage,yggdrasil-go_nohf))
-
