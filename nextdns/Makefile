@@ -9,30 +9,27 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=v1.37.11
+PKG_VERSION:=1.38.0
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/nextdns/nextdns
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=d409692763b9b5408b28c21c1fa1e7d22581390d
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=51565e49d9bdcf8e89e9c600b567006fe42a2fd99c4dd62bc0067ff1d1d7d92f
-PKG_COMMIT:=563d9c8d9ce026be670d7584da26fb81e9fa8a1d
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=9f2abe95e932fa99885736babc5a49c801a32b2748b63b3cb6b4429b8723aa61
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/nextdns/Default
-	$(call Package/gopackage/Default)
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=IP Addresses and Names
 	TITLE:=NextDNS CLI Client
 	URL:=https://github.com/nextdns/nextdns
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/nextdns
@@ -47,24 +44,19 @@ define Package/nextdns_nohf
 endef
 
 define Package/nextdns/description
- NextDNS CLI is a DNS53 to DNS-over-HTTPS (DoH) proxy with advanced capabilities to get the most out of the NextDNS service.
- Although the most advanced features will only work with NextDNS, this program can work as a client for any DoH provider or
- a mix of NextDNS + another DNS (split horizon).
+ NextDNS CLI is a DNS53 to DNS-over-HTTPS (DoH) proxy with
+ advanced capabilities to get the most out of the NextDNS
+ service. Although the most advanced features will only work
+ with NextDNS, this program can work as a client for any DoH
+ provider or a mix of NextDNS + another DNS (split horizon).
 endef
 
 Package/nextdns_nohf/description=$(Package/nextdns/description)
 
-define Build/Compile
-        (\
-                cd $(PKG_BUILD_DIR); \
-		mkdir -p bin; \
-		cd src/$(PKG_GOGET); \
-		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
-		cp nextdns $(PKG_BUILD_DIR)/bin; \
-		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
-        )
-endef
+GO_LDFLAGS += \
+	-X 'main.Build=v$(PKG_VERSION)'
 
+GO_VARS += GO111MODULE=on
 
 define Package/nextdns/install
 	$(INSTALL_DIR) $(1)/opt/bin
@@ -75,4 +67,3 @@ Package/nextdns_nohf/install=$(Package/nextdns/install)
 
 $(eval $(call BuildPackage,nextdns))
 $(eval $(call BuildPackage,nextdns_nohf))
-
