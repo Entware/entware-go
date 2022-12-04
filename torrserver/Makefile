@@ -10,31 +10,29 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=torrserver
-PKG_VERSION:=1.2.117
+PKG_VERSION:=1.2.118
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/YouROK/TorrServer
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=d0520772018774e79c542c8b6d532845080f9d03
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=b6482fd85d0c482de0d6f9f015403f1bebfb701f06c952f3a03df13f021e52da
-PKG_COMMIT:=46246d9dfff9bd2af450dea0f032d822974176d0
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=757cd927881ae1a3805bd8faa9f1a77aa77b1463d7cf1e0ecd52d244345d876c
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
 PKG_BUILD_DEPENDS:=node-yarn/host
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/torrserver/Default
-	$(call Package/gopackage/Default)
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=BitTorrent
 	TITLE:=TorrServer - stream torrent to http
 	URL:=https://github.com/YouROK/TorrServer
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/torrserver
@@ -54,23 +52,23 @@ endef
 
 Package/torrserver_nohf/description=$(Package/torrserver/description)
 
-define Build/Compile
-        (\
-		cd $(PKG_BUILD_DIR); \
-		mkdir -p bin; \
-		cd src/$(PKG_GOGET); \
-		PATH="$(GOROOT)/bin:$$$$PATH" LDFLAGS="'-s -w'" FAILURES="" go run gen_web.go; \
+GO_SRC_SUBDIR:=server
+GO_TAGS:=-tags=nosqlite
+GO_TARGET:=./cmd
+
+define Build/Compile/Web
+        ( cd $(GO_SRC_DIR); \
+		$(GO_BIN) run gen_web.go; \
 		cd server; \
-		$(GOROOT)/bin/go mod tidy; \
-		CGO_ENABLED=0 GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -tags nosqlite -ldflags="-s -w" -x -v -o ${PKG_BUILD_DIR}/bin/${PKG_NAME} ./cmd; \
-		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
+		$(GO_BIN) mod tidy; \
         )
 endef
 
+Hooks/Compile/Pre += Build/Compile/Web
 
 define Package/torrserver/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/torrserver $(1)/opt/sbin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/cmd $(1)/opt/sbin/torrserver
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) files/S90torrserver $(1)/opt/etc/init.d
 	$(INSTALL_DIR) $(1)/opt/etc/torrserver
@@ -81,4 +79,3 @@ Package/torrserver_nohf/install=$(Package/torrserver/install)
 
 $(eval $(call BuildPackage,torrserver))
 $(eval $(call BuildPackage,torrserver_nohf))
-

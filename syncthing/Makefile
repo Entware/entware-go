@@ -8,30 +8,28 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=1.20.3
+PKG_VERSION:=1.22.1
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/syncthing/syncthing
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=abb921acbc21191f18ac4a6884f5296acb216e86
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=d4c211c4f7bd1adae15f61451eaf4fa19270684d4a91ab5b9a0f839ad4d4e5c5
-PKG_COMMIT:=13d545c9f2e54ac32e35047a475a3f4bbd616e70
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=c67aafd65a5978db0004904c1c9f15961099b244b882c79b0437cba1d0144170
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DEPENDS:=node/host
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/syncthing/Default
-	$(call Package/gopackage/Default)
-	TITLE:=Utility for synchronization of a folder between a number of collaborating devices.
+	SECTION:=net
+	CATEGORY:=Network
+	TITLE:=Utility for synchronization
 	URL:=https://syncthing.net/
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/syncthing
@@ -46,29 +44,41 @@ define Package/syncthing_nohf
 endef
 
 define Package/syncthing/description
- Syncthing replaces proprietary sync and cloud services with something open, trustworthy and decentralized.
- Your data is your data alone and you deserve to choose where it is stored, if it is shared with some 
- third party and how it's transmitted over the Internet.
+ Syncthing replaces proprietary sync and cloud services with something open,
+ trustworthy and decentralized. Your data is your data alone and you deserve
+ to choose where it is stored, if it is shared with some third party and how
+ it's transmitted over the Internet.
 endef
 
 Package/syncthing_nohf/description=$(Package/syncthing/description)
 
-define Build/Compile
-	( \
-		cd $(GOROOT); \
-		rm -rf src/$(PKG_GOGET); \
-		mkdir -p src/github.com; \
-		$(CP) $(PKG_BUILD_DIR)/src/github.com/* src/github.com; \
-		cd src/$(PKG_GOGET); \
+GO_LDFLAGS += \
+	-X '$(PKG_GOGET)/lib/build.Version=v$(PKG_VERSION)' \
+	-X '$(PKG_GOGET)/lib/build.Stamp=$(SOURCE_DATE_EPOCH)' \
+	-X '$(PKG_GOGET)/lib/build.User=Entware' \
+	-X '$(PKG_GOGET)/lib/build.Host=Entware' \
+	-X '$(PKG_GOGET)/lib/build.Tags=noupgrade'
+
+GO_VARS += \
+	GO111MODULE=on \
+	PATH="$(GOROOT)/bin:$$$$PATH"
+
+GO_TAGS:=-tags=noupgrade
+
+GO_TARGET:=./cmd/syncthing
+
+define Build/FixAssets
+	( cd $(GO_SRC_DIR); \
 		PATH="$(GOROOT)/bin:$$$$PATH" \
-		CGO_ENABLED=0 GO111MODULE=on $(GOARM) go run build.go -goos linux -goarch $(GOARCH) -version v$(PKG_VERSION) -no-upgrade build ; \
+		$(GO_BIN) run build.go assets; \
 	)
 endef
 
+Hooks/Compile/Pre += Build/FixAssets
 
 define Package/syncthing/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(GOROOT)/src/$(PKG_GOGET)/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(GO_INSTALL_DIR)/$(PKG_NAME) $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) files/S92syncthing $(1)/opt/etc/init.d
 endef

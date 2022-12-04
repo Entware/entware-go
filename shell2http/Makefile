@@ -8,30 +8,28 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shell2http
-PKG_VERSION:=2021-10-10
+PKG_VERSION:=2022-08-20
 PKG_RELEASE:=1
+
+_PKG_VERSION:=1.14.2
+
 PKG_GOGET:=github.com/msoap/shell2http
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=9f2fb96730804292cea53fc69ac26511ac2b2cfc
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=9d61e4752648c93fbf81bd3910a88139adfad30364581e1bfd8ff8f1d38370be
-PKG_COMMIT:=a112b1ac680ee08ed08be90b41d2d935289d973b
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=c51d461a5cea0d3c5eced99f2a0e2ccca6d88b4c37ac4547db18104fd271ef45
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/shell2http/Default
-	$(call Package/gopackage/Default)
+	SECTION:=net
+	CATEGORY:=Network
 	TITLE:=Execute shell commands via simple http server
 	URL:=https://github.com/msoap/shell2http
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/shell2http
@@ -47,22 +45,16 @@ endef
 
 define Package/shell2http/description
  Executing shell commands via simple http server (written in Go language).
- Settings through 2 command line arguments, path and shell command. By default bind to :8080.
+ Settings through 2 command line arguments, path and shell command.
+ By default bind to :8080.
 endef
 
 Package/shell2http_nohf/description=$(Package/shell2http/description)
 
-define Build/Compile
-        (\
-                cd $(PKG_BUILD_DIR); \
-		mkdir -p bin; \
-		cd src/$(PKG_GOGET); \
-		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-s -w" -x -v; \
-		cp shell2http $(PKG_BUILD_DIR)/bin; \
-		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
-        )
-endef
+GO_LDFLAGS += \
+	-X 'main.version=$(_PKG_VERSION)'
 
+GO_VARS += GO111MODULE=on
 
 define Package/shell2http/install
 	$(INSTALL_DIR) $(1)/opt/bin

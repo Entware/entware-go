@@ -8,68 +8,65 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tailscale
-PKG_VERSION:=1.28.0
+PKG_VERSION:=1.32.3
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/tailscale/tailscale
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=9dd89b8c263d8a15dec313ea3ce77a6f2fcf2aaf
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=8a427ca14ad619e8cce82b45e584fe66c7e3732cc68d1ac833489750d6913cd4
-PKG_COMMIT:=aabca3a4c431d24199c1deb25d4684516ead88ca
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=063d2f33a0cbd5e14b10ecea14b782ca713e66f28431d2b34f901e561a2c2fb5
 
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_GOGET:=github.com/tailscale/tailscale
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/tailscale/Default
-	$(call Package/gopackage/Default)
+	SECTION:=net
+	CATEGORY:=Network
+	SUBMENU:=VPN
 	TITLE:=Private WireGuard networks made easy
 	URL:=https://tailscale.com/
+	MAINTAINER:=Entware team, https://entware.net
+	DEPENDS:=+ca-bundle
 endef
 
 define Package/tailscale
 	$(call Package/tailscale/Default)
 	VARIANT:=hf
-	DEPENDS:=+ca-bundle
 endef
 
 define Package/tailscale_nohf
 	$(call Package/tailscale/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2) +ca-bundle
+	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
 endef
 
 define Package/tailscale/description
- Zero config VPN. Installs on any device in minutes, manages firewall rules for you, and works from anywhere
+ Zero config VPN. Installs on any device in minutes, manages
+ firewall rules for you, and works from anywhere
 endef
 
 Package/tailscale_nohf/description=$(Package/tailscale/description)
 
-define Build/Compile
-        (\
-		cd $(PKG_BUILD_DIR); \
-		mkdir -p bin; \
-		cd src/$(PKG_GOGET); \
-		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X tailscale.com/version.Long=${PKG_VERSION} -s -w" -x -v tailscale.com/cmd/tailscale; \
-		cp tailscale $(PKG_BUILD_DIR)/bin; \
-		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X tailscale.com/version.Long=${PKG_VERSION} -s -w" -x -v tailscale.com/cmd/tailscaled; \
-		cp tailscaled $(PKG_BUILD_DIR)/bin; \
-		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
-        )
-endef
+GIT_HASH:=$(shell echo $(PKG_SOURCE_VERSION) | cut -b -9)
+PKG_SHORT_VER:=$(word 1,$(subst ., ,$(PKG_VERSION))).$(word 2,$(subst ., ,$(PKG_VERSION)))
 
+GO_LDFLAGS += \
+	-X 'tailscale.com/version.Long=$(PKG_VERSION)' \
+	-X 'tailscale.com/version.Short=$(PKG_SHORT_VER)' \
+	-X 'tailscale.com/version.GitCommit=$(GIT_HASH)'
+
+GO_VARS += GO111MODULE=on
+
+GO_TARGET:=tailscale.com/cmd/tailscale tailscale.com/cmd/tailscaled
 
 define Package/tailscale/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/tailscale $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/tailscaled $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/tailscale{,d} $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S06tailscaled $(1)/opt/etc/init.d/
 endef
@@ -78,4 +75,3 @@ Package/tailscale_nohf/install=$(Package/tailscale/install)
 
 $(eval $(call BuildPackage,tailscale))
 $(eval $(call BuildPackage,tailscale_nohf))
-

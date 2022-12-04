@@ -1,6 +1,6 @@
 --- a/src/git.zx2c4.com/wireguard-go/device/queueconstants_default.go
 +++ b/src/git.zx2c4.com/wireguard-go/device/queueconstants_default.go
-@@ -11,6 +11,6 @@
+@@ -12,6 +12,6 @@ const (
  	QueueOutboundSize          = 1024
  	QueueInboundSize           = 1024
  	QueueHandshakeSize         = 1024

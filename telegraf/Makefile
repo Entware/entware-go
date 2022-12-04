@@ -9,30 +9,26 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=telegraf
-PKG_VERSION:=1.23.2
+PKG_VERSION:=1.24.3
 PKG_RELEASE:=1
+
 PKG_GOGET:=github.com/influxdata/telegraf
 
-GOPKG_SOURCE=GO_$(PKG_NAME)-$(PKG_VERSION)-$(PKG_RELEASE).tar.bz2
+PKG_SOURCE_VERSION:=ff7323e1567ec68dbb414fffbf83d7dfcc9a1c19
 
-#!!! uncomment PKG_SOURCE to download fixed version
-PKG_SOURCE:=$(GOPKG_SOURCE)
-PKG_HASH:=3a86ba28041d95806836911942222cecafd6c5e170035724df9126a0ebdb225f
-PKG_COMMIT:=7c8a6a94411c03ca9e04a38eefd3cd0ecdf11c7c
-
-PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(BUILD_VARIANT)/$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_MIRROR_HASH:=c2192637600b8deeabc10c55101dabc03f136d6bdc18fe7d0dafc6e7054584a1
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-ifeq ($(BUILD_VARIANT),nohf)
-GOARM=GOARM=5
-endif
-
 define Package/telegraf/Default
-	$(call Package/gopackage/Default)
-	TITLE:=telegraf  is an agent for collecting, processing, aggregating, and writing metrics
+	SECTION:=utils
+	CATEGORY:=Utilities
+	TITLE:=an agent for collecting, processing, aggregating, writing metrics
 	URL:=https://github.com/influxdata/telegraf
+	MAINTAINER:=Entware team, https://entware.net
 endef
 
 define Package/telegraf
@@ -54,17 +50,16 @@ endef
 
 Package/telegraf_nohf/description=$(Package/telegraf/description)
 
-define Build/Compile
-        (\
-		cd $(PKG_BUILD_DIR); \
-		mkdir -p bin; \
-		cd src/$(PKG_GOGET); \
-		CGO_ENABLED=0 GO111MODULE=on GOOS=linux GOARCH=$(GOARCH) $(GOARM) GOPATH=$(PKG_BUILD_DIR) $(GOROOT)/bin/go build -ldflags="-X main.version=$(PKG_VERSION) -s -w" -x -v $(PKG_GOGET)/cmd/telegraf; \
-		cp telegraf $(PKG_BUILD_DIR)/bin; \
-		chmod -R +w $(PKG_BUILD_DIR)/pkg; \
-        )
-endef
+COMMIT:=$(shell echo $(PKG_SOURCE_VERSION) | cut -b -9)
 
+GO_LDFLAGS += \
+	-X '$(PKG_GOGET)/internal.Commit=$(COMMIT)' \
+	-X '$(PKG_GOGET)/internal.Branch=master' \
+	-X '$(PKG_GOGET)/internal.Version=$(PKG_VERSION)'
+
+GO_TARGET:=./cmd/telegraf
+
+GO_VARS += GO111MODULE=on
 
 define Package/telegraf/install
 	$(INSTALL_DIR) $(1)/opt/bin
@@ -75,4 +70,3 @@ Package/telegraf_nohf/install=$(Package/telegraf/install)
 
 $(eval $(call BuildPackage,telegraf))
 $(eval $(call BuildPackage,telegraf_nohf))
-
