@@ -60,6 +60,8 @@ endef
 
 Package/rclone_nohf/description=$(Package/rclone/description)
 
+GO_LDFLAGS += \
+        -X '$(PKG_GOGET)/fs.Version=$(PKG_VERSION)'
 
 GO_TAGS:=-tags=noselfupdate
 GO_VARS += GO111MODULE=on
