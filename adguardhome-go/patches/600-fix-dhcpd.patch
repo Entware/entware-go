@@ -1,0 +1,22 @@
+--- a/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux.go
++++ b/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux.go
+@@ -19,7 +19,7 @@ import (
+ )
+ 
+ // dhcpсdConf is the name of /etc/dhcpcd.conf file in the root filesystem.
+-const dhcpcdConf = "etc/dhcpcd.conf"
++const dhcpcdConf = "opt/etc/dhcpcd.conf"
+ 
+ func canBindPrivilegedPorts() (can bool, err error) {
+ 	res, err := unix.PrctlRetInt(
+--- a/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux_test.go
++++ b/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux_test.go
+@@ -15,7 +15,7 @@ func TestHasStaticIP(t *testing.T) {
+ 	const ifaceName = "wlan0"
+ 
+ 	const (
+-		dhcpcd    = "etc/dhcpcd.conf"
++		dhcpcd    = "opt/etc/dhcpcd.conf"
+ 		netifaces = "etc/network/interfaces"
+ 	)
+ 

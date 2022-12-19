@@ -1,0 +1,12 @@
+#!/bin/sh
+
+. /opt/etc/AdGuardHome/adguardhome.conf
+
+ENABLED=yes
+PROCS=AdGuardHome
+ARGS="$OPTIONS"
+PREARGS=""
+DESC=$PROCS
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
