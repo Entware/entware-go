@@ -48,15 +48,10 @@ define Package/snowflake-go/description/Default
  as though you're using the Internet for a regular video or voice call.
 endef
 
-define Package/snowflake-go_hf/description=$(Package/snowflake/description/Default)
-endef
+Package/snowflake-go_hf/description=$(Package/snowflake/description/Default)
 
 GO_VARS += GO111MODULE=on
 GO_TARGET:=./broker ./client ./distinctcounter ./probetest ./proxy ./server
-
-define Package/snowflake-go_nohf/description
-$(call Package/snowflake/description/Default)
-endef
 
 define Package/snowflake-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
