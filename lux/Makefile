@@ -4,22 +4,19 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-# The newer version has different dependency tracking
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lux
-PKG_VERSION:=0.16.0
+PKG_VERSION:=0.18.0
 PKG_RELEASE:=1
 
-PKG_GOGET:=github.com/iawia002/lux
-
-PKG_SOURCE_VERSION:=ac654a81bc568a8115368c8870633647e1e4a491
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=ef283d82e951c07516e08104177ae0c6bd07ff7f1903050719fcb78d4aa8815e
+PKG_SOURCE_VERSION:=e0729b067aff8b1115a9a78d76216e0f86a22ce3
+PKG_SOURCE_URL:=https://github.com/iawia002/lux
+PKG_MIRROR_HASH:=f4fec6790eb09997104df13aa50566e5038d45d07e01e35a6212a7e6f5d2fa5b
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -54,7 +51,7 @@ GO_VARS += GO111MODULE=on
 
 define Package/lux/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/lux $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/lux $(1)/opt/bin
 endef
 
 Package/lux_nohf/install=$(Package/lux/install)
