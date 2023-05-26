@@ -8,17 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray
-PKG_VERSION:=5.3.0
+PKG_VERSION:=5.4.1
 PKG_RELEASE:=1
-
-PKG_GOGET:=github.com/v2fly/v2ray-core
-
-PKG_SOURCE_VERSION:=1aac75c8bc628cb45f68ec71c45cd436167a07c2
+SOURCE_DATE:=2023-05-20
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=ee7ca711a9fd03d8db1ed9eccb56d6fc70df50c020a6579662479ee026be7c0d
+PKG_SOURCE_VERSION:=9b5262855fd5bf432c5abdd24152a9089bbb874f
+PKG_SOURCE_URL:=https://github.com/v2fly/v2ray-core
+PKG_MIRROR_HASH:=5677482d84a15062d41fb8169069ed2705e16369a96c5f6bb21c23f818d16ec3
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -58,9 +57,9 @@ endef
 Package/v2ray_nohf/conffiles=$(Package/v2ray/conffiles)
 
 GO_LDFLAGS += \
-	-X '$(PKG_GOGET)/v5.codename=Entware' \
-	-X '$(PKG_GOGET)/v5.build=$(SOURCE_DATE_EPOCH)' \
-	-X '$(PKG_GOGET)/v5.version=$(PKG_VERSION)'
+	-X '$(XIMPORTPATH)/v5.codename=Entware' \
+	-X '$(XIMPORTPATH)/v5.build=$(SOURCE_DATE)' \
+	-X '$(XIMPORTPATH)/v5.version=$(PKG_VERSION)'
 
 GO_TARGET:=./main
 
@@ -68,11 +67,11 @@ GO_VARS += GO111MODULE=on
 
 define Package/v2ray/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/main $(1)/opt/sbin/v2ray
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/main $(1)/opt/sbin/v2ray
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
-	$(INSTALL_BIN) files/S24v2ray $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S24v2ray $(1)/opt/etc/init.d
 	$(INSTALL_DIR) $(1)/opt/etc/v2ray
-	$(INSTALL_CONF) $(GO_SRC_DIR)/release/config/*.json $(1)/opt/etc/v2ray
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/release/config/*.json $(1)/opt/etc/v2ray
 endef
 
 Package/v2ray_nohf/install=$(Package/v2ray/install)
