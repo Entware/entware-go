@@ -8,19 +8,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=1.23.2
+PKG_VERSION:=1.23.4
 PKG_RELEASE:=1
-
-PKG_GOGET:=github.com/syncthing/syncthing
-
-PKG_SOURCE_VERSION:=8bbf2ba9ac7048cdc7527c3b6e71b3086448fa3a
+SOURCE_DATE:=2023-04-05
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=f0fc53df402b5e5b44b9e864e6783abb971e41b77ddad1e2cae9aa621dc3f534
+PKG_SOURCE_VERSION:=4a8c691aef82b773887c15fc4b1d08d3b4352c9b
+PKG_SOURCE_URL:=https://github.com/syncthing/syncthing
+PKG_MIRROR_HASH:=ead6b6afac7240e71e335462c04a8592201951dd0613d4ccafd51e51ad33c5db
 
 PKG_BUILD_DEPENDS:=node/host
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -53,23 +52,23 @@ endef
 Package/syncthing_nohf/description=$(Package/syncthing/description)
 
 GO_LDFLAGS += \
-	-X '$(PKG_GOGET)/lib/build.Version=v$(PKG_VERSION)' \
-	-X '$(PKG_GOGET)/lib/build.Stamp=$(SOURCE_DATE_EPOCH)' \
-	-X '$(PKG_GOGET)/lib/build.User=Entware' \
-	-X '$(PKG_GOGET)/lib/build.Host=Entware' \
-	-X '$(PKG_GOGET)/lib/build.Tags=noupgrade'
+	-X '$(XIMPORTPATH)/lib/build.Version=v$(PKG_VERSION)' \
+	-X '$(XIMPORTPATH)/lib/build.Stamp=$(SOURCE_DATE)' \
+	-X '$(XIMPORTPATH)/lib/build.User=Entware' \
+	-X '$(XIMPORTPATH)/lib/build.Host=Entware' \
+	-X '$(XIMPORTPATH)/lib/build.Tags=noupgrade'
 
 GO_VARS += \
 	GO111MODULE=on \
-	PATH="$(GOROOT)/bin:$$$$PATH"
+	PATH="$(GOROOT)/bin:$(PATH)"
 
 GO_TAGS:=-tags=noupgrade
 
 GO_TARGET:=./cmd/syncthing
 
 define Build/FixAssets
-	( cd $(GO_SRC_DIR); \
-		PATH="$(GOROOT)/bin:$$$$PATH" \
+	( cd $(PKG_BUILD_DIR); \
+		PATH="$(GOROOT)/bin:$(PATH)" \
 		$(GO_BIN) run build.go assets; \
 	)
 endef
@@ -78,9 +77,9 @@ Hooks/Compile/Pre += Build/FixAssets
 
 define Package/syncthing/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(GO_INSTALL_DIR)/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
-	$(INSTALL_BIN) files/S92syncthing $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S92syncthing $(1)/opt/etc/init.d
 endef
 
 Package/syncthing_nohf/install=$(Package/syncthing/install)

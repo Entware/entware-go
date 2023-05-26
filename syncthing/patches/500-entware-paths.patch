@@ -1,5 +1,5 @@
---- a/src/github.com/syncthing/syncthing/lib/locations/locations.go
-+++ b/src/github.com/syncthing/syncthing/lib/locations/locations.go
+--- a/lib/locations/locations.go
++++ b/lib/locations/locations.go
 @@ -189,7 +189,7 @@ func defaultConfigDir(userHome string) s
  		if xdgCfg := os.Getenv("XDG_CONFIG_HOME"); xdgCfg != "" {
  			return filepath.Join(xdgCfg, "syncthing")
