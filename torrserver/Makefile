@@ -4,25 +4,19 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-# The newer version has different dependency tracking
-#
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=torrserver
-PKG_VERSION:=1.2.120
+PKG_VERSION:=1.2.123
 PKG_RELEASE:=1
 
-PKG_GOGET:=github.com/YouROK/TorrServer
-
-PKG_SOURCE_VERSION:=aeb85d965ee95e4a99c94c463f479624f1631c3d
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=3d63c8c9c88955e3514d55f2c6442d8771b54e3f3bc9bb672dc00b9aba8c7389
+PKG_SOURCE_VERSION:=48bff20df9f31ebfa3e869dd1c49df9c638c6896
+PKG_SOURCE_URL:=https://github.com/YouROK/TorrServer
+PKG_MIRROR_HASH:=ef285d8a6e39c5bfcb2919a1d72ff99cbab652d24383538e16cdfc9e432d1eb3
 
-PKG_BUILD_DEPENDS:=node-yarn/host
-
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -56,21 +50,17 @@ GO_SRC_SUBDIR:=server
 GO_TAGS:=-tags=nosqlite
 GO_TARGET:=./cmd
 
-define Build/Compile/Web
-        ( cd $(GO_SRC_DIR); \
-		$(GO_BIN) run gen_web.go; \
-		cd server; \
-		$(GO_BIN) mod tidy; \
-        )
+define PreBuild
+        ( cd $(PKG_BUILD_DIR)/server; $(GO_BIN) mod tidy; )
 endef
 
-Hooks/Compile/Pre += Build/Compile/Web
+Hooks/Compile/Pre += PreBuild
 
 define Package/torrserver/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/cmd $(1)/opt/sbin/torrserver
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/cmd $(1)/opt/sbin/torrserver
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
-	$(INSTALL_BIN) files/S90torrserver $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S90torrserver $(1)/opt/etc/init.d
 	$(INSTALL_DIR) $(1)/opt/etc/torrserver
 	touch $(1)/opt/etc/torrserver/.keep
 endef
