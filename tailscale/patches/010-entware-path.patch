@@ -1,6 +1,6 @@
---- a/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go
-+++ b/src/github.com/tailscale/tailscale/logpolicy/logpolicy.go
-@@ -387,7 +387,7 @@ func tryFixLogStateLocation(dir, cmdname
+--- a/logpolicy/logpolicy.go
++++ b/logpolicy/logpolicy.go
+@@ -389,7 +389,7 @@ func tryFixLogStateLocation(dir, cmdname
  	existsInCache := false
  	cacheDir := os.Getenv("CACHE_DIRECTORY")
  	if cacheDir != "" {
@@ -9,11 +9,11 @@
  		if err != nil {
  			log.Printf("checking for configs in %s: %v", cacheDir, err)
  		}
---- a/src/github.com/tailscale/tailscale/paths/paths.go
-+++ b/src/github.com/tailscale/tailscale/paths/paths.go
-@@ -42,8 +42,8 @@ func DefaultTailscaledSocket() string {
- 	case distro.Gokrazy:
- 		return "/perm/tailscaled/tailscaled.sock"
+--- a/paths/paths.go
++++ b/paths/paths.go
+@@ -39,8 +39,8 @@ func DefaultTailscaledSocket() string {
+ 	case distro.QNAP:
+ 		return "/tmp/tailscale/tailscaled.sock"
  	}
 -	if fi, err := os.Stat("/var/run"); err == nil && fi.IsDir() {
 -		return "/var/run/tailscale/tailscaled.sock"
@@ -22,9 +22,9 @@
  	}
  	return "tailscaled.sock"
  }
---- a/src/github.com/tailscale/tailscale/paths/paths_unix.go
-+++ b/src/github.com/tailscale/tailscale/paths/paths_unix.go
-@@ -24,7 +24,7 @@ func init() {
+--- a/paths/paths_unix.go
++++ b/paths/paths_unix.go
+@@ -22,7 +22,7 @@ func init() {
  func statePath() string {
  	switch runtime.GOOS {
  	case "linux":
