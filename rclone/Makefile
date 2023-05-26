@@ -4,22 +4,19 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-# The newer version has different dependency tracking
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.61.1
+PKG_VERSION:=1.62.2
 PKG_RELEASE:=1
 
-PKG_GOGET:=github.com/rclone/rclone
-
-PKG_SOURCE_VERSION:=486e713337b3c57b871e5cf3fd880987fe2913c2
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=a6326fdeaed1c2b6baea255a52329a8fa1554b257fc35c04b4e3e2e87453af9a
+PKG_SOURCE_VERSION:=78d0f48b98a27031c3478f1730af9255bed339a6
+PKG_SOURCE_URL:=https://github.com/rclone/rclone
+PKG_MIRROR_HASH:=f0d707641a633504800e8249d073b6fc2055c2218197b23d481cfd77229ca3f7
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -61,14 +58,14 @@ endef
 Package/rclone_nohf/description=$(Package/rclone/description)
 
 GO_LDFLAGS += \
-        -X '$(PKG_GOGET)/fs.Version=$(PKG_VERSION)'
+        -X '$(XIMPORTPATH)/fs.Version=$(PKG_VERSION)'
 
 GO_TAGS:=-tags=noselfupdate
 GO_VARS += GO111MODULE=on
 
 define Package/rclone/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/var/cache/rclone
 endef
 
