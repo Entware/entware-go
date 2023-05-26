@@ -4,7 +4,6 @@
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
 #
-# The newer version has different dependency tracking
 
 include $(TOPDIR)/rules.mk
 
@@ -12,14 +11,12 @@ PKG_NAME:=nextdns
 PKG_VERSION:=1.39.4
 PKG_RELEASE:=1
 
-PKG_GOGET:=github.com/nextdns/nextdns
-
-PKG_SOURCE_VERSION:=632b26fe91421cc9274eab832f2110eb7e460bd2
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_SOURCE_VERSION:=632b26fe91421cc9274eab832f2110eb7e460bd2
+PKG_SOURCE_URL:=https://github.com/nextdns/nextdns
 PKG_MIRROR_HASH:=930e345aad70277b3aeddb791be88da9560d3700c157866a78cf0bc56fdc9fee
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -60,7 +57,7 @@ GO_VARS += GO111MODULE=on
 
 define Package/nextdns/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/nextdns $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/nextdns $(1)/opt/bin
 endef
 
 Package/nextdns_nohf/install=$(Package/nextdns/install)
