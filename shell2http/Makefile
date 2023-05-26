@@ -8,19 +8,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shell2http
-PKG_VERSION:=2023-02-11
+PKG_VERSION:=2023-03-11
 PKG_RELEASE:=1
 
-_PKG_VERSION:=1.15.0
-
-PKG_GOGET:=github.com/msoap/shell2http
-
-PKG_SOURCE_VERSION:=5cbbcf954d5dcd8c515b61dce77b2ff7d5e08ed6
+_PKG_VERSION:=1.16.0
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=0c16bf0a0ff7d092593577ba9940c743c6fee2153f3d93b12b0653e63b002b04
+PKG_SOURCE_VERSION:=28c2f05aec1db23b4525caf565aa5c410b1995e5
+PKG_SOURCE_URL:=https://github.com/msoap/shell2http
+PKG_MIRROR_HASH:=00125be213e8a0788174b0c8b837309325966f3cccf5b596b01f2b7454385af6
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -58,7 +56,7 @@ GO_VARS += GO111MODULE=on
 
 define Package/shell2http/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
 endef
 
 Package/shell2http_nohf/install=$(Package/shell2http/install)
