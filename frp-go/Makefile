@@ -11,14 +11,12 @@ PKG_NAME:=frp
 PKG_VERSION:=0.48.0
 PKG_RELEASE:=1
 
-PKG_GOGET:=github.com/fatedier/frp
-PKG_SOURCE_VERSION:=8fb99ef7a99c7a87065247d60be4a08218afa60b
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_SOURCE_VERSION:=8fb99ef7a99c7a87065247d60be4a08218afa60b
+PKG_SOURCE_URL:=https://github.com/fatedier/frp
 PKG_MIRROR_HASH:=3ecd25cf79d9e4f94bb0539ee2d271c125ac415e320d2bb1086c84ae4685e23b
 
-
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -56,9 +54,9 @@ GO_TARGET:=./cmd/frps ./cmd/frpc
 
 define Package/frp-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/* $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/* $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc
-	$(INSTALL_CONF) $(GO_SRC_DIR)/conf/* $(1)/opt/etc
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/conf/* $(1)/opt/etc
 endef
 
 Package/frp-go_nohf/install=$(Package/frp/install)
