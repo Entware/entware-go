@@ -1,5 +1,5 @@
---- a/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/hostscontainer_linux.go
-+++ b/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/hostscontainer_linux.go
+--- a/internal/aghnet/hostscontainer_linux.go
++++ b/internal/aghnet/hostscontainer_linux.go
 @@ -7,7 +7,7 @@ import (
  )
  

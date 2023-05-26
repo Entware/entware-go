@@ -1,5 +1,5 @@
---- a/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux.go
-+++ b/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux.go
+--- a/internal/aghnet/net_linux.go
++++ b/internal/aghnet/net_linux.go
 @@ -19,7 +19,7 @@ import (
  )
  
@@ -9,8 +9,8 @@
  
  func canBindPrivilegedPorts() (can bool, err error) {
  	res, err := unix.PrctlRetInt(
---- a/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux_test.go
-+++ b/src/github.com/AdguardTeam/AdGuardHome/internal/aghnet/net_linux_test.go
+--- a/internal/aghnet/net_linux_test.go
++++ b/internal/aghnet/net_linux_test.go
 @@ -15,7 +15,7 @@ func TestHasStaticIP(t *testing.T) {
  	const ifaceName = "wlan0"
  

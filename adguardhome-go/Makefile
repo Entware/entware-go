@@ -8,21 +8,21 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.26
+PKG_VERSION:=v0.107.29
 PKG_RELEASE:=1
-
-PKG_GOGET:=github.com/AdguardTeam/AdGuardHome
+SOURCE_DATE:=2023-04-18
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=a21558f418b4fa4135b1220759eff88c6077ae94
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
-PKG_MIRROR_HASH:=skip
+PKG_SOURCE_VERSION:=09718a21705f91588c3fa31172035cde016a3db7
+PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
+PKG_MIRROR_HASH:=3a4207ad10a147cc35a130aa5c432fcf765a57a2f27b552202d107dcfbed8eba
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
 
 PKG_BUILD_DEPENDS:=node-yarn/host
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -59,29 +59,24 @@ endef
 
 Package/adguardhome-go_nohf/conffiles=$(Package/adguardhome-go/conffiles)
 
-BUILDTIME:=$(shell date -u +%FT%TZ%z)
-
 GO_LDFLAGS += \
-	-X '$(PKG_GOGET)/internal/version.channel=release' \
-	-X '$(PKG_GOGET)/internal/version.version=$(PKG_VERSION)' \
-	-X '$(PKG_GOGET)/internal/version.buildtime=$(BUILDTIME)'
+	-X '$(XIMPORTPATH)/internal/version.channel=release' \
+	-X '$(XIMPORTPATH)/internal/version.version=$(PKG_VERSION)' \
+	-X '$(XIMPORTPATH)/internal/version.committime=$(SOURCE_DATE)'
 
 define Build/Web
-	( cd $(GO_SRC_DIR); make js-deps js-build; )
+	( cd $(PKG_BUILD_DIR); make js-deps js-build; )
 endef
 
 Hooks/Compile/Pre += Build/Web
 
 define Package/adguardhome-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/AdGuardHome $(1)/opt/bin
-
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/AdGuardHome $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
-	$(INSTALL_BIN) files/S99adguardhome $(1)/opt/etc/init.d
-
+	$(INSTALL_BIN) ./files/S99adguardhome $(1)/opt/etc/init.d
 	$(INSTALL_DIR) $(1)/opt/etc/AdGuardHome
-	$(INSTALL_CONF) files/adguardhome.conf $(1)/opt/etc/AdGuardHome
-
+	$(INSTALL_CONF) ./files/adguardhome.conf $(1)/opt/etc/AdGuardHome
 	touch $(1)/opt/etc/hosts
 endef
 
