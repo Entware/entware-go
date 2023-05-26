@@ -11,14 +11,12 @@ PKG_NAME:=dnscrypt-proxy2
 PKG_VERSION:=2.1.4
 PKG_RELEASE:=1
 
-PKG_GOGET:=github.com/DNSCrypt/dnscrypt-proxy
-
-PKG_SOURCE_VERSION:=9f3ef735f283a90d97b041a4d1d6bf8f866fe6ef
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_SOURCE_VERSION:=9f3ef735f283a90d97b041a4d1d6bf8f866fe6ef
+PKG_SOURCE_URL:=https://github.com/DNSCrypt/dnscrypt-proxy
 PKG_MIRROR_HASH:=c63b5718eac43533f896ebf7f5a0617ae5770821dd493269b28fffda9efd49c2
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -62,11 +60,11 @@ GO_TARGET:=./dnscrypt-proxy
 
 define Package/dnscrypt-proxy2/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/dnscrypt-proxy $(1)/opt/sbin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/dnscrypt-proxy $(1)/opt/sbin
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
-	$(INSTALL_BIN) files/S09dnscrypt-proxy2 $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S09dnscrypt-proxy2 $(1)/opt/etc/init.d
 	$(INSTALL_CONF) \
-		$(GO_SRC_DIR)/dnscrypt-proxy/example-dnscrypt-proxy.toml \
+		$(PKG_BUILD_DIR)/dnscrypt-proxy/example-dnscrypt-proxy.toml \
 			$(1)/opt/etc/dnscrypt-proxy.toml
 endef
 
