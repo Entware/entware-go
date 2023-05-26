@@ -11,14 +11,12 @@ PKG_NAME:=obfs4
 PKG_VERSION:=0.0.14
 PKG_RELEASE:=1
 
-PKG_GOGET:=gitlab.com/yawning/obfs4
-
-PKG_SOURCE_VERSION:=336a71d6e4cfd2d33e9c57797828007ad74975e9
-
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://$(PKG_GOGET)
+PKG_SOURCE_VERSION:=336a71d6e4cfd2d33e9c57797828007ad74975e9
+PKG_SOURCE_URL:=https://gitlab.com/yawning/obfs4
 PKG_MIRROR_HASH:=c3aa598023543ea18cde3fa0addf11a237b42cbb708645c6f282ec399cdf80ab
 
+include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -62,7 +60,7 @@ GO_TARGET:=./obfs4proxy
 
 define Package/obfs4/install
 	$(INSTALL_DIR) $(1)/opt/sbin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/obfs4proxy $(1)/opt/sbin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/obfs4proxy $(1)/opt/sbin
 endef
 
 Package/obfs4_nohf/install=$(Package/obfs4/install)
