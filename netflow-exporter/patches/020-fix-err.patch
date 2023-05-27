@@ -1,0 +1,110 @@
+--- a/main.go
++++ b/main.go
+@@ -79,7 +79,7 @@ func (c *netflowCollector) processReader
+ 		buf := make([]byte, 65535)
+ 		chars, srcAddress, err := udpSock.ReadFromUDP(buf)
+ 		if err != nil {
+-			log.Errorf("Error reading UDP packet from %s: %s", srcAddress, err)
++			log.Printf("Error reading UDP packet from %s: %s", srcAddress, err)
+ 			continue
+ 		}
+ 		timestampMs := int64(float64(time.Now().UnixNano()) / 1e6)
+@@ -125,17 +125,17 @@ func (c *netflowCollector) processReader
+ 			}
+ 
+ 		case *netflow9.Packet:
+-			//log.Infoln("NetFlow 9")
++			//log.Print("NetFlow 9")
+ 			for _, set := range p.DataFlowSets {
+ 				for _, record := range set.Records {
+ 					labels := prometheus.Labels{}
+ 					counts := make(map[string]float64)
+ 					for _, field := range record.Fields {
+ 						if len(*netflowExclude) > 0 && regexp.MustCompile(*netflowExclude).MatchString(field.Translated.Name) {
+-							//log.Infoln(field,"is not using label")
++							//log.Print(field,"is not using label")
+ 						} else if regexp.MustCompile(*netflowCollects).MatchString(field.Translated.Name) {
+ 							counts[field.Translated.Name] = float64(field.Translated.Value.(uint64))
+-							//log.Infoln(field,"is using metric")
++							//log.Print(field,"is using metric")
+ 						} else {
+ 							labels[field.Translated.Name] = fmt.Sprintf("%v", field.Translated.Value)
+ 						}
+@@ -146,14 +146,14 @@ func (c *netflowCollector) processReader
+ 						labels["TemplateID"] = fmt.Sprintf("%d",record.TemplateID)
+ 						labels["NetflowVersion"] = "9"
+ 
+-						//log.Infoln(labels["sourceIPv4Address"])
+-						//log.Infoln(labels["destinationIPv4Address"])
++						//log.Print(labels["sourceIPv4Address"])
++						//log.Print(labels["destinationIPv4Address"])
+ 						
+ 						// Add IP data
+ 						if labels["sourceIPv4Address"] != "" && labels["destinationIPv4Address"] != "" {
+ 							ip_data := ipdb.GetIpInfo(labels["sourceIPv4Address"], *lan_net, *lan_asn, *lan_asn_name,
+ 							*private_asn, *private_asn_name, *storage_file, *refresh_info )
+-							//log.Infoln(ip_data)
++							//log.Print(ip_data)
+ 							labels["sourceAS"] = fmt.Sprintf("%d",ip_data.Asn)
+ 							labels["sourceCountry"] = ip_data.Country
+ 							labels["sourceRegistry"] = ip_data.Registry
+@@ -162,7 +162,7 @@ func (c *netflowCollector) processReader
+ 							
+ 							ip_data = ipdb.GetIpInfo(labels["destinationIPv4Address"], *lan_net, *lan_asn, *lan_asn_name,
+                                                         *private_asn, *private_asn_name, *storage_file, *refresh_info )
+-                                                	//log.Infoln(ip_data)
++                                                	//log.Print(ip_data)
+ 							labels["destinationAS"] = fmt.Sprintf("%d",ip_data.Asn)
+ 							labels["destinationCountry"] = ip_data.Country
+                                                         labels["destinationRegistry"] = ip_data.Registry
+@@ -181,7 +181,7 @@ func (c *netflowCollector) processReader
+ 				}
+ 			}
+ 		default:
+-			log.Infoln("packet is not supported version")
++			log.Print("packet is not supported version")
+ 		}
+ 
+ 	}
+@@ -251,7 +251,7 @@ func (c *netflowCollector) Collect(ch ch
+ 				desc = fmt.Sprintf("netflow_%s_%s", sample.Labels["From"], key)
+ 			}
+             desc = strings.Replace(desc,".","",-1)
+-            log.Infoln(desc)
++            log.Print(desc)
+ 			ch <- MustNewTimeConstMetric(
+ 				prometheus.NewDesc(desc,
+ 					fmt.Sprintf("netflow metric %s", key),
+@@ -299,8 +299,8 @@ func main() {
+ 		os.Exit(0)
+ 	}
+ 
+-	log.Infoln("Starting netflow_exporter", version.Info())
+-	log.Infoln("Build context", version.BuildContext())
++	log.Print("Starting netflow_exporter", version.Info())
++	log.Print("Build context", version.BuildContext())
+ 
+ 	http.Handle(*metricsPath, promhttp.Handler())
+ 
+@@ -315,9 +315,9 @@ func main() {
+ 	if err != nil {
+ 		log.Fatalf("Error lisening to UDP address: %s", err)
+ 	}
+-	log.Infoln("include", *netflowCollects)
++	log.Print("include", *netflowCollects)
+ 	if len(*netflowExclude) > 0 {
+-		log.Infoln("exclude", *netflowExclude)
++		log.Print("exclude", *netflowExclude)
+ 	}
+ 	go c.processReader(udpSock)
+ 
+@@ -331,7 +331,7 @@ func main() {
+         </html>`))
+ 	})
+ 
+-	log.Infoln("Listening on", *listenAddress)
+-	log.Infoln("Listening UDP on", *netflowAddress)
++	log.Print("Listening on", *listenAddress)
++	log.Print("Listening UDP on", *netflowAddress)
+ 	log.Fatal(http.ListenAndServe(*listenAddress, nil))
+ }
