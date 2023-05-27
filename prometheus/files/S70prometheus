@@ -1,0 +1,17 @@
+#!/bin/sh
+
+FLAGS="\
+--config.file=/opt/etc/prometheus/prometheus.yml
+--storage.tsdb.path=/opt/var/lib/prometheus
+--web.console.libraries=/opt/etc/prometheus/console_libraries
+--web.console.templates=/opt/etc/prometheus/consoles
+"
+
+ENABLED=yes
+PROCS=prometheus
+ARGS="$FLAGS"
+PREARGS=""
+DESC=$PROCS
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
