@@ -1,0 +1,14 @@
+#!/bin/sh
+
+CONFIG=/opt/etc/grafana/grafana.ini
+HOMEPATH=/opt/share/grafana
+PIDFILE=/opt/var/run/grafana.pid
+
+ENABLED=yes
+PROCS=grafana
+ARGS="server -config=$CONFIG -homepath $HOMEPATH -pidfile $PIDFILE"
+PREARGS=""
+DESC="Grafana Server"
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
