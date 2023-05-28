@@ -1,0 +1,10 @@
+--- a/fs/localfs/local_fs_32bit.go
++++ b/fs/localfs/local_fs_32bit.go
+@@ -4,6 +4,6 @@
+ 
+ package localfs
+ 
+-func platformSpecificWidenDev(dev int32) uint64 {
++func platformSpecificWidenDev(dev uint32) uint64 {
+ 	return uint64(dev)
+ }
