@@ -54,6 +54,8 @@ GO_LDFLAGS += \
 
 GO_TARGET:=./cmd/headscale
 
+GO_TAGS:=-tags=ts2019
+
 define Package/headscale/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/headscale $(1)/opt/bin
