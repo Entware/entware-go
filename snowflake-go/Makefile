@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=snowflake
-PKG_VERSION:=2.5.1
+PKG_VERSION:=2.6.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=7b77001eaa90e09d41172a2b170dabd3f1922b4a
+PKG_SOURCE_VERSION:=2fa8fd9188078eaa169f1edd16815deae4004c6c
 PKG_SOURCE_URL:=https://git.torproject.org/pluggable-transports/snowflake
-PKG_MIRROR_HASH:=7f36f48ab07ac9a3944202613b024072f3ad0ad55b495fde611ee30223410fdf
+PKG_MIRROR_HASH:=a982f792c0184158e1842d8d191a7786f46030725bf3da1410c0d70b274cbd62
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
