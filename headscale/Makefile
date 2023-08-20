@@ -27,7 +27,7 @@ define Package/headscale/Default
 	TITLE:=An open source, self-hosted implementation of the Tailscale control server
 	URL:=https://github.com/juanfont/headscale
 	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+ca-bundle
+	DEPENDS:=+ca-bundle @!(mips||mipsel)
 endef
 
 define Package/headscale
@@ -49,12 +49,10 @@ endef
 
 Package/headscale_nohf/description=$(Package/headscale/description)
 
-
 GO_LDFLAGS += \
-	-X 'github.com/juanfont/headscale/cmd/headscale/cli.Version=$(PKG_VERSION)'
+	-X '$(XIMPORTPATH)/cmd/headscale/cli.Version=$(PKG_VERSION)'
 
-
-GO_TARGET:=./cmd/headscale/headscale.go
+GO_TARGET:=./cmd/headscale
 
 define Package/headscale/install
 	$(INSTALL_DIR) $(1)/opt/bin
