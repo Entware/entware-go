@@ -70,7 +70,7 @@ GO_TARGET:=./cmd/promlens
 define Build/CompilePre
 	( cd $(PKG_BUILD_DIR)/app; \
 		CI=false PUBLIC_URL=. npm install; \
-		CI=false PUBLIC_URL=. npm run build; \
+		CI=false NODE_OPTIONS=--openssl-legacy-provider PUBLIC_URL=. npm run build; \
 	)
 	( cd $(PKG_BUILD_DIR); $(SHELL) scripts/compress_assets.sh; )
 endef
