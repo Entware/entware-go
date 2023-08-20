@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nebula
-PKG_VERSION:=1.7.1
+PKG_VERSION:=1.7.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=165b671e70aabfd6f06d90f14e8ca4a3476e8ad6
+PKG_SOURCE_VERSION:=57eb80e9fbb09ac16f22b38b258a18005b7a6cb1
 PKG_SOURCE_URL:=https://github.com/slackhq/nebula
-PKG_MIRROR_HASH:=d6cf7cc6ad75cd773546ebdcd7916b0232ea35bbe91f7a35315f2526f2b664cd
+PKG_MIRROR_HASH:=a17ce3aa67451de831f3abc19e98f5e4cb8048d6dae0098d5a3e697e548395fe
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
