@@ -1,13 +1,13 @@
 --- a/logpolicy/logpolicy.go
 +++ b/logpolicy/logpolicy.go
-@@ -389,7 +389,7 @@ func tryFixLogStateLocation(dir, cmdname
+@@ -391,7 +391,7 @@ func tryFixLogStateLocation(dir, cmdname
  	existsInCache := false
  	cacheDir := os.Getenv("CACHE_DIRECTORY")
  	if cacheDir != "" {
 -		existsInCache, err = checkExists("/var/cache/tailscale")
 +		existsInCache, err = checkExists("/opt/var/cache/tailscale")
  		if err != nil {
- 			log.Printf("checking for configs in %s: %v", cacheDir, err)
+ 			logf("checking for configs in %s: %v", cacheDir, err)
  		}
 --- a/paths/paths.go
 +++ b/paths/paths.go
