@@ -8,13 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
-PKG_VERSION:=2.1.4
+PKG_VERSION:=2.1.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=9f3ef735f283a90d97b041a4d1d6bf8f866fe6ef
+PKG_SOURCE_VERSION:=1b65fe62b01965bfee3f7ed8ba852c15de1255eb
 PKG_SOURCE_URL:=https://github.com/DNSCrypt/dnscrypt-proxy
-PKG_MIRROR_HASH:=c63b5718eac43533f896ebf7f5a0617ae5770821dd493269b28fffda9efd49c2
+PKG_MIRROR_HASH:=4d98962da492ea9caedb8950c7799d9cc9f781ed382ef9c45218884be31ab937
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
