@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=grafana
-PKG_VERSION:=9.5.2
+PKG_VERSION:=10.0.3
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-05-03
+SOURCE_DATE:=2023-07-26
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=cfcea7591663053d58f0783e84a356eb258444cb
+PKG_SOURCE_VERSION:=eb8dd7263774270427606573496c748c8c1fec2d
 PKG_SOURCE_URL:=https://github.com/grafana/grafana
-PKG_MIRROR_HASH:=04c958b50896f4ae2494a7086aa8b4d47d0da5b50f68c121671b47ce998a332f
+PKG_MIRROR_HASH:=25407f5ceb6fbeb2ab6ba5eb12aa90b6970a6836547265451c3c68c56402e693
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE LICENSING.md
@@ -80,7 +80,7 @@ define Build/Deps
 		$(GO_BIN) generate ./pkg/plugins/plugindef; \
 		$(GO_BIN) generate ./kinds/gen.go; \
 		$(GO_BIN) generate ./public/app/plugins/gen.go; \
-		$(GO_BIN) generate ./pkg/kindsys/report.go; \
+		$(GO_BIN) generate ./pkg/kindsysreport/codegen/report.go; \
 	)
 	# generate go files
 	( cd $(PKG_BUILD_DIR); \
