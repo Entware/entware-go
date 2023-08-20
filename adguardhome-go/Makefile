@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.29
+PKG_VERSION:=v0.107.36
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-04-18
+SOURCE_DATE:=2023-08-02
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=09718a21705f91588c3fa31172035cde016a3db7
+PKG_SOURCE_VERSION:=3be767697074c3734add7e27758dd81bda7df303
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=3a4207ad10a147cc35a130aa5c432fcf765a57a2f27b552202d107dcfbed8eba
+PKG_MIRROR_HASH:=2d4ad1cce7bc24ca903734944b0031e5dd01730f6862e54c16c7bfab0bf462ed
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
@@ -65,7 +65,7 @@ GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/internal/version.committime=$(SOURCE_DATE)'
 
 define Build/Web
-	( cd $(PKG_BUILD_DIR); make js-deps js-build; )
+	( cd $(PKG_BUILD_DIR); NODE_OPTIONS=--openssl-legacy-provider make js-deps js-build; )
 endef
 
 Hooks/Compile/Pre += Build/Web
