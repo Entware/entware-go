@@ -1,0 +1,181 @@
+--- a/cmd/headscale/cli/dump_config.go
++++ b/cmd/headscale/cli/dump_config.go
+@@ -13,13 +13,13 @@ func init() {
+ 
+ var dumpConfigCmd = &cobra.Command{
+ 	Use:    "dumpConfig",
+-	Short:  "dump current config to /etc/headscale/config.dump.yaml, integration test only",
++	Short:  "dump current config to /opt/etc/headscale/config.dump.yaml, integration test only",
+ 	Hidden: true,
+ 	Args: func(cmd *cobra.Command, args []string) error {
+ 		return nil
+ 	},
+ 	Run: func(cmd *cobra.Command, args []string) {
+-		err := viper.WriteConfigAs("/etc/headscale/config.dump.yaml")
++		err := viper.WriteConfigAs("/opt/etc/headscale/config.dump.yaml")
+ 		if err != nil {
+ 			//nolint
+ 			fmt.Println("Failed to dump config")
+--- a/cmd/headscale/cli/root.go
++++ b/cmd/headscale/cli/root.go
+@@ -26,7 +26,7 @@ func init() {
+ 
+ 	cobra.OnInitialize(initConfig)
+ 	rootCmd.PersistentFlags().
+-		StringVarP(&cfgFile, "config", "c", "", "config file (default is /etc/headscale/config.yaml)")
++		StringVarP(&cfgFile, "config", "c", "", "config file (default is /opt/etc/headscale/config.yaml)")
+ 	rootCmd.PersistentFlags().
+ 		StringP("output", "o", "", "Output format. Empty for human-readable, 'json', 'json-line' or 'yaml'")
+ 	rootCmd.PersistentFlags().
+--- a/hscontrol/config.go
++++ b/hscontrol/config.go
+@@ -150,9 +150,9 @@ func LoadConfig(path string, isFile bool
+ 	} else {
+ 		viper.SetConfigName("config")
+ 		if path == "" {
+-			viper.AddConfigPath("/etc/headscale/")
++			viper.AddConfigPath("/opt/etc/headscale/")
+ 			viper.AddConfigPath("$HOME/.headscale")
+-			viper.AddConfigPath(".")
++			// viper.AddConfigPath(".")
+ 		} else {
+ 			// For testing
+ 			viper.AddConfigPath(path)
+@@ -163,7 +163,7 @@ func LoadConfig(path string, isFile bool
+ 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+ 	viper.AutomaticEnv()
+ 
+-	viper.SetDefault("tls_letsencrypt_cache_dir", "/var/www/.cache")
++	viper.SetDefault("tls_letsencrypt_cache_dir", "/opt/var/cache")
+ 	viper.SetDefault("tls_letsencrypt_challenge_type", http01ChallengeType)
+ 
+ 	viper.SetDefault("log.level", "info")
+@@ -175,7 +175,7 @@ func LoadConfig(path string, isFile bool
+ 	viper.SetDefault("derp.server.enabled", false)
+ 	viper.SetDefault("derp.server.stun.enabled", true)
+ 
+-	viper.SetDefault("unix_socket", "/var/run/headscale/headscale.sock")
++	viper.SetDefault("unix_socket", "/opt/var/run/headscale/headscale.sock")
+ 	viper.SetDefault("unix_socket_permission", "0o770")
+ 
+ 	viper.SetDefault("grpc_listen_addr", ":50443")
+--- a/integration/hsic/config.go
++++ b/integration/hsic/config.go
+@@ -68,7 +68,7 @@ log:
+   level: trace
+ acl_policy_path: ""
+ db_type: sqlite3
+-db_path: /tmp/integration_test_db.sqlite3
++db_path: /opt/tmp/integration_test_db.sqlite3
+ ephemeral_node_inactivity_timeout: 30m
+ node_update_check_interval: 10s
+ ip_prefixes:
+@@ -81,9 +81,9 @@ dns_config:
+   nameservers:
+     - 127.0.0.11
+     - 1.1.1.1
+-private_key_path: /tmp/private.key
++private_key_path: /opt/tmp/private.key
+ noise:
+-  private_key_path: /tmp/noise_private.key
++  private_key_path: /opt/tmp/noise_private.key
+ listen_addr: 0.0.0.0:8080
+ metrics_listen_addr: 127.0.0.1:9090
+ server_url: http://headscale:8080
+@@ -100,9 +100,9 @@ derp:
+ 
+ func MinimumConfigYAML() string {
+ 	return `
+-private_key_path: /tmp/private.key
++private_key_path: /opt/tmp/private.key
+ noise:
+-  private_key_path: /tmp/noise_private.key
++  private_key_path: /opt/tmp/noise_private.key
+ `
+ }
+ 
+@@ -111,7 +111,7 @@ func DefaultConfigEnv() map[string]strin
+ 		"HEADSCALE_LOG_LEVEL":                         "trace",
+ 		"HEADSCALE_ACL_POLICY_PATH":                   "",
+ 		"HEADSCALE_DB_TYPE":                           "sqlite3",
+-		"HEADSCALE_DB_PATH":                           "/tmp/integration_test_db.sqlite3",
++		"HEADSCALE_DB_PATH":                           "/opt/tmp/integration_test_db.sqlite3",
+ 		"HEADSCALE_EPHEMERAL_NODE_INACTIVITY_TIMEOUT": "30m",
+ 		"HEADSCALE_NODE_UPDATE_CHECK_INTERVAL":        "10s",
+ 		"HEADSCALE_IP_PREFIXES":                       "fd7a:115c:a1e0::/48 100.64.0.0/10",
+@@ -119,8 +119,8 @@ func DefaultConfigEnv() map[string]strin
+ 		"HEADSCALE_DNS_CONFIG_MAGIC_DNS":              "true",
+ 		"HEADSCALE_DNS_CONFIG_DOMAINS":                "",
+ 		"HEADSCALE_DNS_CONFIG_NAMESERVERS":            "127.0.0.11 1.1.1.1",
+-		"HEADSCALE_PRIVATE_KEY_PATH":                  "/tmp/private.key",
+-		"HEADSCALE_NOISE_PRIVATE_KEY_PATH":            "/tmp/noise_private.key",
++		"HEADSCALE_PRIVATE_KEY_PATH":                  "/opt/tmp/private.key",
++		"HEADSCALE_NOISE_PRIVATE_KEY_PATH":            "/opt/tmp/noise_private.key",
+ 		"HEADSCALE_LISTEN_ADDR":                       "0.0.0.0:8080",
+ 		"HEADSCALE_METRICS_LISTEN_ADDR":               "127.0.0.1:9090",
+ 		"HEADSCALE_SERVER_URL":                        "http://headscale:8080",
+--- a/integration/hsic/hsic.go
++++ b/integration/hsic/hsic.go
+@@ -33,9 +33,9 @@ import (
+ const (
+ 	hsicHashLength       = 6
+ 	dockerContextPath    = "../."
+-	aclPolicyPath        = "/etc/headscale/acl.hujson"
+-	tlsCertPath          = "/etc/headscale/tls.cert"
+-	tlsKeyPath           = "/etc/headscale/tls.key"
++	aclPolicyPath        = "/opt/etc/headscale/acl.hujson"
++	tlsCertPath          = "/opt/etc/headscale/tls.cert"
++	tlsKeyPath           = "/opt/etc/headscale/tls.key"
+ 	headscaleDefaultPort = 8080
+ )
+ 
+@@ -210,7 +210,7 @@ func New(
+ 
+ 	env := []string{
+ 		"HEADSCALE_PROFILING_ENABLED=1",
+-		"HEADSCALE_PROFILING_PATH=/tmp/profile",
++		"HEADSCALE_PROFILING_PATH=/opt/tmp/profile",
+ 	}
+ 	for key, value := range hsic.env {
+ 		env = append(env, fmt.Sprintf("%s=%s", key, value))
+@@ -225,7 +225,7 @@ func New(
+ 		// Cmd:          []string{"headscale", "serve"},
+ 		// TODO(kradalby): Get rid of this hack, we currently need to give us some
+ 		// to inject the headscale configuration further down.
+-		Entrypoint: []string{"/bin/bash", "-c", "/bin/sleep 3 ; headscale serve ; /bin/sleep 30"},
++		Entrypoint: []string{"/opt/bin/sh", "-c", "sleep 3 ; headscale serve ; sleep 30"},
+ 		Env:        env,
+ 	}
+ 
+@@ -263,7 +263,7 @@ func New(
+ 
+ 	hsic.container = container
+ 
+-	err = hsic.WriteFile("/etc/headscale/config.yaml", []byte(MinimumConfigYAML()))
++	err = hsic.WriteFile("/opt/etc/headscale/config.yaml", []byte(MinimumConfigYAML()))
+ 	if err != nil {
+ 		return nil, fmt.Errorf("failed to write headscale config to container: %w", err)
+ 	}
+--- a/integration/tsic/tsic.go
++++ b/integration/tsic/tsic.go
+@@ -24,7 +24,7 @@ const (
+ 	tsicHashLength    = 6
+ 	defaultPingCount  = 10
+ 	dockerContextPath = "../."
+-	headscaleCertPath = "/usr/local/share/ca-certificates/headscale.crt"
++	headscaleCertPath = "/opt/share/ca-certificates/headscale.crt"
+ )
+ 
+ var (
+@@ -165,9 +165,9 @@ func New(
+ 		network: network,
+ 
+ 		withEntrypoint: []string{
+-			"/bin/bash",
++			"/opt/bin/sh",
+ 			"-c",
+-			"/bin/sleep 3 ; update-ca-certificates ; tailscaled --tun=tsdev",
++			"sleep 3 ; update-ca-certificates ; tailscaled --tun=tsdev",
+ 		},
+ 	}
+ 

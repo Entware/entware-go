@@ -49,8 +49,16 @@ endef
 
 Package/headscale_nohf/description=$(Package/headscale/description)
 
+define Package/headscale/conffiles
+/opt/etc/headscale/config.yaml
+endef
+
+Package/headscale_nohf/conffiles=$(Package/headscale/conffiles)
+
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/cmd/headscale/cli.Version=$(PKG_VERSION)'
+
+GO_BUILD_ARGS += -a
 
 GO_TARGET:=./cmd/headscale
 
@@ -59,6 +67,11 @@ GO_TAGS:=-tags=ts2019
 define Package/headscale/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/headscale $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/etc/headscale
+	$(CP) $(PKG_BUILD_DIR)/config-example.yaml $(1)/opt/etc/headscale/config.yaml
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S07headscale $(1)/opt/etc/init.d
+	$(INSTALL_DIR) $(1)/opt/var/{lib,run}/headscale
 endef
 
 Package/headscale_nohf/install=$(Package/headscale/install)
