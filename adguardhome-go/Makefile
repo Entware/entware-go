@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2019-2022 Entware
+# Copyright (C) 2019-2023 Entware
 #
 # This is free software, licensed under the GNU General Public License v2.
 # See /LICENSE for more information.
@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.36
+PKG_VERSION:=v0.107.37
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-08-02
+SOURCE_DATE:=2023-09-07
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=3be767697074c3734add7e27758dd81bda7df303
+PKG_SOURCE_VERSION:=7b93f5d7cfe6c1932aa3ba35e2adee8698db09e2
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=2d4ad1cce7bc24ca903734944b0031e5dd01730f6862e54c16c7bfab0bf462ed
+PKG_MIRROR_HASH:=ac87cd85e8b1965eb96a61b4c8c73dfe3c3233c7a12aeb73182ed98b36cd5fdf
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
