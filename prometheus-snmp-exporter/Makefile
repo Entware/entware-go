@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-snmp-exporter
-PKG_VERSION:=0.23.0
+PKG_VERSION:=0.25.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-07-20
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=20657d2f486a1ac237238827beed97fa67eb8611
+PKG_SOURCE_DATE:=2023-12-10
+PKG_SOURCE_VERSION:=9c42d6c874d479314e612bca69558c81f8e26287
 PKG_SOURCE_URL:=https://github.com/prometheus/snmp_exporter
-PKG_MIRROR_HASH:=cdb9b7655689e982aeee33fb16aeb25fe9330eb8132f0e7ae285c78e9e537e64
+PKG_MIRROR_HASH:=980714c4a1988a574bb7019585abd462c64625ce5ad5a58a45f9ce6f3471728a
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -58,7 +55,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="release"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 GO_TAGS:=-tags=netgo
 
