@@ -1,0 +1,22 @@
+--- a/templates/global_settings.html
++++ b/templates/global_settings.html
+@@ -70,7 +70,7 @@ Global Settings
+                             <div class="form-group">
+                                 <label for="config_file_path">Wireguard Config File Path</label>
+                                 <input type="text" class="form-control" id="config_file_path"
+-                                    name="config_file_path" placeholder="E.g. /etc/wireguard/wg0.conf"
++                                    name="config_file_path" placeholder="E.g. /opt/etc/wireguard/wg0.conf"
+                                     value="{{ .globalSettings.ConfigFilePath }}">
+                             </div>
+                         </div>
+--- a/util/config.go
++++ b/util/config.go
+@@ -41,7 +41,7 @@ const (
+ 	DefaultPersistentKeepalive             = 15
+ 	DefaultFirewallMark                    = "0xca6c" // i.e. 51820
+ 	DefaultTable                           = "auto"
+-	DefaultConfigFilePath                  = "/etc/wireguard/wg0.conf"
++	DefaultConfigFilePath                  = "/opt/etc/wireguard/wg0.conf"
+ 	UsernameEnvVar                         = "WGUI_USERNAME"
+ 	PasswordEnvVar                         = "WGUI_PASSWORD"
+ 	PasswordFileEnvVar                     = "WGUI_PASSWORD_FILE"

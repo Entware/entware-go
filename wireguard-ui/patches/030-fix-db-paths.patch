@@ -1,0 +1,22 @@
+--- a/main.go
++++ b/main.go
+@@ -173,7 +173,7 @@ func init() {
+ }
+ 
+ func main() {
+-	db, err := jsondb.New("./db")
++	db, err := jsondb.New("/opt/var/lib/wireguard-ui/db")
+ 	if err != nil {
+ 		panic(err)
+ 	}
+--- a/util/util.go
++++ b/util/util.go
+@@ -264,7 +264,7 @@ func GetAllocatedIPs(ignoreClientID stri
+ 	allocatedIPs := make([]string, 0)
+ 
+ 	// initialize database directory
+-	dir := "./db"
++	dir := "/opt/var/lib/wireguard-ui/db"
+ 	db, err := scribble.New(dir, nil)
+ 	if err != nil {
+ 		return nil, err
