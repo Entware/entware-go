@@ -1,11 +1,11 @@
 --- a/lib/locations/locations.go
 +++ b/lib/locations/locations.go
-@@ -189,7 +189,7 @@ func defaultConfigDir(userHome string) s
- 		if xdgCfg := os.Getenv("XDG_CONFIG_HOME"); xdgCfg != "" {
- 			return filepath.Join(xdgCfg, "syncthing")
- 		}
--		return filepath.Join(userHome, ".config/syncthing")
-+		return filepath.Join("/opt/etc", "syncthing")
+@@ -233,7 +233,7 @@ func unixConfigDir(userHome, xdgConfigHo
  	}
+ 
+ 	// Use our default
+-	return filepath.Join(userHome, defaultStateDir)
++	return filepath.Join("/opt/etc", "syncthing")
  }
  
+ // unixDataDir returns the default data directory, where we store the
