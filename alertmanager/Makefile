@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=alertmanager
-PKG_VERSION:=0.25.0
+PKG_VERSION:=0.26.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2022-12-22
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=258fab7cdd551f2cf251ed0348f0ad7289aee789
+PKG_SOURCE_DATE:=2023-08-23
+PKG_SOURCE_VERSION:=d7b4f0c7322e7151d6e3b1e31cbc15361e295d8d
 PKG_SOURCE_URL:=https://github.com/prometheus/alertmanager
-PKG_MIRROR_HASH:=d9ac0fecc65c23ed3334fda1118e239978e0f80ebb8b43f92191608bb2198d22
+PKG_MIRROR_HASH:=853c87a0f44e1fec9e7f79de6bc61728112621937898aaba04bf8af768275428
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -69,7 +66,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="release"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 GO_TAGS:=-tags=netgo
 GO_TARGET:=./cmd/alertmanager ./cmd/amtool
