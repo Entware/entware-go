@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.51.3
+PKG_VERSION:=0.54.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=466d69eae08e44f118302cf433d3f4d6e8d04893
+PKG_SOURCE_VERSION:=d689f0fc531604b78b510c2f5f182831a2b5bee5
 PKG_SOURCE_URL:=https://github.com/fatedier/frp
-PKG_MIRROR_HASH:=bb76563cf6a442824ec432f07523a2a19afaf781fb9175fb45ac37af7ed89f02
+PKG_MIRROR_HASH:=6cc3f21b9cf469249f6a85b8de355066ec7da27848b809940701292c9d8c1e3d
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
@@ -41,12 +38,20 @@ define Package/frp-go_nohf
 endef
 
 define Package/frp-go/description
- frp is a fast reverse proxy that allows you to expose a local server located behind a NAT or firewall to the Internet.
- It currently supports TCP and UDP, as well as HTTP and HTTPS protocols, enabling requests to be forwarded to internal services via domain name.
- frp also offers a P2P connect mode
+ frp is a fast reverse proxy that allows you to expose
+ a local server located behind a NAT or firewall to the Internet.
+ It currently supports TCP and UDP, as well as HTTP and HTTPS protocols,
+ enabling requests to be forwarded to internal services via domain name.
+ frp also offers a P2P connect mode.
 endef
 
 Package/frp-go_nohf/description=$(Package/frp/description)
+
+define Package/frp-go/conffiles
+/opt/etc/frp/
+endef
+
+Package/frp-go_nohf/conffiles=$(Package/frp-go/conffiles)
 
 GO_VARS += GO111MODULE=on
 
@@ -55,8 +60,8 @@ GO_TARGET:=./cmd/frps ./cmd/frpc
 define Package/frp-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/* $(1)/opt/bin
-	$(INSTALL_DIR) $(1)/opt/etc
-	$(INSTALL_CONF) $(PKG_BUILD_DIR)/conf/* $(1)/opt/etc
+	$(INSTALL_DIR) $(1)/opt/etc/frp
+	$(INSTALL_CONF) $(PKG_BUILD_DIR)/conf/*.toml $(1)/opt/etc/frp
 endef
 
 Package/frp-go_nohf/install=$(Package/frp/install)
