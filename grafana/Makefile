@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=grafana
-PKG_VERSION:=10.0.3
+PKG_VERSION:=10.3.1
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-07-26
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=eb8dd7263774270427606573496c748c8c1fec2d
+PKG_SOURCE_DATE:=2024-01-23
+PKG_SOURCE_VERSION:=00a22ff8b28550d593ec369ba3da1b25780f0a4a
 PKG_SOURCE_URL:=https://github.com/grafana/grafana
-PKG_MIRROR_HASH:=25407f5ceb6fbeb2ab6ba5eb12aa90b6970a6836547265451c3c68c56402e693
+PKG_MIRROR_HASH:=c2ec8d5ca1b2141602f903712dd9aac27669b5e985d1eb500fec5c65b77705ac
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE LICENSING.md
@@ -59,7 +56,7 @@ Package/grafana_nohf/description=$(Package/grafana/description)
 GO_LDFLAGS += \
 	-X 'main.version=$(PKG_VERSION)' \
 	-X 'main.commit=$(COMMIT_SHORT)' \
-	-X 'main.buildstamp=$(SOURCE_DATE)' \
+	-X 'main.buildstamp=$(PKG_SOURCE_DATE)' \
 	-X 'main.buildBranch=main'
 
 GO_TARGET:=./pkg/cmd/grafana ./pkg/cmd/grafana-cli ./pkg/cmd/grafana-server
@@ -68,7 +65,7 @@ define Build/Deps
 	# install frontend dependencies
 	( cd $(PKG_BUILD_DIR); \
 		YARN_ENABLE_PROGRESS_BARS=false YARN_CHECKSUM_BEHAVIOR=update \
-		yarn install --immutable; \
+		HTTP_PROXY=localhost yarn install --immutable; \
 	)
 	# wire-host
 	( cd $(PKG_BUILD_DIR)/.bingo; \
