@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2021-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tailscale
-PKG_VERSION:=1.46.1
+PKG_VERSION:=1.58.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=2d3223f557924d408b5d67b80440d6fba264a0fd
+PKG_SOURCE_VERSION:=b0e1bbb62ef3834e99f5212b44043cec1866b07e
 PKG_SOURCE_URL:=https://github.com/tailscale/tailscale
-PKG_MIRROR_HASH:=78e51408d3308b3afc909c1bc7a38d5b15aa2d93ac22e1c61a97bb80ddf74c52
+PKG_MIRROR_HASH:=b9a5c450859472cb7a33954b3fdb43ca67f811415e31dcb3ca33dea17d2598e8
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
