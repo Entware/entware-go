@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2021-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=telegraf
-PKG_VERSION:=1.27.3
+PKG_VERSION:=1.29.4
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=afcf01332f975fe9a0e4473151756ec880012e77
+PKG_SOURCE_VERSION:=4441c4ed5ba88104957ce27249aaadb175f698fb
 PKG_SOURCE_URL:=https://github.com/influxdata/telegraf
-PKG_MIRROR_HASH:=11dfdc68fa4eb2886cf8be9d43c13816c48fd9c46022d9035f59089c1802e657
+PKG_MIRROR_HASH:=5b2c84418d02f1c2040ae537e3fec552fef58c4289d4983ca7434066ec1ea2c5
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
