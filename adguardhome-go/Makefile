@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2019-2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2019-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.37
+PKG_VERSION:=v0.107.44
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-09-07
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=7b93f5d7cfe6c1932aa3ba35e2adee8698db09e2
+PKG_SOURCE_DATE:=2024-02-06
+PKG_SOURCE_VERSION:=48d1c673a97d230ea79ec5531e1639f928b7d6f7
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=ac87cd85e8b1965eb96a61b4c8c73dfe3c3233c7a12aeb73182ed98b36cd5fdf
+PKG_MIRROR_HASH:=78e2768276d34c68e80b60588fc8edaff03fee6e1f359ba9940fb0ef4bf4598a
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
@@ -62,10 +59,11 @@ Package/adguardhome-go_nohf/conffiles=$(Package/adguardhome-go/conffiles)
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/internal/version.channel=release' \
 	-X '$(XIMPORTPATH)/internal/version.version=$(PKG_VERSION)' \
-	-X '$(XIMPORTPATH)/internal/version.committime=$(SOURCE_DATE)'
+	-X '$(XIMPORTPATH)/internal/version.committime=$(PKG_SOURCE_DATE)'
 
 define Build/Web
 	( cd $(PKG_BUILD_DIR); NODE_OPTIONS=--openssl-legacy-provider make js-deps js-build; )
+	( cd $(PKG_BUILD_DIR); $(GO_BIN) mod tidy; )
 endef
 
 Hooks/Compile/Pre += Build/Web
