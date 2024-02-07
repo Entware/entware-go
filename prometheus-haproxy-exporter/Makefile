@@ -1,19 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
+# Copyright (C) 2023-2024 Entware
 #
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-# This repository has been archived by the owner on Mar 8, 2023.
+# # Project archived by the owner on Mar 8, 2023.
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-haproxy-exporter
 PKG_VERSION:=0.15.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-02-15
 
 PKG_SOURCE_PROTO:=git
+PKG_SOURCE_DATE:=2023-02-15
 PKG_SOURCE_VERSION:=d4aba878f043fd3ad0bcacd0149e7d75e67c0faa
 PKG_SOURCE_URL:=https://github.com/prometheus/haproxy_exporter
 PKG_MIRROR_HASH:=79465cffcab87aa80f3a981078a76a8c560ebe99c83852b30d4097a38bb2edd3
@@ -60,7 +58,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="release"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 GO_TAGS:=-tags=netgo
 
