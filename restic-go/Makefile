@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=restic
-PKG_VERSION:=0.16.0
+PKG_VERSION:=0.16.4
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=eb33e564c9e707529fe3e62fe7bf5f6be133e145
+PKG_SOURCE_VERSION:=3786536dc18ef27aedcfa8e4c6953b48353eee79
 PKG_SOURCE_URL:=https://github.com/restic/restic
-PKG_MIRROR_HASH:=54e2e5046bc2c06a913be07fd6762e7ec836376aa8cdb4c44104d77523c726b5
+PKG_MIRROR_HASH:=98ca6adc45c857e93571b027036fb8b3faead569bfead2c57a2388c6eac328bd
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
@@ -24,8 +21,8 @@ define Package/restic-go/Default
 	SECTION:=utils
 	CATEGORY:=Utilities
 	SUBMENU:=Backup
-	TITLE:=restic is a backup program
-	URL:=https://github.com/restic/restic
+	TITLE:=Fast, secure, efficient backup program
+	URL:=https://restic.net
 	MAINTAINER:=Entware team, https://entware.net
 endef
 
@@ -41,11 +38,12 @@ define Package/restic-go_nohf
 endef
 
 define Package/restic-go/description
-  restic is a backup program that is fast, efficient and secure. It supports the three major operating systems (Linux, macOS, Windows) and a few smaller ones (FreeBSD, OpenBSD)
+ restic is a backup program that is fast, efficient and secure.
+ It supports the three major operating systems (Linux, macOS, Windows) and a
+ few smaller ones (FreeBSD, OpenBSD).
 endef
 
 Package/restic-go_nohf/description=$(Package/restic-go/description)
-
 
 GO_TARGET:=./cmd/restic
 
