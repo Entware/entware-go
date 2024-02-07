@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2020-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=1.39.4
+PKG_VERSION:=1.42.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=632b26fe91421cc9274eab832f2110eb7e460bd2
+PKG_SOURCE_VERSION:=f21facfe50abb659732014d3b95e9f91b8494e2f
 PKG_SOURCE_URL:=https://github.com/nextdns/nextdns
-PKG_MIRROR_HASH:=930e345aad70277b3aeddb791be88da9560d3700c157866a78cf0bc56fdc9fee
+PKG_MIRROR_HASH:=860379468080f421bd8abbf0da8cf55d905bf2de0a083fc9059dcf684351d269
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
