@@ -1,0 +1,35 @@
+--- a/service/common/tools.go
++++ b/service/common/tools.go
+@@ -177,7 +177,7 @@ func FillEmpty(toFill interface{}, defau
+ // IsOpenWrt return true only if the operating system SHOULD be openwrt
+ func IsOpenWrt() bool {
+ 	if runtime.GOOS == "linux" {
+-		if _, err := os.Stat("/etc/openwrt_release"); err == nil {
++		if _, err := os.Stat("/opt/etc/entware_release"); err == nil {
+ 			return true
+ 		}
+ 	}
+--- a/service/conf/environmentConfig.go
++++ b/service/conf/environmentConfig.go
+@@ -65,7 +65,7 @@ func initFunc() {
+ 				params.Config = "$HOME/.config/v2raya"
+ 			}
+ 		} else {
+-			params.Config = "/etc/v2raya"
++			params.Config = "/opt/etc/v2raya"
+ 		}
+ 	}
+ 	// replace all dots of the filename with underlines
+--- a/service/core/v2ray/asset/asset.go
++++ b/service/core/v2ray/asset/asset.go
+@@ -64,8 +64,8 @@ func GetV2rayLocationAsset(filename stri
+ 		if runtime.GOOS != "windows" {
+ 			searchPaths = append(
+ 				searchPaths,
+-				filepath.Join("/usr/local/share", folder, filename),
+-				filepath.Join("/usr/share", folder, filename),
++				filepath.Join("/opt/share", folder, filename),
++				filepath.Join("/opt/usr/share", folder, filename),
+ 			)
+ 		}
+ 		for _, searchPath := range searchPaths {

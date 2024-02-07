@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# V2Ray binary is xray by default (if xray installed)
+if [ -x "/opt/sbin/xray" ]; then
+  V2RAY_BIN="-b /opt/sbin/xray"
+elif [ -x "/opt/sbin/v2ray" ]; then
+  V2RAY_BIN="-b /opt/sbin/v2ray"
+else
+  echo "v2ray or xray not installed" && exit
+fi
+
+ENABLED=yes
+PROCS=v2raya
+ARGS="$V2RAY_BIN -c /opt/etc/v2raya --v2ray-assetsdir /opt/share/v2ray
+--nftables-support off --log-file /opt/var/log/v2raya.log"
+PREARGS=""
+DESC=$PROCS
+PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
