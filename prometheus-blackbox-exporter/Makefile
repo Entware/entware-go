@@ -1,18 +1,15 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-blackbox-exporter
 PKG_VERSION:=0.24.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-05-16
 
 PKG_SOURCE_PROTO:=git
+PKG_SOURCE_DATE:=2023-05-16
 PKG_SOURCE_VERSION:=0b0467473916fd9e8526e2635c2a0b1c56011dff
 PKG_SOURCE_URL:=https://github.com/prometheus/blackbox_exporter
 PKG_MIRROR_HASH:=1ecd9495d0aee4b4a45978b4ad54a47adf5eddbd16060b939a24ae29683c9b65
@@ -64,7 +61,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="release"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 GO_TAGS:=-tags=netgo
 
