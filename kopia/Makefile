@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kopia
-PKG_VERSION:=0.13.0
+PKG_VERSION:=0.15.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=7f69502bddd6650e7cb7a132291bc54920e58988
+PKG_SOURCE_VERSION:=dd1ebb11cfdb7902a2b87106dfeea038858bafb5
 PKG_SOURCE_URL:=https://github.com/kopia/kopia
-PKG_MIRROR_HASH:=c6062177639c7ddb64ab2cf8897caea82b8aa48f8a8d5d74ba5ccbebc55b56fa
+PKG_MIRROR_HASH:=3ff987fdd7dd56951595f6211faefcd4dcd9ee7f0fb915defa5045608081b5b1
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE

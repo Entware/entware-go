@@ -1,8 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
+# Copyright (C) 2023-2024 Entware
 #
 # XXX mips(el): modernc.org/libc/**: build constraints exclude all Go files in ***
 
@@ -11,9 +9,9 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=promlens
 PKG_VERSION:=0.3.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2022-12-05
 
 PKG_SOURCE_PROTO:=git
+PKG_SOURCE_DATE:=2022-12-05
 PKG_SOURCE_VERSION:=759372f2207b1c8e46c210e822b5e8fdc92ea6a7
 PKG_SOURCE_URL:=https://github.com/prometheus/promlens
 PKG_MIRROR_HASH:=ad567a1cba0ff5c5cf429908f2a3d9ef017d51865f69a6a8037f45f156e712e2
@@ -61,7 +59,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="release"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 GO_TAGS:=-tags=netgo,builtinassets
 

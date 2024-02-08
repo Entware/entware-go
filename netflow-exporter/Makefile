@@ -1,8 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
+# Copyright (C) 2023-2024 Entware
 #
 # based on fork from paihu/netflow_exporter
 
@@ -11,9 +9,9 @@ include $(TOPDIR)/rules.mk
 PKG_NAME:=netflow-exporter
 PKG_VERSION:=0.0.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2021-11-22
 
 PKG_SOURCE_PROTO:=git
+PKG_SOURCE_DATE:=2021-11-22
 PKG_SOURCE_VERSION:=b28b09684a775fa069da642606709db98cac6abb
 PKG_SOURCE_URL:=https://github.com/AlfredArouna/netflow_exporter
 PKG_MIRROR_HASH:=a19e17182430187f4d93e232341817389da181c7729894be2feac5284d07d63a
@@ -57,7 +55,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="master"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 define Build/FixPre
 	( cd $(PKG_BUILD_DIR); rm ipdb.go; $(GO_BIN) mod tidy; )

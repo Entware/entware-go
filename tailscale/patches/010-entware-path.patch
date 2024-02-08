@@ -1,6 +1,6 @@
 --- a/logpolicy/logpolicy.go
 +++ b/logpolicy/logpolicy.go
-@@ -391,7 +391,7 @@ func tryFixLogStateLocation(dir, cmdname
+@@ -384,7 +384,7 @@ func tryFixLogStateLocation(dir, cmdname
  	existsInCache := false
  	cacheDir := os.Getenv("CACHE_DIRECTORY")
  	if cacheDir != "" {
@@ -11,7 +11,7 @@
  		}
 --- a/paths/paths.go
 +++ b/paths/paths.go
-@@ -39,8 +39,8 @@ func DefaultTailscaledSocket() string {
+@@ -42,8 +42,8 @@ func DefaultTailscaledSocket() string {
  	case distro.QNAP:
  		return "/tmp/tailscale/tailscaled.sock"
  	}
@@ -24,7 +24,7 @@
  }
 --- a/paths/paths_unix.go
 +++ b/paths/paths_unix.go
-@@ -22,7 +22,7 @@ func init() {
+@@ -23,7 +23,7 @@ func init() {
  func statePath() string {
  	switch runtime.GOOS {
  	case "linux":

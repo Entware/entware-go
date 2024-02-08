@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2022-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lux
-PKG_VERSION:=0.19.0
+PKG_VERSION:=0.22.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=092bc0f6c18f81e1441ac17b2d053e74d7e6ddfe
+PKG_SOURCE_VERSION:=154292b36b704d64e7b072ef695e737576bd2d31
 PKG_SOURCE_URL:=https://github.com/iawia002/lux
-PKG_MIRROR_HASH:=e0964b426f0371a62126ad1b0f07879921cf8e2118356e05984b166e75c63c8d
+PKG_MIRROR_HASH:=286b9992cad69128ce6a6e4e9f0abbb151143c38cab99515ce2dd4102c153fe3
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk

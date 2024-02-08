@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2020-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=yggdrasil-go
-PKG_VERSION:=0.4.7
+PKG_VERSION:=0.5.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=14f1cd4696a37b0f7fdcb067fac337c46953f8af
+PKG_SOURCE_VERSION:=2c20a043692a5f54f67480971830aa56c4d3de03
 PKG_SOURCE_URL:=https://github.com/yggdrasil-network/yggdrasil-go
-PKG_MIRROR_HASH:=ce8ac6fe3ee42ce77c51ae5b624da98965d13e911672e62484c4f4a5a4e53a58
+PKG_MIRROR_HASH:=371159b7244c3dc38cf09633eae43478696a4855be3a304a10e3bd0c427a962a
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk

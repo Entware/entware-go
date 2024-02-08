@@ -1,0 +1,11 @@
+--- a/prepare_assets.sh
++++ b/prepare_assets.sh
+@@ -5,7 +5,7 @@ DIR=$(dirname "$0")
+ 
+ # install node modules
+ YARN=yarn
+-[ -x /usr/bin/lsb_release ] && [ -n "`lsb_release -i | grep Debian`" ] && YARN=yarnpkg
++#[ -x /usr/bin/lsb_release ] && [ -n "`lsb_release -i | grep Debian`" ] && YARN=yarnpkg
+ $YARN install --pure-lockfile --production
+ 
+ # Copy admin-lte dist

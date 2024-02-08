@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=git-lfs
-PKG_VERSION:=3.4.0
+PKG_VERSION:=3.4.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=d06d6e9efd78ff4f958b072146ce167d87f60285
+PKG_SOURCE_VERSION:=0898dcbc0a9dd281701c4ef6603b50d46be4dabc
 PKG_SOURCE_URL:=https://github.com/git-lfs/git-lfs
-PKG_MIRROR_HASH:=31f3a17a80f3b60006205cc3ebc7c7aab9eeab74500a081a52b6ef1830f9a068
+PKG_MIRROR_HASH:=2bccf936726dd4ecb67847cf0e6e9de1df2dd421a2ce5bff425c445adb30ae42
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md

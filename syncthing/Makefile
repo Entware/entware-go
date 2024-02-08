@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2016-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=1.23.7
+PKG_VERSION:=1.27.3
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-08-09
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=97625ccc26d0919f709acc8e4b1211b485e722aa
+PKG_SOURCE_DATE:=2024-02-06
+PKG_SOURCE_VERSION:=445e8cc532767f554c40f523611ac74ad3389d74
 PKG_SOURCE_URL:=https://github.com/syncthing/syncthing
-PKG_MIRROR_HASH:=4c0ad1b2792e1d28b46c69bcc15b1d47ebd8de1e071b4c3eaf7d67df2ed7fe9a
+PKG_MIRROR_HASH:=3ded812c9b9872dbb1142b37415bd786c7e563d7f2257fc59372b8c2dea10c77
 
 PKG_BUILD_DEPENDS:=node/host
 
@@ -53,7 +50,7 @@ Package/syncthing_nohf/description=$(Package/syncthing/description)
 
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/lib/build.Version=v$(PKG_VERSION)' \
-	-X '$(XIMPORTPATH)/lib/build.Stamp=$(SOURCE_DATE)' \
+	-X '$(XIMPORTPATH)/lib/build.Stamp=$(PKG_SOURCE_DATE)' \
 	-X '$(XIMPORTPATH)/lib/build.User=Entware' \
 	-X '$(XIMPORTPATH)/lib/build.Host=Entware' \
 	-X '$(XIMPORTPATH)/lib/build.Tags=noupgrade'
@@ -77,7 +74,7 @@ Hooks/Compile/Pre += Build/FixAssets
 
 define Package/syncthing/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/syncthing $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
 	$(INSTALL_BIN) ./files/S92syncthing $(1)/opt/etc/init.d
 endef

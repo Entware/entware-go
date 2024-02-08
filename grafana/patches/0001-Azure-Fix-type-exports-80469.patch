@@ -1,0 +1,36 @@
+From 702e7cb3ac3d5c028bfe4d2f9e69337437b72571 Mon Sep 17 00:00:00 2001
+From: Andreas Christou <andreas.christou@grafana.com>
+Date: Mon, 15 Jan 2024 09:54:52 +0000
+Subject: [PATCH] Azure: Fix type exports (#80469)
+
+Fix type exports
+---
+ public/app/plugins/datasource/azuremonitor/types/query.ts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/public/app/plugins/datasource/azuremonitor/types/query.ts b/public/app/plugins/datasource/azuremonitor/types/query.ts
+index 0c4287928c..c9098ef91c 100644
+--- a/public/app/plugins/datasource/azuremonitor/types/query.ts
++++ b/public/app/plugins/datasource/azuremonitor/types/query.ts
+@@ -1,7 +1,7 @@
+ import { AzureMonitorQuery as AzureMonitorQueryBase, AzureQueryType } from '../dataquery.gen';
+ 
+ export { AzureQueryType };
+-export {
++export type {
+   AzureMetricQuery,
+   AzureLogsQuery,
+   AzureResourceGraphQuery,
+@@ -9,8 +9,8 @@ export {
+   AzureMonitorResource,
+   AzureMetricDimension,
+   AzureTracesFilter,
+-  ResultFormat,
+ } from '../dataquery.gen';
++export { ResultFormat } from '../dataquery.gen';
+ 
+ /**
+  * Represents the query as it moves through the frontend query editor and datasource files.
+-- 
+2.30.2
+

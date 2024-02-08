@@ -1,6 +1,6 @@
 --- a/conf/defaults.ini
 +++ b/conf/defaults.ini
-@@ -15,19 +15,19 @@ force_migration = false
+@@ -16,19 +16,19 @@ force_migration = false
  #################################### Paths ###############################
  [paths]
  # Path to where grafana can store temp files, sessions, and the sqlite3 db (if that is used)
@@ -24,7 +24,7 @@
  
  #################################### Server ##############################
  [server]
-@@ -76,7 +76,7 @@ socket_gid = -1
+@@ -80,7 +80,7 @@ socket_gid = -1
  socket_mode = 0660
  
  # Unix socket path
@@ -33,7 +33,7 @@
  
  # CDN Url
  cdn_url =
-@@ -768,7 +768,7 @@ skip_org_role_sync = false
+@@ -834,7 +834,7 @@ signout_redirect_url =
  #################################### Auth LDAP ###########################
  [auth.ldap]
  enabled = false

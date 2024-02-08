@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=snowflake
-PKG_VERSION:=2.6.0
+PKG_VERSION:=2.9.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=2fa8fd9188078eaa169f1edd16815deae4004c6c
-PKG_SOURCE_URL:=https://git.torproject.org/pluggable-transports/snowflake
-PKG_MIRROR_HASH:=a982f792c0184158e1842d8d191a7786f46030725bf3da1410c0d70b274cbd62
+PKG_SOURCE_VERSION:=38352b22ade217bd1372772b9cb69f8eff93e919
+PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake
+PKG_MIRROR_HASH:=dd1f42b5161c701cd233436c19dacfd9d2fdd26a9baf22cc12f66479ee60f2cd
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
@@ -49,9 +46,9 @@ endef
 Package/snowflake-go_hf/description=$(Package/snowflake-go/description)
 
 GO_VARS += GO111MODULE=on
-GO_TARGET:=./broker ./client ./distinctcounter ./probetest ./proxy ./server
+GO_TARGET:=./broker ./client ./probetest ./proxy ./server
 
-BINS:=broker client distinctcounter probetest proxy server
+BINS:=broker client probetest proxy server
 
 define Package/snowflake-go/install
 	$(INSTALL_DIR) $(1)/opt/bin

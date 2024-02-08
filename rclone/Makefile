@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2016-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.63.1
+PKG_VERSION:=1.65.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=bd1fbcae12f795f498c7ace6af9d9cc218102094
+PKG_SOURCE_VERSION:=ffcaa6cd927929a871609a8d6ce0004324feb8d0
 PKG_SOURCE_URL:=https://github.com/rclone/rclone
-PKG_MIRROR_HASH:=ef4d2af85f647d2108da56f591ef20911d71e39a2689cae81ec6df7215e2bd55
+PKG_MIRROR_HASH:=05d7a723fd60b5140e631532fdc680847406862543832cd4af7e2cd806f42761
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk

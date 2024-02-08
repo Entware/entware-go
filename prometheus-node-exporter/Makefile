@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-node-exporter
-PKG_VERSION:=1.6.1
+PKG_VERSION:=1.7.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-06-17
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=4a1b77600c1873a8233f3ffb55afcedbb63b8d84
+PKG_SOURCE_DATE:=2023-11-13
+PKG_SOURCE_VERSION:=7333465abf9efba81876303bb57e6fadb946041b
 PKG_SOURCE_URL:=https://github.com/prometheus/node_exporter
-PKG_MIRROR_HASH:=7bd6548c1bb7f0e986160ece3895415d089d5a56017ea7a57367c3aa51668921
+PKG_MIRROR_HASH:=8ca9a04191013a03b3aa4afff675bbb259357b505315da315971e48e4ec55a14
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -58,7 +55,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.Revision=$(COMMIT_SHORT)'  \
 	-X 'github.com/prometheus/common/version.Branch="release"' \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
-	-X 'github.com/prometheus/common/version.BuildDate=$(SOURCE_DATE)'
+	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 GO_TAGS:=-tags=netgo,osusergo,static_build
 

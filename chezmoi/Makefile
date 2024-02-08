@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=chezmoi
-PKG_VERSION:=2.37.0
+PKG_VERSION:=2.46.0
 PKG_RELEASE:=1
-SOURCE_DATE:=2023-08-06
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=552d2556aa4b53ecd2677f9ef811376c42fc6c8e
+PKG_SOURCE_DATE:=2024-01-25
+PKG_SOURCE_VERSION:=1418f74ab40bbee807a1438ec0bbdb6c85f24a74
 PKG_SOURCE_URL:=https://github.com/twpayne/chezmoi
-PKG_MIRROR_HASH:=bce0de5f5bab34b0b04c5536d3b3ad0331cdc9c5c2ab876f0bd8d7372a0374c2
+PKG_MIRROR_HASH:=c847f8274bb77e4effde94e82132c3202fafd563515da31dc39bc62edbf6cff6
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
@@ -52,7 +49,7 @@ Package/chezmoi_nohf/description=$(Package/chezmoi/description)
 GO_LDFLAGS += \
 	-X 'main.version=v$(PKG_VERSION)' \
 	-X 'main.commit=$(COMMIT_SHORT)' \
-	-X 'main.date=$(SOURCE_DATE)' \
+	-X 'main.date=$(PKG_SOURCE_DATE)' \
 	-X 'main.builtBy=Entware'
 
 GO_TAGS:=-tags=noupgrade

@@ -1,21 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2023-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=goflow
-PKG_VERSION:=3.4.4
+PKG_VERSION:=3.4.5
 PKG_RELEASE:=1
-SOURCE_DATE:=2022-07-25
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=c829ccd2c0aafdc9b886b20bf6f28095607f4998
+PKG_SOURCE_DATE:=2022-08-29
+PKG_SOURCE_VERSION:=742cddc5dc37bac910151b9519e2720776ba404d
 PKG_SOURCE_URL:=https://github.com/cloudflare/goflow
-PKG_MIRROR_HASH:=35660f2611012f7fde78d6160cf51645b9cf8aac3f10731ea92d49f1ae8db640
+PKG_MIRROR_HASH:=40cfeab1207c783dccc605e7b40b8c1c0ef34fd9f010f616b8a26b0a6cb047d7
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE.txt
@@ -120,7 +117,7 @@ Package/goflow_nohf/description=$(Package/goflow/description)
 
 GO_LDFLAGS += \
 	-X 'main.version=$(PKG_VERSION)' \
-	-X 'main.buildinfos=$(SOURCE_DATE)'
+	-X 'main.buildinfos=$(PKG_SOURCE_DATE)'
 
 GO_TARGET:=./cmd/...
 
