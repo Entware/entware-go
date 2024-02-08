@@ -14,7 +14,7 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=216a0380fe85a88ea1c423ade15145b38d7dbe89
 PKG_SOURCE_URL:=https://github.com/SagerNet/sing-box
-PKG_MIRROR_HASH:=skip
+PKG_MIRROR_HASH:=b428f55cb2b4e0eb0074c9efd0e3c8b3e07dd76f40cbcf911f4307576ed507e0
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk

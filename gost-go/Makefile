@@ -14,7 +14,7 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=abfbf23842598d86ae2dab58501a5f05cbb28877
 PKG_SOURCE_URL:=https://github.com/go-gost/gost
-PKG_MIRROR_HASH:=skip
+PKG_MIRROR_HASH:=bcf2f430dca9b461068d6b028d84a594e7a16f2d86717dede860910114ce9bb1
 
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
