@@ -17,8 +17,6 @@ PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Entware team, https://entware.net
 
-PKG_BUILD_DEPENDS:=node-yarn/host
-
 include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
