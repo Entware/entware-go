@@ -1,0 +1,25 @@
+--- a/cmd/sing-box/main.go
++++ b/cmd/sing-box/main.go
+@@ -69,6 +69,6 @@ func preRun(cmd *cobra.Command, args []s
+ 		}
+ 	}
+ 	if len(configPaths) == 0 && len(configDirectories) == 0 {
+-		configPaths = append(configPaths, "config.json")
++		configPaths = append(configPaths, "/opt/etc/sing-box/config.json")
+ 	}
+ }
+--- a/constant/path_unix.go
++++ b/constant/path_unix.go
+@@ -7,10 +7,8 @@ import (
+ )
+ 
+ func init() {
+-	resourcePaths = append(resourcePaths, "/etc")
+-	resourcePaths = append(resourcePaths, "/usr/share")
+-	resourcePaths = append(resourcePaths, "/usr/local/etc")
+-	resourcePaths = append(resourcePaths, "/usr/local/share")
++	resourcePaths = append(resourcePaths, "/opt/etc")
++	resourcePaths = append(resourcePaths, "/opt/share")
+ 	if homeDir := os.Getenv("HOME"); homeDir != "" {
+ 		resourcePaths = append(resourcePaths, homeDir+"/.local/share")
+ 	}

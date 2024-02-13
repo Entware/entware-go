@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sing-box-go
 PKG_VERSION:=1.8.2
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=216a0380fe85a88ea1c423ade15145b38d7dbe89
@@ -41,10 +41,17 @@ define Package/sing-box-go_nohf
 endef
 
 define Package/sing-box-go/description
- Sing-box is a fast, customizable and univsersal proxy platform that can be used to create network proxy servers, clients and transparent proxies.
+ Sing-box is a fast, customizable and univsersal proxy platform that
+can be used to create network proxy servers, clients and transparent proxies.
 endef
 
 Package/sing-box-go_nohf/description=$(Package/sing-box-go/description)
+
+define Package/sing-box-go/conffiles
+/opt/etc/sing-box/config.json
+endef
+
+Package/sing-box-go_nohf/conffiles=$(Package/sing-box-go/conffiles)
 
 GO_LDFLAGS += \
 	-X 'github.com/sagernet/sing-box/constant.Version=$(PKG_VERSION)'
@@ -56,6 +63,10 @@ GO_TAGS:=-tags=with_gvisor,with_dhcp,with_wireguard,with_reality_server,with_cla
 define Package/sing-box-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/sing-box $(1)/opt/bin
+	$(INSTALL_DIR) $(1)/opt/etc/sing-box
+	$(INSTALL_DATA) $(PKG_BUILD_DIR)/release/config/config.json $(1)/opt/etc/sing-box
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S99sing-box $(1)/opt/etc/init.d
 endef
 
 Package/sing-box-go_nohf/install=$(Package/sing-box-go/install)
