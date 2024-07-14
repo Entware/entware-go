@@ -14,9 +14,10 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=1b65fe62b01965bfee3f7ed8ba852c15de1255eb
 PKG_SOURCE_URL:=https://github.com/DNSCrypt/dnscrypt-proxy
-PKG_MIRROR_HASH:=4d98962da492ea9caedb8950c7799d9cc9f781ed382ef9c45218884be31ab937
+PKG_MIRROR_HASH:=1a1cd9b8fcdee47514c22e229812acbc8bfb635b094183d0e7799206df13be9d
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/dnscrypt-proxy2_nohf
 	$(call Package/dnscrypt-proxy2/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/dnscrypt-proxy2/description
