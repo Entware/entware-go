@@ -8,15 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gost-go
-PKG_VERSION:=v3.0.0-nightly.20240118
+PKG_VERSION:=3.0.0-nightly.20240625
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=abfbf23842598d86ae2dab58501a5f05cbb28877
+PKG_SOURCE_VERSION:=1400b5ff5d336849fc84d77e7c6aeb5729b37355
 PKG_SOURCE_URL:=https://github.com/go-gost/gost
-PKG_MIRROR_HASH:=bcf2f430dca9b461068d6b028d84a594e7a16f2d86717dede860910114ce9bb1
+PKG_MIRROR_HASH:=7a291791192423869d5a071f829c4aeec293ab8e5dc6dfbd2ce739eb851ba724
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/gost-go_nohf
 	$(call Package/gost-go/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/gost-go/description
