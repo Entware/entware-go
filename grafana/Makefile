@@ -5,22 +5,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=grafana
-PKG_VERSION:=10.3.1
+PKG_VERSION:=10.4.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-01-23
-PKG_SOURCE_VERSION:=00a22ff8b28550d593ec369ba3da1b25780f0a4a
+PKG_SOURCE_DATE:=2024-06-21
+PKG_SOURCE_VERSION:=17cbd4277deaa5f970e88c5bfe7a46de10cc6302
 PKG_SOURCE_URL:=https://github.com/grafana/grafana
-PKG_MIRROR_HASH:=c2ec8d5ca1b2141602f903712dd9aac27669b5e985d1eb500fec5c65b77705ac
+PKG_MIRROR_HASH:=d97a2739cde10d6715f68aaf667aed43b2cea6362d4b723160db66c167326994
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE LICENSING.md
 
-PKG_CGO_ENABLED:=1
 PKG_BUILD_DEPENDS:=node-yarn/host
+PKG_BUILD_PARALLEL:=1
+PKG_CGO_ENABLED:=1
 
-include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -41,14 +41,13 @@ endef
 define Package/grafana_nohf
   $(call Package/grafana/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/grafana/description
   The open and composable observability and data visualization
-  platform. Visualize metrics, logs, and traces from multiple
-  sources like Prometheus, Loki, Elasticsearch, InfluxDB, Postgres
-  and many more. 
+  platform. Visualize metrics, logs, and traces from multiple sources like
+  Prometheus, Loki, Elasticsearch, InfluxDB, Postgres and many more. 
 endef
 
 Package/grafana_nohf/description=$(Package/grafana/description)
@@ -57,7 +56,7 @@ GO_LDFLAGS += \
 	-X 'main.version=$(PKG_VERSION)' \
 	-X 'main.commit=$(COMMIT_SHORT)' \
 	-X 'main.buildstamp=$(PKG_SOURCE_DATE)' \
-	-X 'main.buildBranch=main'
+	-X 'main.buildBranch=v10.4.x'
 
 GO_TARGET:=./pkg/cmd/grafana ./pkg/cmd/grafana-cli ./pkg/cmd/grafana-server
 
@@ -69,18 +68,19 @@ define Build/Deps
 	)
 	# wire-host
 	( cd $(PKG_BUILD_DIR)/.bingo; \
-		GOWORK=off $(GO_BIN) build -mod=mod -modfile=wire.mod \
+		$(GO_ENV_COMMON) $(GO_BIN) build -mod=mod -modfile=wire.mod \
 		-o=$(PKG_BUILD_DIR)/wire-host "github.com/google/wire/cmd/wire"; \
 	)
 	# generate code from .cue files
 	( cd $(PKG_BUILD_DIR); \
-		$(GO_BIN) generate ./pkg/plugins/plugindef; \
-		$(GO_BIN) generate ./kinds/gen.go; \
-		$(GO_BIN) generate ./public/app/plugins/gen.go; \
-		$(GO_BIN) generate ./pkg/kindsysreport/codegen/report.go; \
+		$(GO_BIN_GENERATE) ./pkg/plugins/plugindef; \
+		$(GO_BIN_GENERATE) ./kinds/gen.go; \
+		$(GO_BIN_GENERATE) ./public/app/plugins/gen.go; \
+		$(GO_BIN_GENERATE) ./pkg/kindsysreport/codegen/report.go; \
 	)
 	# generate go files
 	( cd $(PKG_BUILD_DIR); \
+		$(GO_ENV_COMMON) \
 		PATH="$(GOROOT)/bin:$(PATH)" \
 		$(PKG_BUILD_DIR)/wire-host gen -tags "oss" ./pkg/server; \
 	)

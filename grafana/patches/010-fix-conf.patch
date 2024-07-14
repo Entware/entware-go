@@ -33,7 +33,7 @@
  
  # CDN Url
  cdn_url =
-@@ -834,7 +834,7 @@ signout_redirect_url =
+@@ -861,7 +861,7 @@ skip_org_role_sync = false
  #################################### Auth LDAP ###########################
  [auth.ldap]
  enabled = false
