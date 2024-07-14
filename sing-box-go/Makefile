@@ -8,15 +8,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sing-box-go
-PKG_VERSION:=1.8.5
+PKG_VERSION:=1.9.3
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=3d735281f468e2c2eb13c1148b4b71a9272ea0d9
+PKG_SOURCE_VERSION:=085f60337799afc906069b540a38368968c123e4
 PKG_SOURCE_URL:=https://github.com/SagerNet/sing-box
-PKG_MIRROR_HASH:=28555c7715f273e6a774d0e5ed7a796455aee937b84f2df1e6a9a6445a752d59
+PKG_MIRROR_HASH:=9c35038f5be6fcb99f4412d90008b0457f92a0ff21398a5774a0625ac2e8c82a
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/sing-box-go_nohf
 	$(call Package/sing-box-go/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/sing-box-go/description
@@ -54,11 +55,19 @@ endef
 Package/sing-box-go_nohf/conffiles=$(Package/sing-box-go/conffiles)
 
 GO_LDFLAGS += \
-	-X 'github.com/sagernet/sing-box/constant.Version=$(PKG_VERSION)'
+	-X '$(XIMPORTPATH)/constant.Version=$(PKG_VERSION)'
 
 GO_TARGET:=./cmd/sing-box
 
-GO_TAGS:=-tags=with_gvisor,with_dhcp,with_wireguard,with_reality_server,with_clash_api,with_quic,with_ech,with_utls
+GO_TAGS:= \
+	with_clash_api, \
+	with_dhcp, \
+	with_ech, \
+	with_gvisor, \
+	with_quic, \
+	with_reality_server, \
+	with_utls, \
+	with_wireguard
 
 define Package/sing-box-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
