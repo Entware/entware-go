@@ -5,18 +5,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=git-lfs
-PKG_VERSION:=3.4.1
+PKG_VERSION:=3.5.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=0898dcbc0a9dd281701c4ef6603b50d46be4dabc
+PKG_SOURCE_VERSION:=e237bb3a364603cbb92cabc34b8401d1ad5d795b
 PKG_SOURCE_URL:=https://github.com/git-lfs/git-lfs
-PKG_MIRROR_HASH:=2bccf936726dd4ecb67847cf0e6e9de1df2dd421a2ce5bff425c445adb30ae42
+PKG_MIRROR_HASH:=3374f2f889c1a6078e5b4876dc7bf20912d7afe318d01cc65bffe5a63c755052
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/git-lfs_nohf
   $(call Package/git-lfs/Default)
   VARIANT:=nohf
-  DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS+=@arm
 endef
 
 define Package/git-lfs/description
@@ -49,7 +50,7 @@ endef
 Package/git-lfs_nohf/description=$(Package/git-lfs/description)
 
 define Build/FixHelp
-	( cd $(PKG_BUILD_DIR); $(GO_BIN) generate ./commands )
+	( cd $(PKG_BUILD_DIR); $(GO_BIN_GENERATE) ./commands; )
 endef
 
 Hooks/Compile/Pre += Build/FixHelp
