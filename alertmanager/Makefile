@@ -5,21 +5,21 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=alertmanager
-PKG_VERSION:=0.26.0
+PKG_VERSION:=0.27.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-08-23
-PKG_SOURCE_VERSION:=d7b4f0c7322e7151d6e3b1e31cbc15361e295d8d
+PKG_SOURCE_DATE:=2024-02-28
+PKG_SOURCE_VERSION:=0aa3c2aad14cff039931923ab16b26b7481783b5
 PKG_SOURCE_URL:=https://github.com/prometheus/alertmanager
-PKG_MIRROR_HASH:=853c87a0f44e1fec9e7f79de6bc61728112621937898aaba04bf8af768275428
+PKG_MIRROR_HASH:=124c5c11086ee939d89f117e1653ae8a977e800d5955e67e406c911401aeb3ac
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_DEPENDS:=node/host
+PKG_BUILD_PARALLEL:=1
 
-include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -40,7 +40,7 @@ endef
 define Package/alertmanager_nohf
   $(call Package/alertmanager/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/alertmanager/description
@@ -68,7 +68,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-GO_TAGS:=-tags=netgo
+GO_TAGS:=netgo
 GO_TARGET:=./cmd/alertmanager ./cmd/amtool
 
 define Package/alertmanager/install
