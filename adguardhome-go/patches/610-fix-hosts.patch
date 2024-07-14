@@ -1,6 +1,6 @@
 --- a/internal/client/client.go
 +++ b/internal/client/client.go
-@@ -40,7 +40,7 @@ func (cs Source) String() (s string) {
+@@ -41,7 +41,7 @@ func (cs Source) String() (s string) {
  	case SourceDHCP:
  		return "DHCP"
  	case SourceHostsFile:
