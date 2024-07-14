@@ -12,12 +12,13 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_DATE:=2022-08-29
 PKG_SOURCE_VERSION:=742cddc5dc37bac910151b9519e2720776ba404d
 PKG_SOURCE_URL:=https://github.com/cloudflare/goflow
-PKG_MIRROR_HASH:=40cfeab1207c783dccc605e7b40b8c1c0ef34fd9f010f616b8a26b0a6cb047d7
+PKG_MIRROR_HASH:=643c329ec72b86b4ab26dfb1e467d9e464a6206f29212153dc73397a8d143757
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE.txt
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -41,7 +42,7 @@ define Package/cnetflow_nohf
   $(call Package/goflow/Default)
   TITLE+=(IPFIX/NetFlow v9)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/cnetflow/description
@@ -62,7 +63,7 @@ define Package/cnflegacy_nohf
   $(call Package/goflow/Default)
   TITLE+=(NetFlow v5)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/cnflegacy/description
@@ -83,7 +84,7 @@ define Package/csflow_nohf
   $(call Package/goflow/Default)
   TITLE+=(sFlow v5)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/csflow/description
@@ -104,7 +105,7 @@ define Package/goflow_nohf
   $(call Package/goflow/Default)
   TITLE+=(full)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/goflow/description
