@@ -5,19 +5,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lyrebird
-PKG_VERSION:=0.1.0
+PKG_VERSION:=0.2.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=3915dcd117d95f301d5e07d2ff48c398b8107772
+PKG_SOURCE_VERSION:=aab489105e97fdcf177327af73d84d35a80496c5
 PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird
-PKG_MIRROR_HASH:=ad3bfab834879525e00de61235cbb6a173138a8c6ac3d2200a4b374c2f4b2f08
+PKG_MIRROR_HASH:=a787d14ff7ac26952c69fb4caa08739edf53c889a6c35706f2101d025b57d141
 
 PKG_LICENSE:=GPL-3.0-or-later
 PKG_LICENSE_FILES:=LICENSE LICENSE-GPL3.txt
 PKG_MAINTAINER:=Entware team, https://entware.net
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -36,7 +37,7 @@ endef
 define Package/lyrebird_nohf
   $(call Package/lyrebird/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/lyrebird/description
