@@ -5,19 +5,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-node-exporter
-PKG_VERSION:=1.7.0
+PKG_VERSION:=1.8.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-11-13
-PKG_SOURCE_VERSION:=7333465abf9efba81876303bb57e6fadb946041b
+PKG_SOURCE_DATE:=2024-06-19
+PKG_SOURCE_VERSION:=f1e0e8360aa60b6cb5e5cc1560bed348fc2c1895
 PKG_SOURCE_URL:=https://github.com/prometheus/node_exporter
-PKG_MIRROR_HASH:=8ca9a04191013a03b3aa4afff675bbb259357b505315da315971e48e4ec55a14
+PKG_MIRROR_HASH:=13902136636603dfc030c6ba4041cd78884b4516d0723a07f39f48b3f3dccaee
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -38,7 +39,7 @@ endef
 define Package/prometheus-node-exporter_nohf
   $(call Package/prometheus-node-exporter/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/prometheus-node-exporter/description
@@ -57,7 +58,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-GO_TAGS:=-tags=netgo,osusergo,static_build
+GO_TAGS:=netgo, osusergo, static_build
 
 define Package/prometheus-node-exporter/install
 	$(INSTALL_DIR) $(1)/opt/bin
