@@ -5,19 +5,22 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-snmp-exporter
-PKG_VERSION:=0.25.0
+PKG_VERSION:=0.26.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-12-10
-PKG_SOURCE_VERSION:=9c42d6c874d479314e612bca69558c81f8e26287
+PKG_SOURCE_DATE:=2024-05-11
+PKG_SOURCE_VERSION:=44f8732988e726bad3f13d5779f1da7705178642
 PKG_SOURCE_URL:=https://github.com/prometheus/snmp_exporter
-PKG_MIRROR_HASH:=980714c4a1988a574bb7019585abd462c64625ce5ad5a58a45f9ce6f3471728a
+PKG_MIRROR_HASH:=169fe3251022f8d96f30d0c6088815b5ed3894dc106d6cc48c0e61d2d5440c91
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-include ../goenv.mk
+PKG_BUILD_DEPENDS:=net-snmp
+PKG_BUILD_PARALLEL:=1
+PKG_CGO_ENABLED:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -38,7 +41,7 @@ endef
 define Package/prometheus-snmp-exporter_nohf
   $(call Package/prometheus-snmp-exporter/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/prometheus-snmp-exporter/description
@@ -57,7 +60,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-GO_TAGS:=-tags=netgo
+GO_TAGS:=netgo
 
 define Package/prometheus-snmp-exporter/install
 	$(INSTALL_DIR) $(1)/opt/bin
