@@ -14,9 +14,10 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=336a71d6e4cfd2d33e9c57797828007ad74975e9
 PKG_SOURCE_URL:=https://gitlab.com/yawning/obfs4
-PKG_MIRROR_HASH:=c3aa598023543ea18cde3fa0addf11a237b42cbb708645c6f282ec399cdf80ab
+PKG_MIRROR_HASH:=8fa7950328b64c9cdea86c5d343f3043f9f1273df1b4e6efe985d53f607ba66e
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/obfs4_nohf
 	$(call Package/obfs4/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/obfs4/description
