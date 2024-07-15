@@ -5,18 +5,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kopia
-PKG_VERSION:=0.15.0
+PKG_VERSION:=0.17.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=dd1ebb11cfdb7902a2b87106dfeea038858bafb5
+PKG_SOURCE_VERSION:=89c8eb47af2e1d5c1d14fe299a0cf7eaac095abf
 PKG_SOURCE_URL:=https://github.com/kopia/kopia
-PKG_MIRROR_HASH:=3ff987fdd7dd56951595f6211faefcd4dcd9ee7f0fb915defa5045608081b5b1
+PKG_MIRROR_HASH:=d9bed3dc3a10884b83d444faea204eabcd2cc71799c073d41763ff92384ad246
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/kopia_nohf
   $(call Package/kopia/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/kopia/description
