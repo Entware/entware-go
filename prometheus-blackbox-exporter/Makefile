@@ -5,19 +5,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-blackbox-exporter
-PKG_VERSION:=0.24.0
+PKG_VERSION:=0.25.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-05-16
-PKG_SOURCE_VERSION:=0b0467473916fd9e8526e2635c2a0b1c56011dff
+PKG_SOURCE_DATE:=2024-04-09
+PKG_SOURCE_VERSION:=ef3ff4fef195333fb8ee0039fb487b2f5007908f
 PKG_SOURCE_URL:=https://github.com/prometheus/blackbox_exporter
-PKG_MIRROR_HASH:=1ecd9495d0aee4b4a45978b4ad54a47adf5eddbd16060b939a24ae29683c9b65
+PKG_MIRROR_HASH:=ee933e47105e6d85f895a9e9f0db87632c2308a7561b129c2af79d8a2c128ecc
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -38,7 +39,7 @@ endef
 define Package/prometheus-blackbox-exporter_nohf
   $(call Package/prometheus-blackbox-exporter/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/prometheus-blackbox-exporter/description
@@ -63,7 +64,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-GO_TAGS:=-tags=netgo
+GO_TAGS:=netgo
 
 define Package/prometheus-blackbox-exporter/install
 	$(INSTALL_DIR) $(1)/opt/bin
