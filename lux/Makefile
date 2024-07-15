@@ -5,15 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lux
-PKG_VERSION:=0.22.0
+PKG_VERSION:=0.24.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=154292b36b704d64e7b072ef695e737576bd2d31
+PKG_SOURCE_VERSION:=348ae97219784a32dd3c4721ad0cbc2584ee7b46
 PKG_SOURCE_URL:=https://github.com/iawia002/lux
-PKG_MIRROR_HASH:=286b9992cad69128ce6a6e4e9f0abbb151143c38cab99515ce2dd4102c153fe3
+PKG_MIRROR_HASH:=b65af44eca517015d42f2679d7157642c759ff954a4adf044b84b55001bfc7fa
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -35,7 +36,7 @@ endef
 define Package/lux_nohf
 	$(call Package/lux/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/lux/description
