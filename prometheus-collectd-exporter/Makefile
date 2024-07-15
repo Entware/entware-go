@@ -12,12 +12,13 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_DATE:=2020-12-09
 PKG_SOURCE_VERSION:=97668d16288554a7bb5ce2b611cdf475e22f464a
 PKG_SOURCE_URL:=https://github.com/prometheus/collectd_exporter
-PKG_MIRROR_HASH:=7ea2e4c4255123c2aa75e761a53a63ad62f743b9480e53d0d404bcbcc085e053
+PKG_MIRROR_HASH:=735997fdb0618339aea069d8074bb2a1338093cba1da843dc76d463769245025
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -39,7 +40,7 @@ endef
 define Package/prometheus-collectd-exporter_nohf
   $(call Package/prometheus-collectd-exporter/Default)
   VARIANT:=nohf
-  DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS+=@arm
 endef
 
 define Package/prometheus-collectd-exporter/description
@@ -58,7 +59,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-GO_TAGS:=-tags=netgo
+GO_TAGS:=netgo
 
 define Package/prometheus-collectd-exporter/install
 	$(INSTALL_DIR) $(1)/opt/bin
