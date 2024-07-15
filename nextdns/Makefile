@@ -5,15 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=1.42.0
+PKG_VERSION:=1.43.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=f21facfe50abb659732014d3b95e9f91b8494e2f
+PKG_SOURCE_VERSION:=e051fcc9dfb2b332bb25a11447b6b158ae9a6b78
 PKG_SOURCE_URL:=https://github.com/nextdns/nextdns
-PKG_MIRROR_HASH:=860379468080f421bd8abbf0da8cf55d905bf2de0a083fc9059dcf684351d269
+PKG_MIRROR_HASH:=39ff3c9c253e4d1a9ce2896c786f1695e825c8af8b70d33e9328511b8e0efd38
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -34,7 +35,7 @@ endef
 define Package/nextdns_nohf
 	$(call Package/nextdns/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS:=@arm
 endef
 
 define Package/nextdns/description
