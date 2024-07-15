@@ -5,19 +5,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-statsd-exporter
-PKG_VERSION:=0.26.0
+PKG_VERSION:=0.26.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-12-06
-PKG_SOURCE_VERSION:=2c7fd1edd4bdf01982a648b689da10e5bcff860d
+PKG_SOURCE_DATE:=2024-03-22
+PKG_SOURCE_VERSION:=58769c7b4d128e7ceae1cf8d893260ed5b5afa4d
 PKG_SOURCE_URL:=https://github.com/prometheus/statsd_exporter
-PKG_MIRROR_HASH:=35847aa30b7844a85649866a906bdb4c2f6bb098e7d30fa949ba38506879c77c
+PKG_MIRROR_HASH:=555b9f71433700b5b5ff5ce01325632e7eea66445b6e0a4d014ed76f54ff1640
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -38,7 +39,7 @@ endef
 define Package/prometheus-statsd-exporter_nohf
   $(call Package/prometheus-statsd-exporter/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/prometheus-statsd-exporter/description
@@ -63,7 +64,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-GO_TAGS:=-tags=netgo,static_build
+GO_TAGS:=netgo, static_build
 
 define Package/prometheus-statsd-exporter/install
 	$(INSTALL_DIR) $(1)/opt/bin
