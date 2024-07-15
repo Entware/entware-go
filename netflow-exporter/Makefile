@@ -14,12 +14,13 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_DATE:=2021-11-22
 PKG_SOURCE_VERSION:=b28b09684a775fa069da642606709db98cac6abb
 PKG_SOURCE_URL:=https://github.com/AlfredArouna/netflow_exporter
-PKG_MIRROR_HASH:=a19e17182430187f4d93e232341817389da181c7729894be2feac5284d07d63a
+PKG_MIRROR_HASH:=7328cdf332521bad28448cca70eb6abba02b0b76ce078b831ac1ffadfa622862
 
 PKG_LICENSE:=
 PKG_LICENSE_FILES:=
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -40,7 +41,7 @@ endef
 define Package/netflow-exporter_nohf
   $(call Package/netflow-exporter/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/netflow-exporter/description
@@ -58,7 +59,7 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
 define Build/FixPre
-	( cd $(PKG_BUILD_DIR); rm ipdb.go; $(GO_BIN) mod tidy; )
+	( cd $(PKG_BUILD_DIR); rm -f ipdb.go; $(GO_BIN_MOD_TIDY); )
 endef
 
 Hooks/Compile/Pre += Build/FixPre
