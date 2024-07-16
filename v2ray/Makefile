@@ -5,16 +5,17 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray
-PKG_VERSION:=5.13.0
+PKG_VERSION:=5.16.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2023-12-11
-PKG_SOURCE_VERSION:=458db3954f76bbf7ce621a24151d9d5469d8b6fb
+PKG_SOURCE_DATE:=2024-05-03
+PKG_SOURCE_VERSION:=346ca66c57ab1b6872908354d5f3e4152fff59da
 PKG_SOURCE_URL:=https://github.com/v2fly/v2ray-core
-PKG_MIRROR_HASH:=b8eca83ffe4c5bc17275c12c4d7a1350c5f6abcd46b69e7846d72520e3817d5e
+PKG_MIRROR_HASH:=566d9b06f32b5929b473a948b84b7d4ecdc49782f64f37e21be6fea1d93e9c4f
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -36,7 +37,7 @@ endef
 define Package/v2ray-core_nohf
 	$(call Package/v2ray/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/v2ray
