@@ -5,15 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=snowflake
-PKG_VERSION:=2.9.0
+PKG_VERSION:=2.9.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=38352b22ade217bd1372772b9cb69f8eff93e919
+PKG_SOURCE_VERSION:=05a95802c195b1d8a68bb6fe4fa98f12763af519
 PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake
-PKG_MIRROR_HASH:=dd1f42b5161c701cd233436c19dacfd9d2fdd26a9baf22cc12f66479ee60f2cd
+PKG_MIRROR_HASH:=7b57423a1b326505999bbd3c96f60d3ef309399d5c16bb47755c39aed2deafbb
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -32,7 +33,7 @@ endef
 define Package/snowflake-go_nohf
 	$(call Package/snowflake/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/snowflake-go/description
