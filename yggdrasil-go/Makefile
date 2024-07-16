@@ -5,15 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=yggdrasil-go
-PKG_VERSION:=0.5.5
+PKG_VERSION:=0.5.6
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=2c20a043692a5f54f67480971830aa56c4d3de03
+PKG_SOURCE_VERSION:=fec96a38a423142ac1712eb63ad7651c5e7a82aa
 PKG_SOURCE_URL:=https://github.com/yggdrasil-network/yggdrasil-go
-PKG_MIRROR_HASH:=371159b7244c3dc38cf09633eae43478696a4855be3a304a10e3bd0c427a962a
+PKG_MIRROR_HASH:=2c8695793f60860d13751ebe1793459d18841b6982d6a8842c9a513844db2fb7
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -34,7 +35,7 @@ endef
 define Package/yggdrasil-go_nohf
 	$(call Package/yggdrasil-go/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS:=@arm
 endef
 
 define Package/yggdrasil-go/description
