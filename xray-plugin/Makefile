@@ -5,19 +5,20 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=xray-plugin
-PKG_VERSION:=1.8.7
+PKG_VERSION:=1.8.17
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=41be310726e2680e6a405d986cb07f634519272c
+PKG_SOURCE_VERSION:=84b716a7951a77ed2769dfb08da54783884f3823
 PKG_SOURCE_URL:=https://github.com/teddysun/xray-plugin
-PKG_MIRROR_HASH:=bc4434e82a08a198207c1d40b847975423bae8c8ae0612a3ba9ae0391ef62aff
+PKG_MIRROR_HASH:=d3dbc55531afe679f80d35eb4bc2eb9f87d00df5ef5be9a479b5d0c053c362ca
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Entware team, https://entware.net
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -37,7 +38,7 @@ endef
 define Package/xray-plugin_nohf
   $(call Package/xray-plugin/Default)
   VARIANT:=nohf
-  DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+  DEPENDS:=@arm
 endef
 
 define Package/xray-plugin/description
