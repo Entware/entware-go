@@ -14,9 +14,10 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=e24fc776e0ffb6e3c293895163d95bdd8a3c386f
 PKG_SOURCE_URL:=https://git.zx2c4.com/wireguard-go
-PKG_MIRROR_HASH:=74526664fae85117381339550b691ae4e8382fff3814ad8c23d16c78cd452da3
+PKG_MIRROR_HASH:=13193587b99f70b152f6312dd55c749177e5e9ecafb642c8e36b63382462261e
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -27,7 +28,7 @@ define Package/wireguard-go/Default
 	TITLE:=This is an implementation of WireGuard in Go
 	URL:=https://git.zx2c4.com/wireguard-go/about/
 	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+wireguard-tools +wg-quick @!LINUX_2_6_36
+	DEPENDS:=+wireguard-tools +wg-quick
 endef
 
 define Package/wireguard-go
@@ -38,7 +39,7 @@ endef
 define Package/wireguard-go_nohf
 	$(call Package/wireguard-go/Default)
 	VARIANT:=nohf
-	DEPENDS+=@TARGET_armv7_3_2
+	DEPENDS+=@arm
 endef
 
 define Package/wireguard-go/description
