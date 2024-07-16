@@ -8,17 +8,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shell2http
-PKG_VERSION:=2023-03-11
+PKG_VERSION:=2024-03-23
 PKG_RELEASE:=1
 
-_PKG_VERSION:=1.16.0
+_PKG_VERSION:=1.17.0
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=28c2f05aec1db23b4525caf565aa5c410b1995e5
+PKG_SOURCE_VERSION:=1ccddb63ffa9211d27d3cfb23e763e785279f05e
 PKG_SOURCE_URL:=https://github.com/msoap/shell2http
-PKG_MIRROR_HASH:=00125be213e8a0788174b0c8b837309325966f3cccf5b596b01f2b7454385af6
+PKG_MIRROR_HASH:=08e232097aefaaf374dbe701b8d6afae0eb954afa2f4a468a6269595f5edb13a
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -38,7 +39,7 @@ endef
 define Package/shell2http_nohf
 	$(call Package/shell2http/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS:=@arm
 endef
 
 define Package/shell2http/description
