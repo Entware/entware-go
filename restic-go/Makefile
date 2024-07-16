@@ -11,9 +11,10 @@ PKG_RELEASE:=1
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=3786536dc18ef27aedcfa8e4c6953b48353eee79
 PKG_SOURCE_URL:=https://github.com/restic/restic
-PKG_MIRROR_HASH:=98ca6adc45c857e93571b027036fb8b3faead569bfead2c57a2388c6eac328bd
+PKG_MIRROR_HASH:=3ddba86d84005713f4dd645dfa7cec94cbcd1c6f596b607aff37c00a0f987c18
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -34,7 +35,7 @@ endef
 define Package/restic-go_nohf
 	$(call Package/restic-go/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS:=@arm
 endef
 
 define Package/restic-go/description
