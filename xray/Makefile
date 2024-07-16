@@ -5,15 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=xray
-PKG_VERSION:=1.8.7
+PKG_VERSION:=1.8.18
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=3f0bc134298cf512bd29660221a030db91594faf
+PKG_SOURCE_VERSION:=9e6d7a3cb0c5d60b8ef3cedef7ffaf610547f619
 PKG_SOURCE_URL:=https://github.com/XTLS/Xray-core
-PKG_MIRROR_HASH:=29215def0f50ba8dab38a3865b1994f36f327835dfa44bd8da419451d321d089
+PKG_MIRROR_HASH:=43ad0583411de6ec69ba588ac8a3907c5311b6b881bbd8ed7956cf8bb097c1e3
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -35,7 +36,7 @@ endef
 define Package/xray-core_nohf
 	$(call Package/xray/Default)
 	VARIANT:=nohf
-	DEPENDS+=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS+=@arm
 endef
 
 define Package/xray
@@ -70,9 +71,8 @@ endef
 
 Package/xray_nohf/conffiles=$(Package/xray/conffiles)
 
-GO_LDFLAGS += -buildid=
-
-GO_BUILD_ARGS += -a
+GO_LDFLAGS += \
+	-X '$(XIMPORTPATH)/core.build=$(COMMIT_SHORT)'
 
 GO_TARGET:=./main
 
