@@ -5,15 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=telegraf
-PKG_VERSION:=1.29.4
+PKG_VERSION:=1.31.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=4441c4ed5ba88104957ce27249aaadb175f698fb
+PKG_SOURCE_VERSION:=99fcdc283bdca2bb00c1fa8c59172a69d9c2137d
 PKG_SOURCE_URL:=https://github.com/influxdata/telegraf
-PKG_MIRROR_HASH:=5b2c84418d02f1c2040ae537e3fec552fef58c4289d4983ca7434066ec1ea2c5
+PKG_MIRROR_HASH:=skip
 
-include ../goenv.mk
+PKG_BUILD_PARALLEL:=1
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -33,7 +34,7 @@ endef
 define Package/telegraf_nohf
 	$(call Package/telegraf/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS:=@arm
 endef
 
 define Package/telegraf/description
