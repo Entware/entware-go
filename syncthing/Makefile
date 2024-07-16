@@ -5,18 +5,18 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=1.27.3
+PKG_VERSION:=1.27.9
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-02-06
-PKG_SOURCE_VERSION:=445e8cc532767f554c40f523611ac74ad3389d74
+PKG_SOURCE_DATE:=2024-07-01
+PKG_SOURCE_VERSION:=4704d3bc48761d89c2eafadf79f5d268631a063d
 PKG_SOURCE_URL:=https://github.com/syncthing/syncthing
-PKG_MIRROR_HASH:=3ded812c9b9872dbb1142b37415bd786c7e563d7f2257fc59372b8c2dea10c77
+PKG_MIRROR_HASH:=6e075c271491474c5a99d13e9234cea5f1bcd8d13ce07993ac3ad8ed3e21463d
 
 PKG_BUILD_DEPENDS:=node/host
+PKG_BUILD_PARALLEL:=1
 
-include ../goenv.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
@@ -36,7 +36,7 @@ endef
 define Package/syncthing_nohf
 	$(call Package/syncthing/Default)
 	VARIANT:=nohf
-	DEPENDS:=@(TARGET_armv7_2_6||TARGET_armv7_3_2)
+	DEPENDS:=@arm
 endef
 
 define Package/syncthing/description
@@ -55,22 +55,22 @@ GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/lib/build.Host=Entware' \
 	-X '$(XIMPORTPATH)/lib/build.Tags=noupgrade'
 
-GO_VARS += \
-	GO111MODULE=on \
-	PATH="$(GOROOT)/bin:$(PATH)"
+GO_VARS += GO111MODULE=on
 
-GO_TAGS:=-tags=noupgrade
+GO_TAGS:=noupgrade
 
 GO_TARGET:=./cmd/syncthing
 
-define Build/FixAssets
+define Build/Web
 	( cd $(PKG_BUILD_DIR); \
-		PATH="$(GOROOT)/bin:$(PATH)" \
-		$(GO_BIN) run build.go assets; \
+		PATH="$(shell $(GO_BIN) env GOROOT)/bin:$(PATH)" \
+		$(GO_ENV_COMMON) $(GO_BIN) run \
+		$(if $(findstring s,$(OPENWRT_VERBOSE)),-v -x) \
+		build.go assets; \
 	)
 endef
 
-Hooks/Compile/Pre += Build/FixAssets
+Hooks/Compile/Pre += Build/Web
 
 define Package/syncthing/install
 	$(INSTALL_DIR) $(1)/opt/bin
