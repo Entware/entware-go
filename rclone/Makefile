@@ -6,7 +6,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
 PKG_VERSION:=1.67.0
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=93e8a976ef686a4bd8e3afaf2016734c81881507
@@ -54,6 +54,14 @@ define Package/rclone/description
 endef
 
 Package/rclone_nohf/description=$(Package/rclone/description)
+
+ifeq ($(or $(CONFIG_mips),$(CONFIG_mipsel)),y)
+    define Build/Prepare
+	$(Build/Prepare/Default)
+	patch -p1 -d $(PKG_BUILD_DIR) < ./patches-mips/010-mips.patch
+    endef
+endif
+
 
 GO_LDFLAGS += \
         -X '$(XIMPORTPATH)/fs.Version=$(PKG_VERSION)'
