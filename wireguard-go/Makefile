@@ -1,15 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2011-2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wireguard-go
 PKG_VERSION:=v0.0.20230223
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=e24fc776e0ffb6e3c293895163d95bdd8a3c386f
@@ -47,6 +44,18 @@ define Package/wireguard-go/description
 endef
 
 Package/wireguard-go_nohf/description=$(Package/wireguard-go/description)
+
+# XXX link: golang.org/x/net/internal/socket: invalid reference to syscall.recvmsg
+define PreBuild
+	# fix go 1.23.x
+	( cd $(PKG_BUILD_DIR); \
+		$(GO_BIN_GET) -u golang.org/x/net \
+		golang.zx2c4.com/wireguard/conn \
+		golang.zx2c4.com/wireguard/device; \
+	)
+endef
+
+Hooks/Compile/Pre += PreBuild
 
 define Package/wireguard-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
