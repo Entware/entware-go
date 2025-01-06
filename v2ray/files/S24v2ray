@@ -1,13 +1,8 @@
 #!/bin/sh
 
-export V2RAY_LOCATION_ASSET=/opt/etc/v2ray
-export V2RAY_LOCATION_CONFIG=/opt/etc/v2ray
-export V2RAY_BUF_READV=auto
-export V2RAY_RAY_BUFFER_SIZE=2
-
 ENABLED=yes
 PROCS=v2ray
-ARGS="-confdir /opt/etc/v2ray"
+ARGS="run -d /opt/etc/v2ray"
 PREARGS=""
 DESC=$PROCS
 PATH=/opt/sbin:/opt/bin:/opt/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

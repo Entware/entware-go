@@ -1,0 +1,20 @@
+--- a/infra/conf/geodata/geodata.go
++++ b/infra/conf/geodata/geodata.go
+@@ -11,7 +11,7 @@ type loader struct {
+ }
+ 
+ func (l *loader) LoadGeoSite(list string) ([]*routercommon.Domain, error) {
+-	return l.LoadGeoSiteWithAttr("geosite.dat", list)
++	return l.LoadGeoSiteWithAttr("../share/v2ray/geosite.dat", list)
+ }
+ 
+ func (l *loader) LoadGeoSiteWithAttr(file string, siteWithAttr string) ([]*routercommon.Domain, error) {
+@@ -55,7 +55,7 @@ func (l *loader) LoadGeoSiteWithAttr(fil
+ }
+ 
+ func (l *loader) LoadGeoIP(country string) ([]*routercommon.CIDR, error) {
+-	return l.LoadIP("geoip.dat", country)
++	return l.LoadIP("../share/v2ray/geoip.dat", country)
+ }
+ 
+ var loaders map[string]func() LoaderImplementation
