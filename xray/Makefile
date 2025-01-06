@@ -5,13 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=xray
-PKG_VERSION:=1.8.18
+PKG_VERSION:=25.1.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=9e6d7a3cb0c5d60b8ef3cedef7ffaf610547f619
+PKG_SOURCE_VERSION:=e80ca67feed9fb1b75566c9f91bee8809c086c05
 PKG_SOURCE_URL:=https://github.com/XTLS/Xray-core
-PKG_MIRROR_HASH:=43ad0583411de6ec69ba588ac8a3907c5311b6b881bbd8ed7956cf8bb097c1e3
+PKG_MIRROR_HASH:=a4a359a1e1c6fea7e35dd74fc16099823001d3ba88cde6c30a6bbac9032d6c19
+
+PKG_LICENSE:=MPL-2.0
+PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_PARALLEL:=1
 
@@ -70,6 +73,8 @@ define Package/xray/conffiles
 endef
 
 Package/xray_nohf/conffiles=$(Package/xray/conffiles)
+
+XIMPORTPATH:=$(call tolower,$(XIMPORTPATH))
 
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/core.build=$(COMMIT_SHORT)'
