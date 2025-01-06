@@ -3,7 +3,7 @@
 # Copyright (C) 2024 Entware
 
 COMMIT_SHORT:=$(call version_abbrev,$(PKG_SOURCE_VERSION))
-XIMPORTPATH:=$(shell echo $(PKG_SOURCE_URL) | cut -d/ -f3- | tr '[:upper:]' '[:lower:]')
+XIMPORTPATH:=$(shell echo $(PKG_SOURCE_URL) | cut -d/ -f3-)
 
 GOARCH:=$(subst aarch64,arm64,$(subst mipsel,mipsle,$(subst x86_64,amd64,$(ARCH))))
 
@@ -39,6 +39,12 @@ GO_VARS += \
 GO_VARS += GOOS=linux
 
 GO_VARS += GOARCH=$(GOARCH)
+
+# https://go.dev/wiki/MinimumRequirements:
+# "The GOARM64 environment variable defaults to v8.0."
+ifeq ($(ARCH),aarch64)
+  GO_VARS += GOARM64=v8.0
+endif
 
 ifeq ($(ARCH),arm)
   ifeq ($(BUILD_VARIANT),hf)
