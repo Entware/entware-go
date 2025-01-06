@@ -5,13 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.59.0
+PKG_VERSION:=0.61.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=243ca994e01d672bd6f07788936fdc1118adc460
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/fatedier/frp
-PKG_MIRROR_HASH:=8bba8d1060bf139bc0188c6968ee9264e405a2ff79e70c94153ab24f794578e6
+PKG_MIRROR_HASH:=d72a04fac119a9ae64ea17ba65b1814632cb7fcac434cf2c3c1a1735638f67fe
+
+PKG_LICENSE:=Apache-2.0
+PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,7 +25,7 @@ define Package/frp/Default
 	SECTION:=net
 	CATEGORY:=Network
 	SUBMENU:=Routing and Redirection
-	TITLE:=frp is a fast reverse proxy
+	TITLE:=fast reverse proxy
 	URL:=https://github.com/fatedier/frp
 	MAINTAINER:=Entware team, https://entware.net
 endef
@@ -35,7 +38,7 @@ endef
 define Package/frp-go_nohf
 	$(call Package/frp/Default)
 	VARIANT:=nohf
-	DEPENDS+=@arm
+	DEPENDS:=@arm
 endef
 
 define Package/frp-go/description
@@ -61,7 +64,7 @@ GO_TARGET:=./cmd/frpc ./cmd/frps
 
 define Package/frp-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/* $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/frp{c,s} $(1)/opt/bin
 	$(INSTALL_DIR) $(1)/opt/etc/frp
 	$(INSTALL_CONF) $(PKG_BUILD_DIR)/conf/*.toml $(1)/opt/etc/frp
 endef
