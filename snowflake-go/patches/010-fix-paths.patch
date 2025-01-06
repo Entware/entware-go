@@ -1,6 +1,6 @@
 --- a/broker/broker.go
 +++ b/broker/broker.go
-@@ -207,8 +207,8 @@ func main() {
+@@ -211,8 +211,8 @@ func main() {
  	flag.StringVar(&keyFilename, "key", "", "TLS private key file")
  	flag.StringVar(&acmeCertCacheDir, "acme-cert-cache", "acme-cert-cache", "directory in which certificates should be cached")
  	flag.StringVar(&addr, "addr", ":443", "address to listen on")
@@ -9,5 +9,5 @@
 +	flag.StringVar(&geoipDatabase, "geoipdb", "/opt/share/tor/geoip", "path to correctly formatted geoip database mapping IPv4 address ranges to country codes")
 +	flag.StringVar(&geoip6Database, "geoip6db", "/opt/share/tor/geoip6", "path to correctly formatted geoip database mapping IPv6 address ranges to country codes")
  	flag.StringVar(&bridgeListFilePath, "bridge-list-path", "", "file path for bridgeListFile")
- 	flag.StringVar(&allowedRelayPattern, "allowed-relay-pattern", "", "allowed pattern for relay host name")
+ 	flag.StringVar(&allowedRelayPattern, "allowed-relay-pattern", "", "allowed pattern for relay host name. The broker will reject proxies whose AcceptedRelayPattern is more restrictive than this")
  	flag.StringVar(&presumedPatternForLegacyClient, "default-relay-pattern", "", "presumed pattern for legacy client")
