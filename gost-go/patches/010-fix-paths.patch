@@ -1,9 +1,0 @@
---- a/cmd/gost/version.go
-+++ b/cmd/gost/version.go
-@@ -1,5 +1,5 @@
- package main
- 
- var (
--	version = "3.0.0"
-+	version = "v3.0.0-nightly.20240118"
- )

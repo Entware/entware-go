@@ -1,20 +1,20 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2024 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2024 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=gost-go
-PKG_VERSION:=3.0.0-nightly.20240625
+PKG_VERSION:=3.0.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=1400b5ff5d336849fc84d77e7c6aeb5729b37355
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/go-gost/gost
-PKG_MIRROR_HASH:=7a291791192423869d5a071f829c4aeec293ab8e5dc6dfbd2ce739eb851ba724
+PKG_MIRROR_HASH:=0a417befd0b8cfa9c46d65125610df40519aac403664ea37f0ad8f9a6e8330e2
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_PARALLEL:=1
 
@@ -26,7 +26,7 @@ define Package/gost-go/Default
 	CATEGORY:=Network
 	SUBMENU:=VPN
 	TITLE:=GO Simple Tunnel
-	URL:=https://github.com/SagerNet/gost
+	URL:=https://gost.run
 	MAINTAINER:=Entware team, https://entware.net
 endef
 
@@ -38,11 +38,11 @@ endef
 define Package/gost-go_nohf
 	$(call Package/gost-go/Default)
 	VARIANT:=nohf
-	DEPENDS+=@arm
+	DEPENDS:=@arm
 endef
 
 define Package/gost-go/description
- A simple security tunnel written in golang
+  GO Simple Tunnel - a simple tunnel written in golang.
 endef
 
 Package/gost-go_nohf/description=$(Package/gost-go/description)
