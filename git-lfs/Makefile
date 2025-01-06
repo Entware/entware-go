@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=git-lfs
-PKG_VERSION:=3.5.1
+PKG_VERSION:=3.6.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=e237bb3a364603cbb92cabc34b8401d1ad5d795b
+PKG_SOURCE_VERSION:=6340befc60876f4f039f215479d9d5a945f817e1
 PKG_SOURCE_URL:=https://github.com/git-lfs/git-lfs
-PKG_MIRROR_HASH:=3374f2f889c1a6078e5b4876dc7bf20912d7afe318d01cc65bffe5a63c755052
+PKG_MIRROR_HASH:=ce9b0c8f025a8f2c5918822868ad5524c298a9efbdadb35f82ec82446b1af485
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
@@ -24,6 +24,7 @@ include $(INCLUDE_DIR)/golang.mk
 define Package/git-lfs/Default
   SECTION:=net
   CATEGORY:=Network
+  SUBMENU:=Version Control Systems
   TITLE:=Git Large File Storage
   URL:=https://git-lfs.github.com
   MAINTAINER:=Entware team, https://entware.net
