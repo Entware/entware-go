@@ -1,20 +1,17 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2024 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2024 Entware
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=sing-box-go
-PKG_VERSION:=1.9.3
+PKG_NAME:=sing-box
+PKG_VERSION:=1.10.6
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=085f60337799afc906069b540a38368968c123e4
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/SagerNet/sing-box
-PKG_MIRROR_HASH:=bbcb318209901409366e412a03a589496f4ddb5e95796af86692825320127293
+PKG_MIRROR_HASH:=adc5ca4f79ec5bf40fcc01a72d446cbabbb2b58c40552a541aaf44aa98336368
 
 PKG_BUILD_PARALLEL:=1
 
@@ -26,7 +23,7 @@ define Package/sing-box-go/Default
 	CATEGORY:=Network
 	SUBMENU:=VPN
 	TITLE:=The universal proxy platform
-	URL:=https://github.com/SagerNet/sing-box
+	URL:=https://sing-box.sagernet.org
 	MAINTAINER:=Entware team, https://entware.net
 endef
 
@@ -38,7 +35,7 @@ endef
 define Package/sing-box-go_nohf
 	$(call Package/sing-box-go/Default)
 	VARIANT:=nohf
-	DEPENDS+=@arm
+	DEPENDS:=@arm
 endef
 
 define Package/sing-box-go/description
@@ -53,6 +50,8 @@ define Package/sing-box-go/conffiles
 endef
 
 Package/sing-box-go_nohf/conffiles=$(Package/sing-box-go/conffiles)
+
+XIMPORTPATH:=$(call tolower,$(XIMPORTPATH))
 
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/constant.Version=$(PKG_VERSION)'

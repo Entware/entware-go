@@ -1,12 +1,13 @@
---- a/cmd/sing-box/main.go
-+++ b/cmd/sing-box/main.go
-@@ -69,6 +69,6 @@ func preRun(cmd *cobra.Command, args []s
+--- a/cmd/sing-box/cmd.go
++++ b/cmd/sing-box/cmd.go
+@@ -65,7 +65,7 @@ func preRun(cmd *cobra.Command, args []s
  		}
  	}
  	if len(configPaths) == 0 && len(configDirectories) == 0 {
 -		configPaths = append(configPaths, "config.json")
 +		configPaths = append(configPaths, "/opt/etc/sing-box/config.json")
  	}
+ 	globalCtx = service.ContextWith(globalCtx, deprecated.NewStderrManager(log.StdLogger()))
  }
 --- a/constant/path_unix.go
 +++ b/constant/path_unix.go
