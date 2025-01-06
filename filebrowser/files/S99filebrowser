@@ -1,0 +1,13 @@
+#!/bin/sh
+
+{ [ -f "/opt/etc/filebrowser/filebrowser.conf" ] && \
+. /opt/etc/filebrowser/filebrowser.conf ; } || exit 1
+
+ENABLED=yes
+PROCS=filebrowser
+ARGS="$OPTIONS"
+PREARGS=""
+DESC=$PROCS
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
