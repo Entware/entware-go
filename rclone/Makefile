@@ -5,13 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.67.0
-PKG_RELEASE:=2
+PKG_VERSION:=1.68.2
+PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=93e8a976ef686a4bd8e3afaf2016734c81881507
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/rclone/rclone
-PKG_MIRROR_HASH:=3f7fdb0d52e0caf8c027afa79cac56f61cda7077fc5f4607d472254f3b3fb613
+PKG_MIRROR_HASH:=51068dd940fa4a926fafa9a8830c86f6c198272a6c74883aee3762c52e88a6d8
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_PARALLEL:=1
 
@@ -56,12 +59,11 @@ endef
 Package/rclone_nohf/description=$(Package/rclone/description)
 
 ifeq ($(or $(CONFIG_mips),$(CONFIG_mipsel)),y)
-    define Build/Prepare
-	$(Build/Prepare/Default)
-	patch -p1 -d $(PKG_BUILD_DIR) < ./patches-mips/010-mips.patch
-    endef
+  define FixMIPS
+	$(SED) '/mount2/d' $(PKG_BUILD_DIR)/cmd/all/all.go
+  endef
+  Hooks/Compile/Pre += FixMIPS
 endif
-
 
 GO_LDFLAGS += \
         -X '$(XIMPORTPATH)/fs.Version=$(PKG_VERSION)'

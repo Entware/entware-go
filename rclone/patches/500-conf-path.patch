@@ -1,6 +1,6 @@
 --- a/fs/config/config.go
 +++ b/fs/config/config.go
-@@ -126,8 +126,8 @@ func init() {
+@@ -125,8 +125,8 @@ func init() {
  	fs.ConfigFileHasSection = func(section string) bool {
  		return LoadedData().HasSection(section)
  	}
