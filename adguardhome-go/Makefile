@@ -5,14 +5,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.52
+PKG_VERSION:=v0.107.55
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-06-06
-PKG_SOURCE_VERSION:=c7d8b9ede1eaf8507e406875c679c0a1c21e9cca
+PKG_SOURCE_DATE:=2024-12-11
+PKG_SOURCE_VERSION:=ceb178fcd562af02802590db6cb8093ff26924ab
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=b520536e451f822b7d7201ebf3faa9fe95de9a71ca827852d736f6e0691eb468
+PKG_MIRROR_HASH:=8e321850d447c0677458ae36d38aed5ce815886cd56a3379ccd57a1e3d9a0c28
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
@@ -51,7 +51,6 @@ Package/adguardhome-go_nohf/description=$(Package/adguardhome-go/description)
 
 define Package/adguardhome-go/conffiles
 /opt/etc/AdGuardHome/adguardhome.conf
-/opt/etc/hosts
 endef
 
 Package/adguardhome-go_nohf/conffiles=$(Package/adguardhome-go/conffiles)
@@ -78,20 +77,9 @@ define Package/adguardhome-go/install
 	$(INSTALL_BIN) ./files/S99adguardhome $(1)/opt/etc/init.d
 	$(INSTALL_DIR) $(1)/opt/etc/AdGuardHome
 	$(INSTALL_CONF) ./files/adguardhome.conf $(1)/opt/etc/AdGuardHome
-	touch $(1)/opt/etc/hosts
 endef
 
 Package/adguardhome-go_nohf/install=$(Package/adguardhome-go/install)
-
-define Package/adguardhome-go/postinst
-#!/bin/sh
-
-if [ ! -s "/opt/etc/hosts" ]; then
-  cat /etc/hosts > /opt/etc/hosts
-fi
-endef
-
-Package/adguardhome-go_nohf/postinst=$(Package/adguardhome-go/postinst)
 
 $(eval $(call BuildPackage,adguardhome-go))
 $(eval $(call BuildPackage,adguardhome-go_nohf))
