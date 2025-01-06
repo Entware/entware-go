@@ -1,6 +1,6 @@
 --- a/logpolicy/logpolicy.go
 +++ b/logpolicy/logpolicy.go
-@@ -384,7 +384,7 @@ func tryFixLogStateLocation(dir, cmdname
+@@ -389,7 +389,7 @@ func tryFixLogStateLocation(dir, cmdname
  	existsInCache := false
  	cacheDir := os.Getenv("CACHE_DIRECTORY")
  	if cacheDir != "" {
