@@ -5,14 +5,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=grafana
-PKG_VERSION:=10.4.5
+PKG_VERSION:=10.4.14
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2024-06-21
-PKG_SOURCE_VERSION:=17cbd4277deaa5f970e88c5bfe7a46de10cc6302
+PKG_SOURCE_DATE:=2024-12-03
+PKG_SOURCE_VERSION:=5e34be80a86f976758213f0f40ce7a153ea47d0d
 PKG_SOURCE_URL:=https://github.com/grafana/grafana
-PKG_MIRROR_HASH:=d97a2739cde10d6715f68aaf667aed43b2cea6362d4b723160db66c167326994
+PKG_MIRROR_HASH:=13b9d311bd165c5719a32cc38a3daa444d937f196e7b25fe0b0c846781b93eb9
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE LICENSING.md
@@ -71,18 +71,35 @@ define Build/Deps
 		$(GO_ENV_COMMON) $(GO_BIN) build -mod=mod -modfile=wire.mod \
 		-o=$(PKG_BUILD_DIR)/wire-host "github.com/google/wire/cmd/wire"; \
 	)
+	# fix go 1.23.x
+	( cd $(PKG_BUILD_DIR); $(GO_BIN_GET) \
+		github.com/apache/arrow/go/v15/arrow/ipc@v15.0.0 \
+		github.com/apache/arrow/go/v15/arrow@v15.0.0 \
+		github.com/googleapis/gax-go/v2@v2.13.0 \
+		github.com/grafana/grafana-google-sdk-go/pkg/tokenprovider@v0.1.0 \
+		github.com/grafana/grafana/pkg/components/imguploader/gcs \
+		github.com/grafana/grafana/pkg/extensions \
+		github.com/grafana/grafana/pkg/login/social \
+		github.com/kr/pretty@v0.3.1 \
+		github.com/labstack/gommon/color@v0.4.0 \
+		github.com/prometheus/common/config@v0.46.0 \
+		k8s.io/apiserver/pkg/storage/etcd3@v0.29.0 \
+		k8s.io/apiserver/pkg/storage/storagebackend/factory@v0.29.0 \
+		k8s.io/client-go/tools/clientcmd@v0.29.0; \
+	)
 	# generate code from .cue files
 	( cd $(PKG_BUILD_DIR); \
-		$(GO_BIN_GENERATE) ./pkg/plugins/plugindef; \
-		$(GO_BIN_GENERATE) ./kinds/gen.go; \
-		$(GO_BIN_GENERATE) ./public/app/plugins/gen.go; \
-		$(GO_BIN_GENERATE) ./pkg/kindsysreport/codegen/report.go; \
+		for t in \
+			./pkg/plugins/plugindef \
+			./kinds/gen.go \
+			./public/app/plugins/gen.go \
+			./pkg/kindsysreport/codegen/report.go; do \
+			$(GO_BIN_GENERATE) $$$$t; \
+		done; \
 	)
 	# generate go files
 	( cd $(PKG_BUILD_DIR); \
-		$(GO_ENV_COMMON) \
-		PATH="$(GOROOT)/bin:$(PATH)" \
-		$(PKG_BUILD_DIR)/wire-host gen -tags "oss" ./pkg/server; \
+		$(GO_ENV_COMMON) $(PKG_BUILD_DIR)/wire-host gen -tags "oss" ./pkg/server; \
 	)
 endef
 
