@@ -5,13 +5,16 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=yggdrasil-go
-PKG_VERSION:=0.5.6
+PKG_VERSION:=0.5.12
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=fec96a38a423142ac1712eb63ad7651c5e7a82aa
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/yggdrasil-network/yggdrasil-go
-PKG_MIRROR_HASH:=2c8695793f60860d13751ebe1793459d18841b6982d6a8842c9a513844db2fb7
+PKG_MIRROR_HASH:=52653522b1f5a0d1187908c9c76574f095ad1a7e889e4641dd85129b37daeea2
+
+PKG_LICENSE:=LGPL-3.0-only
+PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_PARALLEL:=1
 
@@ -40,12 +43,11 @@ endef
 
 define Package/yggdrasil-go/description
   Yggdrasil builds end-to-end encrypted networks with IPv6.
-  Beyond the similarities with cjdns is a different routing
-  algorithm. This globally-agreed spanning tree uses greedy
-  routing in a metric space. Back-pressure routing techniques
-  allow advanced link aggregation bonding on per-stream basis.
-  In turn, a single stream will span across multiple network
-  interfaces simultaneously with much greater throughput.
+  Beyond the similarities with cjdns is a different routing algorithm.
+  This globally-agreed spanning tree uses greedy routing in a metric space.
+  Back-pressure routing techniques allow advanced link aggregation bonding
+  on per-stream basis. In turn, a single stream will span across multiple
+  network interfaces simultaneously with much greater throughput.
 endef
 
 Package/yggdrasil-go_nohf/description=$(Package/yggdrasil-go/description)
