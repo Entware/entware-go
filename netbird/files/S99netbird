@@ -1,0 +1,12 @@
+#!/bin/sh
+
+[ -f "/opt/etc/netbird/env" ] && . /opt/etc/netbird/env
+
+ENABLED=yes
+PROCS=netbird
+ARGS="service run $FLAGS"
+PREARGS=""
+DESC="Netbird Client"
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
