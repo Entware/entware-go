@@ -1,0 +1,10 @@
+#!/bin/sh
+
+ENABLED=yes
+PROCS=sftpgo
+ARGS="serve -c /opt/etc/sftpgo -l /opt/var/log/sftpgo.log --log-level error"
+PREARGS=""
+DESC="SFTPGo"
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+. /opt/etc/init.d/rc.func
