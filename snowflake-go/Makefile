@@ -23,6 +23,7 @@ define Package/snowflake/Default
 	CATEGORY:=Network
 	TITLE:=Snowflake
 	URL:=https://snowflake.torproject.org/
+	DEPENDS:=tor-geoip
 endef
 
 define Package/snowflake-go
@@ -57,11 +58,6 @@ define Package/snowflake-go/install
 		$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/$$$$bin \
 			$(1)/opt/bin/snowflake-$$$$bin; \
 	done
-	$(INSTALL_DIR) $(1)/opt/share/tor
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/broker/test_geoip \
-		$(1)/opt/share/tor/geoip
-	$(INSTALL_DATA) $(PKG_BUILD_DIR)/broker/test_geoip6 \
-		$(1)/opt/share/tor/geoip6
 endef
 
 $(eval $(call BuildPackage,snowflake-go))
