@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=git-lfs
-PKG_VERSION:=3.6.0
+PKG_VERSION:=3.6.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=6340befc60876f4f039f215479d9d5a945f817e1
+PKG_SOURCE_VERSION:=ea47a34bde1ba1ecf9eb8dc6d44fcf7aef42f5e3
 PKG_SOURCE_URL:=https://github.com/git-lfs/git-lfs
-PKG_MIRROR_HASH:=ce9b0c8f025a8f2c5918822868ad5524c298a9efbdadb35f82ec82446b1af485
+PKG_MIRROR_HASH:=aa3867e620d9e84bc98f6c831d52a57819212a2aff0c700a0d0d72ce81db2e75
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
@@ -50,11 +50,10 @@ endef
 
 Package/git-lfs_nohf/description=$(Package/git-lfs/description)
 
-define Build/FixHelp
+define Build/Compile
 	( cd $(PKG_BUILD_DIR); $(GO_BIN_GENERATE) ./commands; )
+	$(call Build/Compile/Go)
 endef
-
-Hooks/Compile/Pre += Build/FixHelp
 
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/v3/config.Vendor=Entware' \
