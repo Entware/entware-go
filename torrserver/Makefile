@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2021-2024 Entware
+# Copyright (C) 2021-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=torrserver
-PKG_VERSION:=1.2.134
+PKG_VERSION:=135
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=MatriX.$(shell echo $(PKG_VERSION) | cut -d. -f3-)
+PKG_SOURCE_VERSION:=MatriX.$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/YouROK/TorrServer
-PKG_MIRROR_HASH:=5b459a09229cd8959842bed92cff291d7376b47467c708c9f9e80ca98f715957
+PKG_MIRROR_HASH:=c2a4ec9a1d7650420c0daa3ac6cdacfeccd9a7288c1d71ef6dd820cc72c0831e
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
@@ -54,7 +54,7 @@ GO_SRC_SUBDIR:=server
 GO_TAGS:=nosqlite
 GO_TARGET:=./cmd
 
-define PreBuild
+define Build/Web
 	( cd $(PKG_BUILD_DIR); \
 		NODE_OPTIONS=--openssl-legacy-provider \
 		$(GO_ENV_COMMON) $(GO_BIN) run \
@@ -64,7 +64,10 @@ define PreBuild
 	( cd $(PKG_BUILD_DIR)/server; $(GO_BIN_MOD_TIDY); )
 endef
 
-Hooks/Compile/Pre += PreBuild
+define Build/Compile
+	$(call Build/Web)
+	$(call Build/Compile/Go)
+endef
 
 define Package/torrserver/install
 	$(INSTALL_DIR) $(1)/opt/sbin
