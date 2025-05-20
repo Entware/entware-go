@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024 Entware
+# Copyright (C) 2024-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=grpcurl
-PKG_VERSION:=1.9.1
+PKG_VERSION:=1.9.3
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/fullstorydev/grpcurl
-PKG_MIRROR_HASH:=46bdbe9c45bc7dbfbf6c2a4016eaeae8dab98e24efe7e3cdc65ec0b04eca5aac
+PKG_MIRROR_HASH:=4c8922fd1bc07e7b93bc68f34744ed47cc48754e488a24fd42542393a43b1091
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
