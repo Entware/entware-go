@@ -57,11 +57,10 @@ GO_LDFLAGS += \
 
 GO_TARGET:=./cmd/micro
 
-define Build/Deps
+define Build/Compile
 	( cd $(PKG_BUILD_DIR); $(GO_BIN_GENERATE) ./runtime; )
+	$(call Build/Compile/Go)
 endef
-
-Hooks/Compile/Pre += Build/Deps
 
 define Package/micro/install
 	$(INSTALL_DIR) $(1)/opt/sbin
