@@ -1,6 +1,6 @@
 --- a/logpolicy/logpolicy.go
 +++ b/logpolicy/logpolicy.go
-@@ -389,7 +389,7 @@ func tryFixLogStateLocation(dir, cmdname
+@@ -390,7 +390,7 @@ func tryFixLogStateLocation(dir, cmdname
  	existsInCache := false
  	cacheDir := os.Getenv("CACHE_DIRECTORY")
  	if cacheDir != "" {
@@ -27,7 +27,7 @@
 @@ -23,7 +23,7 @@ func init() {
  func statePath() string {
  	switch runtime.GOOS {
- 	case "linux":
+ 	case "linux", "illumos", "solaris":
 -		return "/var/lib/tailscale/tailscaled.state"
 +		return "/opt/var/lib/tailscale/tailscaled.state"
  	case "freebsd", "openbsd":

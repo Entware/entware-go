@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2021-2024 Entware
+# Copyright (C) 2021-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tailscale
-PKG_VERSION:=1.78.3
+PKG_VERSION:=1.82.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=1b41fdeddb6598b35ba15cc6b07740e0cc0e8411
+PKG_SOURCE_VERSION:=e4d64c6faf827a308ec20b39651225178e6743c0
 PKG_SOURCE_URL:=https://github.com/tailscale/tailscale
-PKG_MIRROR_HASH:=aed62536845e1bccaabf318c369fc9d3efb3a905fb2d8df1d150de043800fcdb
+PKG_MIRROR_HASH:=9a4996f787f17bedc1b96cbb76ccdb9d4da24b827bcefd4f8f460abc2e516e10
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
@@ -28,7 +28,7 @@ define Package/tailscale/Default
 	TITLE:=Private WireGuard networks made easy
 	URL:=https://tailscale.com/
 	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+ca-bundle +coreutils-nohup
+	EXTRA_DEPENDS:=ca-bundle, coreutils-nohup
 endef
 
 define Package/tailscale
@@ -39,7 +39,7 @@ endef
 define Package/tailscale_nohf
 	$(call Package/tailscale/Default)
 	VARIANT:=nohf
-	DEPENDS+=@arm
+	DEPENDS:=@arm
 endef
 
 define Package/tailscale/description
