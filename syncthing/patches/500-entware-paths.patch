@@ -1,6 +1,6 @@
 --- a/lib/locations/locations.go
 +++ b/lib/locations/locations.go
-@@ -233,7 +233,7 @@ func unixConfigDir(userHome, xdgConfigHo
+@@ -235,7 +235,7 @@ func unixConfigDir(userHome, xdgConfigHo
  	}
  
  	// Use our default
