@@ -1,23 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus
-PKG_VERSION:=3.1.0
+PKG_VERSION:=3.4.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-01-02
-PKG_SOURCE_VERSION:=7086161a93b262aa0949dbf2aba15a5a7b13e0a3
+PKG_SOURCE_DATE:=2025-05-17
+PKG_SOURCE_VERSION:=546b1d242e209ed4228aa01a248dbf3e41e573ea
 PKG_SOURCE_URL:=https://github.com/prometheus/prometheus
-PKG_MIRROR_HASH:=32774c395133309fa2b27ddae9c323418986b85982cde081f6e9dfd89759434e
+PKG_MIRROR_HASH:=c0aa4231235e23dc942da8b3a483c7bd917e03b522b0ee4ce38e1a40a0a5aefe
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-PKG_BUILD_DEPENDS:=node/host
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -64,7 +63,7 @@ define Download/prometheus-web-ui
   URL:=https://github.com/prometheus/prometheus/releases/download/v$(PKG_VERSION)/
   URL_FILE:=$(WEB_FILE)
   FILE:=$(WEB_FILE)
-  HASH:=d390da683205b400e790b16a7477b9794be8e8b473e8176e32f1959b339ebab3
+  HASH:=19ceafadf839b8d64b8f0e14f591edcb076add8f789297d981b3650b4ac5d79d
 endef
 
 GO_BUILD_ARGS += -a
@@ -82,7 +81,7 @@ GO_TARGET:=./cmd/...
 
 GO_VARS += GO111MODULE=on
 
-define Build/CompilePre
+define Build/Web
 	$(HOST_TAR) -xzf $(DL_DIR)/$(WEB_FILE) -C $(PKG_BUILD_DIR)/web/ui
 	( cd $(PKG_BUILD_DIR)/web/ui; \
 		$(FIND) ./static -type f -a -name "*.map" -delete; )
@@ -90,7 +89,10 @@ define Build/CompilePre
 	( cd $(PKG_BUILD_DIR); $(GO_BIN_GENERATE) -tags plugins ./plugins; )
 endef
 
-Hooks/Compile/Pre += Build/CompilePre
+define Build/Compile
+	$(call Build/Web)
+	$(call Build/Compile/Go)
+endef
 
 define Package/prometheus/install
 	$(INSTALL_DIR) $(1)/opt/bin
