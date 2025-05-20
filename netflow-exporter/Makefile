@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 #
 # based on fork from paihu/netflow_exporter
 
@@ -58,11 +58,10 @@ GO_LDFLAGS += \
 	-X 'github.com/prometheus/common/version.BuildUser=Entware@Entware' \
 	-X 'github.com/prometheus/common/version.BuildDate=$(PKG_SOURCE_DATE)'
 
-define Build/FixPre
+define Build/Compile
 	( cd $(PKG_BUILD_DIR); rm -f ipdb.go; $(GO_BIN_MOD_TIDY); )
+	$(call Build/Compile/Go)
 endef
-
-Hooks/Compile/Pre += Build/FixPre
 
 define Package/netflow-exporter/install
 	$(INSTALL_DIR) $(1)/opt/bin
