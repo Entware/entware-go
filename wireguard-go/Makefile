@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2024 Entware
+# Copyright (C) 2011-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -45,17 +45,14 @@ endef
 
 Package/wireguard-go_nohf/description=$(Package/wireguard-go/description)
 
-# XXX link: golang.org/x/net/internal/socket: invalid reference to syscall.recvmsg
-define PreBuild
-	# fix go 1.23.x
+define Build/Compile
 	( cd $(PKG_BUILD_DIR); \
 		$(GO_BIN_GET) -u golang.org/x/net \
 		golang.zx2c4.com/wireguard/conn \
 		golang.zx2c4.com/wireguard/device; \
 	)
+	$(call Build/Compile/Go)
 endef
-
-Hooks/Compile/Pre += PreBuild
 
 define Package/wireguard-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
