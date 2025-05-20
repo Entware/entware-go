@@ -1,23 +1,23 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024 Entware
+# Copyright (C) 2024-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=filebrowser
-PKG_VERSION:=2.31.2
+PKG_VERSION:=2.32.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=129a4fd39d550bd2a449575cf93f061593e39102
+PKG_SOURCE_VERSION:=3d6c5152fe22a4a47783253a3506a2930b7b6be3
 PKG_SOURCE_URL:=https://github.com/filebrowser/filebrowser
-PKG_MIRROR_HASH:=4edcce9ae8aa9184b5a9b8182166322f7e9145fd1fee79ee216d844a09459e9b
+PKG_MIRROR_HASH:=4b74a0f53013c67fe315110856753dfcd9ed14aa1e06e7722ba574e768fabeac
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Entware team, https://entware.net
 
-PKG_BUILD_DEPENDS:=node/host
+PKG_BUILD_DEPENDS:=node-pnpm/host
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -65,14 +65,13 @@ GO_VARS += \
 	GOGC=off \
 	GO111MODULE=on
 
-define Build/Web
+define Build/Compile
 	( cd $(PKG_BUILD_DIR)/frontend; \
-		npm ci; \
-		NODE_OPTIONS=--openssl-legacy-provider npm run build; \
+		pnpm install --frozen-lockfile; \
+		pnpm run build; \
 	)
+	$(call Build/Compile/Go)
 endef
-
-Hooks/Compile/Pre += Build/Web
 
 define Package/filebrowser/install
 	$(INSTALL_DIR) $(1)/opt/sbin
