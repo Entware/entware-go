@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-plugin
-PKG_VERSION:=5.17.0
+PKG_VERSION:=5.25.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/teddysun/v2ray-plugin
-PKG_MIRROR_HASH:=17dc80f719d00dfd7326f9a6f1de5d884e94c520dc3802d4cdbad88680995ee5
+PKG_MIRROR_HASH:=b2a2eaebe41e450f5cadeab97ebd746491f3c883cd8751d70468f53aeb954b40
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
