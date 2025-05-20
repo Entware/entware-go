@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=headscale
-PKG_VERSION:=v0.23.0
+PKG_VERSION:=v0.26.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/juanfont/headscale
-PKG_MIRROR_HASH:=eccca40c97a81df475822bc00a9048eb4788a6682198de0f252e96cca49b4101
+PKG_MIRROR_HASH:=0aaf6c2ade99b1cb629640a56be2ff62809e3b32308239fb863a70e3e580da64
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
