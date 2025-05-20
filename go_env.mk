@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024 Entware
+# Copyright (C) 2024-2025 Entware
 
 COMMIT_SHORT:=$(call version_abbrev,$(PKG_SOURCE_VERSION))
 XIMPORTPATH:=$(shell echo $(PKG_SOURCE_URL) | cut -d/ -f3-)
@@ -13,6 +13,7 @@ GO_ENV_COMMON:= \
 	GOPATH=$(DL_DIR)/go-mod-cache \
 	GOTMPDIR=$(TMP_DIR) \
 	GOENV=off \
+	GOTELEMETRY=off \
 	GOTOOLCHAIN=local \
 	GOWORK=off
 
