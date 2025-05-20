@@ -1,17 +1,20 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2020-2024 Entware
+# Copyright (C) 2020-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=1.43.5
+PKG_VERSION:=1.45.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=e051fcc9dfb2b332bb25a11447b6b158ae9a6b78
+PKG_SOURCE_VERSION:=8bf668e033843b1d0a43bb17ebafcc8d13b36a81
 PKG_SOURCE_URL:=https://github.com/nextdns/nextdns
-PKG_MIRROR_HASH:=39ff3c9c253e4d1a9ce2896c786f1695e825c8af8b70d33e9328511b8e0efd38
+PKG_MIRROR_HASH:=370ff6fc679b12e5cd3e15f81e90e879e01c66e7014411a01c80958429a6c18b
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
 
 PKG_BUILD_PARALLEL:=1
 
@@ -23,7 +26,7 @@ define Package/nextdns/Default
 	CATEGORY:=Network
 	SUBMENU:=IP Addresses and Names
 	TITLE:=NextDNS CLI Client
-	URL:=https://github.com/nextdns/nextdns
+	URL:=https://nextdns.io/
 	MAINTAINER:=Entware team, https://entware.net
 endef
 
