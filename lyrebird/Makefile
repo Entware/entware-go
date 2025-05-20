@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=lyrebird
-PKG_VERSION:=0.5.0
+PKG_VERSION:=0.6.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird
-PKG_MIRROR_HASH:=c3075442a946e75debac34184c486f3a1f93b33c9ba56d0c550dc817ab7e4a3f
+PKG_MIRROR_HASH:=c80e9e9f9cc1b55e48d4a106fcba7684fe363a1dd3dae093ef31c38d08869d72
 
 PKG_LICENSE:=GPL-3.0-or-later
 PKG_LICENSE_FILES:=LICENSE LICENSE-GPL3.txt
@@ -48,6 +48,8 @@ define Package/lyrebird/description
 endef
 
 Package/lyrebird_nohf/description=$(Package/lyrebird/description)
+
+GO_LDFLAGS += -X 'main.lyrebirdVersion=$(PKG_VERSION)'
 
 GO_TARGET:=./cmd/lyrebird
 
