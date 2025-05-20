@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.61.1
+PKG_VERSION:=0.62.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/fatedier/frp
-PKG_MIRROR_HASH:=44fb5d33bb211e20e9d26eb21f6de5e9a8d11551ab37d2706a3d8e2a8c74ddec
+PKG_MIRROR_HASH:=50cf34716e43fcdf35e08dacc104d15c7cf7ae77c8cdfff128a0f1edf2c4ff11
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
