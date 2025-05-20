@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=restic
-PKG_VERSION:=0.17.3
+PKG_VERSION:=0.18.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/restic/restic
-PKG_MIRROR_HASH:=701a2cf5ca6fe4a82de4e8d29253ea58c55d3fae4940a61891554f7772db48dd
+PKG_MIRROR_HASH:=7808ee49c2069410fa2440d1eef7c3fd61b26bb1a332d2b793e76155153dd721
 
 PKG_LICENSE:=BSD-2-Clause
 PKG_LICENSE_FILES:=LICENSE
@@ -48,6 +48,8 @@ define Package/restic-go/description
 endef
 
 Package/restic-go_nohf/description=$(Package/restic-go/description)
+
+GO_TAGS:=disable_grpc_modules
 
 GO_TARGET:=./cmd/restic
 
