@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2025 Entware
 #
 # XXX mips(el): modernc.org/libc/**: build constraints exclude all Go files in ***
 
@@ -65,16 +65,15 @@ GO_TAGS:=builtinassets, netgo
 
 GO_TARGET:=./cmd/promlens
 
-define Build/CompilePre
+define Build/Compile
 	( cd $(PKG_BUILD_DIR)/app; \
 		CI=false PUBLIC_URL=. npm install; \
 		CI=false NODE_OPTIONS=--openssl-legacy-provider \
 			PUBLIC_URL=. npm run build; \
 	)
 	( cd $(PKG_BUILD_DIR); $(SHELL) scripts/compress_assets.sh; )
+	$(call Build/Compile/Go)
 endef
-
-Hooks/Compile/Pre += Build/CompilePre
 
 define Package/promlens/install
 	$(INSTALL_DIR) $(1)/opt/bin
