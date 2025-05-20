@@ -1,6 +1,6 @@
 --- a/client/cmd/root.go
 +++ b/client/cmd/root.go
-@@ -88,11 +88,11 @@ func Execute() error {
+@@ -95,11 +95,11 @@ func Execute() error {
  }
  
  func init() {
@@ -16,7 +16,7 @@
  
  	switch runtime.GOOS {
  	case "windows":
-@@ -111,7 +111,7 @@ func init() {
+@@ -118,7 +118,7 @@ func init() {
  	oldDefaultConfigPath = oldDefaultConfigPathDir + "config.json"
  	oldDefaultLogFile = oldDefaultLogFileDir + "client.log"
  
@@ -25,9 +25,20 @@
  	if runtime.GOOS == "windows" {
  		defaultDaemonAddr = "tcp://127.0.0.1:41731"
  	}
+--- a/client/configs/configs.go
++++ b/client/configs/configs.go
+@@ -17,7 +17,7 @@ func init() {
+ 	case "windows":
+ 		StateDir = filepath.Join(os.Getenv("PROGRAMDATA"), "Netbird")
+ 	case "darwin", "linux":
+-		StateDir = "/var/lib/netbird"
++		StateDir = "/opt/var/lib/netbird"
+ 	case "freebsd", "openbsd", "netbsd", "dragonfly":
+ 		StateDir = "/var/db/netbird"
+ 	}
 --- a/client/iface/configurer/usp.go
 +++ b/client/iface/configurer/usp.go
-@@ -216,7 +216,7 @@ func (t *WGUSPConfigurer) Close() {
+@@ -210,7 +210,7 @@ func (t *WGUSPConfigurer) Close() {
  	}
  
  	if runtime.GOOS == "linux" {
@@ -36,15 +47,6 @@
  		if _, statErr := os.Stat(sockPath); statErr == nil {
  			_ = os.Remove(sockPath)
  		}
---- a/client/internal/dns/consts_linux.go
-+++ b/client/internal/dns/consts_linux.go
-@@ -3,5 +3,5 @@
- package dns
- 
- const (
--	fileUncleanShutdownResolvConfLocation = "/var/lib/netbird/resolv.conf"
-+	fileUncleanShutdownResolvConfLocation = "/opt/var/lib/netbird/resolv.conf"
- )
 --- a/client/internal/routemanager/systemops/systemops_linux.go
 +++ b/client/internal/routemanager/systemops/systemops_linux.go
 @@ -29,7 +29,7 @@ const (
@@ -56,17 +58,6 @@
  
  	// ipv4ForwardingPath is the path to the file containing the IP forwarding setting.
  	ipv4ForwardingPath = "net.ipv4.ip_forward"
---- a/client/internal/statemanager/path.go
-+++ b/client/internal/statemanager/path.go
-@@ -13,7 +13,7 @@ func GetDefaultStatePath() string {
- 	case "windows":
- 		return filepath.Join(os.Getenv("PROGRAMDATA"), "Netbird", "state.json")
- 	case "darwin", "linux":
--		return "/var/lib/netbird/state.json"
-+		return "/opt/var/lib/netbird/state.json"
- 	case "freebsd", "openbsd", "netbsd", "dragonfly":
- 		return "/var/db/netbird/state.json"
- 	}
 --- a/client/system/osrelease_unix.go
 +++ b/client/system/osrelease_unix.go
 @@ -11,9 +11,9 @@ import (
@@ -83,41 +74,12 @@
  	defer file.Close()
 --- a/client/ui/client_ui.go
 +++ b/client/ui/client_ui.go
-@@ -45,7 +45,7 @@ const (
- func main() {
- 	var daemonAddr string
+@@ -103,7 +103,7 @@ func main() {
  
+ // parseFlags reads and returns all needed command-line flags.
+ func parseFlags() (daemonAddr string, showSettings, showNetworks, showDebug bool, errorMsg string, saveLogsInFile bool) {
 -	defaultDaemonAddr := "unix:///var/run/netbird.sock"
 +	defaultDaemonAddr := "unix:///opt/var/run/netbird.sock"
- 	if runtime.GOOS == "windows" {
- 		defaultDaemonAddr = "tcp://127.0.0.1:41731"
- 	}
-@@ -62,7 +62,7 @@ func main() {
- 	var errorMSG string
- 	flag.StringVar(&errorMSG, "error-msg", "", "displays a error message window")
- 
--	tmpDir := "/tmp"
-+	tmpDir := "/opt/tmp"
- 	if runtime.GOOS == "windows" {
- 		tmpDir = os.TempDir()
- 	}
---- a/client/ui/config/config.go
-+++ b/client/ui/config/config.go
-@@ -17,14 +17,14 @@ type ClientConfig struct {
- // We are creating this package to extract utility functions from the cmd package
- // reading and parsing the configurations for the client should be done here
- func Config() *ClientConfig {
--	defaultConfigPath := "/etc/wiretrustee/config.json"
--	defaultLogFile := "/var/log/wiretrustee/client.log"
-+	defaultConfigPath := "/opt/etc/wiretrustee/config.json"
-+	defaultLogFile := "/opt/var/log/wiretrustee/client.log"
- 	if runtime.GOOS == "windows" {
- 		defaultConfigPath = os.Getenv("PROGRAMDATA") + "\\Wiretrustee\\" + "config.json"
- 		defaultLogFile = os.Getenv("PROGRAMDATA") + "\\Wiretrustee\\" + "client.log"
- 	}
- 
--	defaultDaemonAddr := "unix:///var/run/wiretrustee.sock"
-+	defaultDaemonAddr := "unix:///opt/var/run/wiretrustee.sock"
  	if runtime.GOOS == "windows" {
  		defaultDaemonAddr = "tcp://127.0.0.1:41731"
  	}
@@ -156,3 +118,14 @@
  
  	if runtime.GOOS == "windows" {
  		defaultLogFile = os.Getenv("PROGRAMDATA") + "\\Netbird\\" + "signal.log"
+--- a/upload-server/server/local.go
++++ b/upload-server/server/local.go
+@@ -14,7 +14,7 @@ import (
+ )
+ 
+ const (
+-	defaultDir = "/var/lib/netbird"
++	defaultDir = "/opt/var/lib/netbird"
+ 	putHandler = "/{dir}/{file}"
+ )
+ 
