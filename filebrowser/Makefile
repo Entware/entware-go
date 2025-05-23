@@ -67,7 +67,9 @@ GO_VARS += \
 
 define Build/Compile
 	( cd $(PKG_BUILD_DIR)/frontend; \
+		XDG_DATA_HOME=$(TMP_DIR)/pnpm-cache \
 		pnpm install --frozen-lockfile; \
+		XDG_DATA_HOME=$(TMP_DIR)/pnpm-cache \
 		pnpm run build; \
 	)
 	$(call Build/Compile/Go)
