@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -15,6 +15,7 @@ PKG_MIRROR_HASH:=527006b3d71134267fac3a8c86be71a99bf7dbb2f969916c60f16bec8c24529
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,22 +23,24 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/snowflake/Default
-	SECTION:=net
-	CATEGORY:=Network
-	TITLE:=Snowflake
-	URL:=https://snowflake.torproject.org/
-	EXTRA_DEPENDS:=tor-geoip
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Snowflake
+  URL:=https://snowflake.torproject.org/
+  PROVIDES:=snowflake snowflake-go
+  EXTRA_DEPENDS:=tor-geoip
 endef
 
 define Package/snowflake-go
-	$(call Package/snowflake/Default)
-	VARIANT:=hf
+  $(call Package/snowflake/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/snowflake-go_nohf
-	$(call Package/snowflake/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/snowflake/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/snowflake-go/description
