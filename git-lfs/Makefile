@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=git-lfs
-PKG_VERSION:=3.6.1
+PKG_VERSION:=3.7.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=ea47a34bde1ba1ecf9eb8dc6d44fcf7aef42f5e3
+PKG_SOURCE_VERSION:=b84b33847fe6458f36ef521534dc0eac953cb379
 PKG_SOURCE_URL:=https://github.com/git-lfs/git-lfs
-PKG_MIRROR_HASH:=aa3867e620d9e84bc98f6c831d52a57819212a2aff0c700a0d0d72ce81db2e75
+PKG_MIRROR_HASH:=3118d03b93af7d9112e173da56354455e3362dfdce0b45ae493fdeae289ba102
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE.md
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -27,19 +28,20 @@ define Package/git-lfs/Default
   SUBMENU:=Version Control Systems
   TITLE:=Git Large File Storage
   URL:=https://git-lfs.github.com
-  MAINTAINER:=Entware team, https://entware.net
-  DEPENDS:=+git
+  PROVIDES:=git-lfs
+  EXTRA_DEPENDS:=git
 endef
 
 define Package/git-lfs
   $(call Package/git-lfs/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/git-lfs_nohf
   $(call Package/git-lfs/Default)
   VARIANT:=nohf
-  DEPENDS+=@arm
+  DEPENDS:=@arm
 endef
 
 define Package/git-lfs/description
