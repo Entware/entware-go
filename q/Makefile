@@ -1,24 +1,24 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2025 Entware
+# Copyright (C) 2025-2026 Entware
 
 # https://github.com/Entware/Entware/issues/1128
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=q
-PKG_VERSION:=0.19.5
+PKG_VERSION:=0.19.11
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-07-07
-PKG_SOURCE_VERSION:=6be15521947155e80f47a4eb88b850de57ecd596
+PKG_SOURCE_DATE:=2025-11-09
+PKG_SOURCE_VERSION:=4b54702e6b56b48c8e9ee1f30d06e7aa487a9891
 PKG_SOURCE_URL:=https://github.com/natesales/q
-PKG_MIRROR_HASH:=dfba4484eb05fa3164bf10f549c1acc9d1212f8416d2c46377fd11dd941c2e1e
+PKG_MIRROR_HASH:=a1193deb84eb85756efe5e379e0ff6e9e22045352902fb58c662957fbfff87a7
 
-PKG_MAINTAINER:=Entware team, https://entware.net
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -31,11 +31,13 @@ define Package/q/Default
   SUBMENU:=IP Addresses and Names
   TITLE:=command line DNS client
   URL:=https://github.com/natesales/q
+  PROVIDES:=q
 endef
 
 define Package/q
   $(call Package/q/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/q_nohf
