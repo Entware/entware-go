@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2ray-plugin
-PKG_VERSION:=5.25.0
+PKG_VERSION:=5.43.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/teddysun/v2ray-plugin
-PKG_MIRROR_HASH:=b2a2eaebe41e450f5cadeab97ebd746491f3c883cd8751d70468f53aeb954b40
+PKG_MIRROR_HASH:=56d26b0ed5860880c466012b77b5c85a53c2b2f9f124194956ed5a2ee70727d6
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
@@ -28,11 +28,13 @@ define Package/v2ray-plugin/Default
   SUBMENU:=Web Servers/Proxies
   TITLE:=A SIP003 plugin based on v2ray
   URL:=https://github.com/teddysun/v2ray-plugin
+  PROVIDES:=v2ray-plugin
 endef
 
 define Package/v2ray-plugin
   $(call Package/v2ray-plugin/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/v2ray-plugin_nohf
