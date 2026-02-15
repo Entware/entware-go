@@ -1,9 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2016-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -11,12 +8,16 @@ PKG_NAME:=shell2http
 PKG_VERSION:=2024-03-23
 PKG_RELEASE:=1
 
-_PKG_VERSION:=1.17.0
+PKG_REAL_VERSION:=1.17.0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=1ccddb63ffa9211d27d3cfb23e763e785279f05e
 PKG_SOURCE_URL:=https://github.com/msoap/shell2http
 PKG_MIRROR_HASH:=08e232097aefaaf374dbe701b8d6afae0eb954afa2f4a468a6269595f5edb13a
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -24,40 +25,39 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/shell2http/Default
-	SECTION:=net
-	CATEGORY:=Network
-	TITLE:=Execute shell commands via simple http server
-	URL:=https://github.com/msoap/shell2http
-	MAINTAINER:=Entware team, https://entware.net
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Executing shell commands via HTTP server
+  URL:=https://github.com/msoap/shell2http
+  PROVIDES:=shell2http
 endef
 
 define Package/shell2http
-	$(call Package/shell2http/Default)
-	VARIANT:=hf
+  $(call Package/shell2http/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/shell2http_nohf
-	$(call Package/shell2http/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/shell2http/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/shell2http/description
- Executing shell commands via simple http server (written in Go language).
- Settings through 2 command line arguments, path and shell command.
- By default bind to :8080.
+ HTTP-server designed to execute shell commands.
 endef
 
 Package/shell2http_nohf/description=$(Package/shell2http/description)
 
 GO_LDFLAGS += \
-	-X 'main.version=$(_PKG_VERSION)'
+	-X 'main.version=$(PKG_REAL_VERSION)'
 
 GO_VARS += GO111MODULE=on
 
 define Package/shell2http/install
 	$(INSTALL_DIR) $(1)/opt/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/$(PKG_NAME) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/shell2http $(1)/opt/bin
 endef
 
 Package/shell2http_nohf/install=$(Package/shell2http/install)
