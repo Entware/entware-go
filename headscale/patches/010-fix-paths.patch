@@ -18,7 +18,7 @@
  			fmt.Println("Failed to dump config")
 --- a/cmd/headscale/cli/root.go
 +++ b/cmd/headscale/cli/root.go
-@@ -33,7 +33,7 @@ func init() {
+@@ -34,7 +34,7 @@ func init() {
  
  	cobra.OnInitialize(initConfig)
  	rootCmd.PersistentFlags().
@@ -49,7 +49,7 @@
  	c.Assert(viper.GetString("tls_letsencrypt_challenge_type"), check.Equals, "HTTP-01")
 --- a/hscontrol/types/config.go
 +++ b/hscontrol/types/config.go
-@@ -265,9 +265,9 @@ func LoadConfig(path string, isFile bool
+@@ -269,9 +269,9 @@ func LoadConfig(path string, isFile bool
  	} else {
  		viper.SetConfigName("config")
  		if path == "" {
@@ -61,7 +61,7 @@
  		} else {
  			// For testing
  			viper.AddConfigPath(path)
-@@ -281,7 +281,7 @@ func LoadConfig(path string, isFile bool
+@@ -285,7 +285,7 @@ func LoadConfig(path string, isFile bool
  
  	viper.SetDefault("policy.mode", "file")
  
@@ -70,9 +70,9 @@
  	viper.SetDefault("tls_letsencrypt_challenge_type", HTTP01ChallengeType)
  
  	viper.SetDefault("log.level", "info")
-@@ -298,7 +298,7 @@ func LoadConfig(path string, isFile bool
- 	viper.SetDefault("derp.server.stun.enabled", true)
+@@ -304,7 +304,7 @@ func LoadConfig(path string, isFile bool
  	viper.SetDefault("derp.server.automatically_add_embedded_derp_region", true)
+ 	viper.SetDefault("derp.update_frequency", "3h")
  
 -	viper.SetDefault("unix_socket", "/var/run/headscale/headscale.sock")
 +	viper.SetDefault("unix_socket", "/opt/var/run/headscale/headscale.sock")
@@ -115,7 +115,7 @@
  		"HEADSCALE_DERP_AUTO_UPDATE_ENABLED":          "false",
 --- a/integration/hsic/hsic.go
 +++ b/integration/hsic/hsic.go
-@@ -34,10 +34,10 @@ import (
+@@ -40,10 +40,10 @@ import (
  const (
  	hsicHashLength                = 6
  	dockerContextPath             = "../."
@@ -152,7 +152,21 @@
  				contents: contents,
  			})
  
-@@ -339,8 +339,8 @@ func New(
+@@ -297,11 +297,11 @@ func (hsic *HeadscaleInContainer) buildE
+ 	)
+ 
+ 	entrypoint := fmt.Sprintf(
+-		"/bin/sleep 3 ; update-ca-certificates ; %s ; /bin/sleep 30",
++		"sleep 3 ; update-ca-certificates ; %s ; sleep 30",
+ 		debugCmd,
+ 	)
+ 
+-	return []string{"/bin/bash", "-c", entrypoint}
++	return []string{"/bin/sh", "-c", entrypoint}
+ }
+ 
+ // New returns a new HeadscaleInContainer instance.
+@@ -385,8 +385,8 @@ func New(
  
  	env := []string{
  		"HEADSCALE_DEBUG_PROFILING_ENABLED=1",
@@ -163,16 +177,7 @@
  		"HEADSCALE_DEBUG_DEADLOCK=1",
  		"HEADSCALE_DEBUG_DEADLOCK_TIMEOUT=5s",
  		"HEADSCALE_DEBUG_HIGH_CARDINALITY_METRICS=1",
-@@ -369,7 +369,7 @@ func New(
- 		// Cmd:          []string{"headscale", "serve"},
- 		// TODO(kradalby): Get rid of this hack, we currently need to give us some
- 		// to inject the headscale configuration further down.
--		Entrypoint: []string{"/bin/bash", "-c", "/bin/sleep 3 ; update-ca-certificates ; headscale serve ; /bin/sleep 30"},
-+		Entrypoint: []string{"/bin/sh", "-c", "sleep 3 ; update-ca-certificates ; headscale serve ; sleep 30"},
- 		Env:        env,
- 	}
- 
-@@ -415,7 +415,7 @@ func New(
+@@ -486,7 +486,7 @@ func New(
  		}
  	}
  
@@ -181,7 +186,7 @@
  	if err != nil {
  		return nil, fmt.Errorf("failed to write headscale config to container: %w", err)
  	}
-@@ -467,7 +467,7 @@ func (t *HeadscaleInContainer) hasTLS()
+@@ -538,7 +538,7 @@ func (t *HeadscaleInContainer) hasTLS()
  
  // Shutdown stops and cleans up the Headscale container.
  func (t *HeadscaleInContainer) Shutdown() (string, string, error) {
@@ -190,7 +195,7 @@
  	if err != nil {
  		log.Printf(
  			"Failed to save log from control: %s",
-@@ -475,7 +475,7 @@ func (t *HeadscaleInContainer) Shutdown(
+@@ -546,7 +546,7 @@ func (t *HeadscaleInContainer) Shutdown(
  		)
  	}
  
@@ -199,7 +204,7 @@
  	if err != nil {
  		log.Printf(
  			"Failed to metrics from control: %s",
-@@ -494,7 +494,7 @@ func (t *HeadscaleInContainer) Shutdown(
+@@ -565,7 +565,7 @@ func (t *HeadscaleInContainer) Shutdown(
  		)
  	}
  
@@ -208,7 +213,7 @@
  	if err != nil {
  		log.Printf(
  			"Failed to save profile from control: %s",
-@@ -502,7 +502,7 @@ func (t *HeadscaleInContainer) Shutdown(
+@@ -573,7 +573,7 @@ func (t *HeadscaleInContainer) Shutdown(
  		)
  	}
  
@@ -217,7 +222,7 @@
  	if err != nil {
  		log.Printf(
  			"Failed to save mapresponses from control: %s",
-@@ -512,7 +512,7 @@ func (t *HeadscaleInContainer) Shutdown(
+@@ -583,7 +583,7 @@ func (t *HeadscaleInContainer) Shutdown(
  
  	// We dont have a database to save if we use postgres
  	if !t.postgres {
@@ -226,7 +231,7 @@
  		if err != nil {
  			log.Printf(
  				"Failed to save database from control: %s",
-@@ -561,7 +561,7 @@ func (t *HeadscaleInContainer) SaveMetri
+@@ -723,7 +723,7 @@ func extractTarToDirectory(tarData []byt
  }
  
  func (t *HeadscaleInContainer) SaveProfile(savePath string) error {
@@ -235,7 +240,7 @@
  	if err != nil {
  		return err
  	}
-@@ -579,7 +579,7 @@ func (t *HeadscaleInContainer) SaveProfi
+@@ -734,7 +734,7 @@ func (t *HeadscaleInContainer) SaveProfi
  }
  
  func (t *HeadscaleInContainer) SaveMapResponses(savePath string) error {
@@ -244,27 +249,45 @@
  	if err != nil {
  		return err
  	}
-@@ -597,7 +597,7 @@ func (t *HeadscaleInContainer) SaveMapRe
- }
+@@ -751,7 +751,7 @@ func (t *HeadscaleInContainer) SaveDatab
+ 	}
  
- func (t *HeadscaleInContainer) SaveDatabase(savePath string) error {
+ 	// Also check for any .sqlite files
+-	sqliteFiles, err := t.Execute([]string{"find", "/tmp", "-name", "*.sqlite*", "-type", "f"})
++	sqliteFiles, err := t.Execute([]string{"find", "/opt/tmp", "-name", "*.sqlite*", "-type", "f"})
+ 	if err != nil {
+ 		log.Printf("Warning: could not find sqlite files: %v", err)
+ 	} else {
+@@ -759,7 +759,7 @@ func (t *HeadscaleInContainer) SaveDatab
+ 	}
+ 
+ 	// Check if the database file exists and has a schema
+-	dbPath := "/tmp/integration_test_db.sqlite3"
++	dbPath := "/opt/tmp/integration_test_db.sqlite3"
+ 	fileInfo, err := t.Execute([]string{"ls", "-la", dbPath})
+ 	if err != nil {
+ 		return fmt.Errorf("database file does not exist at %s: %w", dbPath, err)
+@@ -776,7 +776,7 @@ func (t *HeadscaleInContainer) SaveDatab
+ 		return errors.New("database file exists but has no schema (empty database)")
+ 	}
+ 
 -	tarFile, err := t.FetchPath("/tmp/integration_test_db.sqlite3")
 +	tarFile, err := t.FetchPath("/opt/tmp/integration_test_db.sqlite3")
  	if err != nil {
- 		return err
+ 		return fmt.Errorf("failed to fetch database file: %w", err)
  	}
 --- a/integration/tsic/tsic.go
 +++ b/integration/tsic/tsic.go
-@@ -35,7 +35,7 @@ const (
- 	defaultPingTimeout   = 300 * time.Millisecond
- 	defaultPingCount     = 10
+@@ -41,7 +41,7 @@ const (
+ 	defaultPingTimeout   = 200 * time.Millisecond
+ 	defaultPingCount     = 5
  	dockerContextPath    = "../."
 -	caCertRoot           = "/usr/local/share/ca-certificates"
 +	caCertRoot           = "/opt/share/ca-certificates"
  	dockerExecuteTimeout = 60 * time.Second
  )
  
-@@ -228,7 +228,7 @@ func New(
+@@ -234,7 +234,7 @@ func New(
  		withEntrypoint: []string{
  			"/bin/sh",
  			"-c",
@@ -273,7 +296,7 @@
  		},
  	}
  
-@@ -360,7 +360,7 @@ func New(
+@@ -392,7 +392,7 @@ func New(
  
  // Shutdown stops and cleans up the Tailscale container.
  func (t *TailscaleInContainer) Shutdown() (string, string, error) {
@@ -282,7 +305,7 @@
  	if err != nil {
  		log.Printf(
  			"Failed to save log from %s: %s",
-@@ -640,9 +640,9 @@ func (t *TailscaleInContainer) Status(sa
+@@ -730,9 +730,9 @@ func (t *TailscaleInContainer) Status(sa
  		return nil, fmt.Errorf("failed to unmarshal tailscale status: %w", err)
  	}
  
@@ -294,7 +317,7 @@
  	}
  
  	return &status, err
-@@ -699,9 +699,9 @@ func (t *TailscaleInContainer) Netmap()
+@@ -789,9 +789,9 @@ func (t *TailscaleInContainer) Netmap()
  		return nil, fmt.Errorf("failed to unmarshal tailscale netmap: %w", err)
  	}
  

@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=headscale
-PKG_VERSION:=v0.26.0
+PKG_VERSION:=v0.27.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/juanfont/headscale
-PKG_MIRROR_HASH:=0aaf6c2ade99b1cb629640a56be2ff62809e3b32308239fb863a70e3e580da64
+PKG_MIRROR_HASH:=e9bcb5fd2e8b7919580682daf1b9fc4b64f5314153175f0776f90f643b2a7638
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,24 +23,26 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/headscale/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=VPN
-	TITLE:=Tailscale control server
-	URL:=https://github.com/juanfont/headscale
-	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+ca-bundle @!(mips||mipsel)
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=VPN
+  TITLE:=Tailscale control server
+  URL:=https://github.com/juanfont/headscale
+  PROVIDES:=headscale
+  DEPENDS:=@!(mips||mipsel)
+  EXTRA_DEPENDS:=ca-bundle
 endef
 
 define Package/headscale
-	$(call Package/headscale/Default)
-	VARIANT:=hf
+  $(call Package/headscale/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/headscale_nohf
-	$(call Package/headscale/Default)
-	VARIANT:=nohf
-	DEPENDS+=@arm
+  $(call Package/headscale/Default)
+  VARIANT:=nohf
+  DEPENDS+=@arm
 endef
 
 define Package/headscale/description
