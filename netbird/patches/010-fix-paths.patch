@@ -47,6 +47,32 @@
  		if _, statErr := os.Stat(sockPath); statErr == nil {
  			_ = os.Remove(sockPath)
  		}
+--- a/client/internal/debug/debug.go
++++ b/client/internal/debug/debug.go
+@@ -215,8 +215,8 @@ const (
+ 	errorLogFile  = "netbird.err"
+ 	stdoutLogFile = "netbird.out"
+ 
+-	darwinErrorLogPath  = "/var/log/netbird.out.log"
+-	darwinStdoutLogPath = "/var/log/netbird.err.log"
++	darwinErrorLogPath  = "/opt/var/log/netbird.out.log"
++	darwinStdoutLogPath = "/opt/var/log/netbird.err.log"
+ )
+ 
+ type BundleGenerator struct {
+--- a/client/internal/profilemanager/service.go
++++ b/client/internal/profilemanager/service.go
+@@ -31,8 +31,8 @@ var (
+ 
+ func init() {
+ 
+-	DefaultConfigPathDir = "/var/lib/netbird/"
+-	oldDefaultConfigPathDir = "/etc/netbird/"
++	DefaultConfigPathDir = "/opt/var/lib/netbird/"
++	oldDefaultConfigPathDir = "/opt/etc/netbird/"
+ 
+ 	if stateDir := os.Getenv("NB_STATE_DIR"); stateDir != "" {
+ 		DefaultConfigPathDir = stateDir
 --- a/client/internal/routemanager/systemops/systemops_linux.go
 +++ b/client/internal/routemanager/systemops/systemops_linux.go
 @@ -49,7 +49,7 @@ const (
@@ -58,6 +84,75 @@
  
  	// ipv4ForwardingPath is the path to the file containing the IP forwarding setting.
  	ipv4ForwardingPath = "net.ipv4.ip_forward"
+--- a/client/ssh/client/client.go
++++ b/client/ssh/client/client.go
+@@ -28,7 +28,7 @@ import (
+ 
+ const (
+ 	// DefaultDaemonAddr is the default address for the NetBird daemon
+-	DefaultDaemonAddr = "unix:///var/run/netbird.sock"
++	DefaultDaemonAddr = "unix:///opt/var/run/netbird.sock"
+ 	// DefaultDaemonAddrWindows is the default address for the NetBird daemon on Windows
+ 	DefaultDaemonAddrWindows = "tcp://127.0.0.1:41731"
+ )
+@@ -441,8 +441,8 @@ func getKnownHostsFiles() []string {
+ 		netbirdKnownHosts := filepath.Join(programData, "ssh", "ssh_known_hosts.d", "99-netbird")
+ 		files = append(files, netbirdKnownHosts)
+ 	} else {
+-		files = append(files, "/etc/ssh/ssh_known_hosts.d/99-netbird")
+-		files = append(files, "/etc/ssh/ssh_known_hosts")
++		files = append(files, "/opt/etc/ssh/ssh_known_hosts.d/99-netbird")
++		files = append(files, "/opt/etc/ssh/ssh_known_hosts")
+ 	}
+ 
+ 	return files
+--- a/client/ssh/common.go
++++ b/client/ssh/common.go
+@@ -18,7 +18,7 @@ import (
+ const (
+ 	NetBirdSSHConfigFile = "99-netbird.conf"
+ 
+-	UnixSSHConfigDir    = "/etc/ssh/ssh_config.d"
++	UnixSSHConfigDir    = "/opt/etc/ssh/ssh_config.d"
+ 	WindowsSSHConfigDir = "ssh/ssh_config.d"
+ )
+ 
+--- a/client/ssh/server/shell.go
++++ b/client/ssh/server/shell.go
+@@ -65,13 +65,13 @@ func getUnixUserShell(userID string) str
+ 
+ // getShellFromPasswd reads the shell from /etc/passwd for the given user ID
+ func getShellFromPasswd(userID string) string {
+-	file, err := os.Open("/etc/passwd")
++	file, err := os.Open("/opt/etc/passwd")
+ 	if err != nil {
+ 		return ""
+ 	}
+ 	defer func() {
+ 		if err := file.Close(); err != nil {
+-			log.Warnf("close /etc/passwd file: %v", err)
++			log.Warnf("close /opt/etc/passwd file: %v", err)
+ 		}
+ 	}()
+ 
+@@ -91,7 +91,7 @@ func getShellFromPasswd(userID string) s
+ 	}
+ 
+ 	if err := scanner.Err(); err != nil {
+-		log.Warnf("error reading /etc/passwd: %v", err)
++		log.Warnf("error reading /opt/etc/passwd: %v", err)
+ 	}
+ 
+ 	return ""
+@@ -99,7 +99,7 @@ func getShellFromPasswd(userID string) s
+ 
+ // prepareUserEnv prepares environment variables for user execution
+ func prepareUserEnv(user *user.User, shell string) []string {
+-	pathValue := "/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
++	pathValue := "/opt/bin:/opt/sbin:/opt/usr/bin:/opt/usr/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+ 	if runtime.GOOS == "windows" {
+ 		pathValue = `C:\Windows\System32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0`
+ 	}
 --- a/client/system/osrelease_unix.go
 +++ b/client/system/osrelease_unix.go
 @@ -11,9 +11,9 @@ import (
@@ -83,6 +178,35 @@
  	if runtime.GOOS == "windows" {
  		defaultDaemonAddr = "tcp://127.0.0.1:41731"
  	}
+--- a/combined/cmd/config.go
++++ b/combined/cmd/config.go
+@@ -190,7 +190,7 @@ func DefaultConfig() *CombinedConfig {
+ 			LogLevel:           "info",
+ 			LogFile:            "console",
+ 			StunPorts:          []int{3478},
+-			DataDir:            "/var/lib/netbird/",
++			DataDir:            "/opt/var/lib/netbird/",
+ 			Auth: AuthConfig{
+ 				Storage: AuthStorageConfig{
+ 					Type: "sqlite3",
+@@ -212,7 +212,7 @@ func DefaultConfig() *CombinedConfig {
+ 			// LogLevel inherited from Server.LogLevel via ApplySimplifiedDefaults
+ 		},
+ 		Management: ManagementConfig{
+-			DataDir: "/var/lib/netbird/",
++			DataDir: "/opt/var/lib/netbird/",
+ 			Auth: AuthConfig{
+ 				Storage: AuthStorageConfig{
+ 					Type: "sqlite3",
+@@ -333,7 +333,7 @@ func (c *CombinedConfig) applyManagement
+ 	if c.Management.LogLevel == "" {
+ 		c.Management.LogLevel = c.Server.LogLevel
+ 	}
+-	if c.Management.DataDir == "" || c.Management.DataDir == "/var/lib/netbird/" {
++	if c.Management.DataDir == "" || c.Management.DataDir == "/opt/var/lib/netbird/" {
+ 		c.Management.DataDir = c.Server.DataDir
+ 	}
+ 	c.Management.DnsDomain = exposedHost
 --- a/management/cmd/defaults.go
 +++ b/management/cmd/defaults.go
 @@ -1,13 +1,13 @@
@@ -107,14 +231,12 @@
  	defaultLogFile       = defaultLogDir + "/management.log"
 --- a/signal/cmd/root.go
 +++ b/signal/cmd/root.go
-@@ -39,8 +39,8 @@ func Execute() error {
+@@ -39,7 +39,7 @@ func Execute() error {
  
  func init() {
  	stopCh = make(chan int)
 -	defaultLogFile = "/var/log/netbird/signal.log"
--	defaultSignalSSLDir = "/var/lib/netbird/"
 +	defaultLogFile = "/opt/var/log/netbird/signal.log"
-+	defaultSignalSSLDir = "/opt/var/lib/netbird/"
  
  	if runtime.GOOS == "windows" {
  		defaultLogFile = os.Getenv("PROGRAMDATA") + "\\Netbird\\" + "signal.log"
