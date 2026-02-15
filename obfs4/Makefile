@@ -1,9 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2021 Entware
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
+# Copyright (C) 2011-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -12,9 +9,13 @@ PKG_VERSION:=0.0.14
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=336a71d6e4cfd2d33e9c57797828007ad74975e9
+PKG_SOURCE_VERSION:=$(PKG_NAME)proxy-$(PKG_VERSION)
 PKG_SOURCE_URL:=https://gitlab.com/yawning/obfs4
 PKG_MIRROR_HASH:=8fa7950328b64c9cdea86c5d343f3043f9f1273df1b4e6efe985d53f607ba66e
+
+PKG_LICENSE:=GPL-3.0-or-later
+PKG_LICENSE_FILES:=LICENSE-GPL3.txt
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,23 +23,24 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/obfs4/Default
-	SECTION:=net
-	CATEGORY:=Network
-	TITLE:=A Tor pluggable transport proxy, implementing obfs4
-	URL:=https://gitlab.com/yawning/obfs4
-	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+tor
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=A Tor pluggable transport proxy, implementing obfs4
+  URL:=https://gitlab.com/yawning/obfs4
+  PROVIDES:=obfs4
+  EXTRA_DEPENDS:=tor
 endef
 
 define Package/obfs4
-	$(call Package/obfs4/Default)
-	VARIANT:=hf
+  $(call Package/obfs4/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/obfs4_nohf
-	$(call Package/obfs4/Default)
-	VARIANT:=nohf
-	DEPENDS+=@arm
+  $(call Package/obfs4/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/obfs4/description
