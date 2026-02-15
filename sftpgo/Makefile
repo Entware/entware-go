@@ -1,18 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024-2025 Entware
+# Copyright (C) 2024-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sftpgo
-PKG_VERSION:=2.6.6
+PKG_VERSION:=2.7.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-02-24
-PKG_SOURCE_VERSION:=6825db76ad7ee5fd55162f1d8226a44b31470eb5
+PKG_SOURCE_DATE:=2025-10-23
+PKG_SOURCE_VERSION:=29c635a9a6f68d0f57b520dd82cba8e16d412b30
 PKG_SOURCE_URL:=https://github.com/drakkan/sftpgo
-PKG_MIRROR_HASH:=2cda8921a658c226c65cda858b5d795da3082614d82331586b923beff5f4f0c2
+PKG_MIRROR_HASH:=b30ab70ffa4da29d0b0f408d03a7fa6f4db6ec94c780da84eccc2dbaca0d8187
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
@@ -30,17 +30,20 @@ define Package/sftpgo/Default
   SUBMENU:=File Transfer
   TITLE:=SFTP server
   URL:=https://sftpgo.com/
+  PROVIDES:=sftpgo
+  DEPENDS:=+libc +libgcc +libpthread
 endef
 
 define Package/sftpgo
   $(call Package/sftpgo/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/sftpgo_nohf
   $(call Package/sftpgo/Default)
   VARIANT:=nohf
-  DEPENDS:=@arm
+  DEPENDS+=@arm
 endef
 
 define Package/sftpgo/description
