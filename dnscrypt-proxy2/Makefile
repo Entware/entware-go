@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2011-2025 Entware
+# Copyright (C) 2011-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=dnscrypt-proxy2
-PKG_VERSION:=2.1.8
+PKG_VERSION:=2.1.15
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=67c121317701b01409279a312d4d06fd51123557
+PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/DNSCrypt/dnscrypt-proxy
-PKG_MIRROR_HASH:=e43e0aa940065f71b923fff5c8d430de39783b11ae0cbcca17daa98f86c0dd08
+PKG_MIRROR_HASH:=90dfee3884e69f36b2de01a66cb63f4d9accfe39097688ca7864f6fe9f8cb4ee
+
+PKG_LICENSE:=ISC
+PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -19,25 +23,26 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/dnscrypt-proxy2/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=IP Addresses and Names
-	TITLE:=Flexible DNS proxy with encrypted DNS protocols
-	URL:=https://github.com/DNSCrypt/dnscrypt-proxy
-	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+ca-bundle
-	CONFLICTS:=dnscrypt-proxy
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=IP Addresses and Names
+  TITLE:=Flexible DNS proxy with encrypted DNS protocols
+  URL:=https://dnscrypt.info/
+  PROVIDES:=dnscrypt-proxy2
+  CONFLICTS:=dnscrypt-proxy
+  EXTRA_DEPENDS:=ca-bundle
 endef
 
 define Package/dnscrypt-proxy2
-	$(call Package/dnscrypt-proxy2/Default)
-	VARIANT:=hf
+  $(call Package/dnscrypt-proxy2/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/dnscrypt-proxy2_nohf
-	$(call Package/dnscrypt-proxy2/Default)
-	VARIANT:=nohf
-	DEPENDS+=@arm
+  $(call Package/dnscrypt-proxy2/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/dnscrypt-proxy2/description
