@@ -1,22 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024-2025 Entware
+# Copyright (C) 2024-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=netbird
-PKG_VERSION:=0.44.0
+PKG_VERSION:=0.64.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-05-16
-PKG_SOURCE_VERSION:=99f8dc7748c30049456ae5f16dc44a415751f93d
+PKG_SOURCE_DATE:=2026-01-20
+PKG_SOURCE_VERSION:=e01998815e64660ea41535cb57b9dbab3c44f83b
 PKG_SOURCE_URL:=https://github.com/netbirdio/netbird
-PKG_MIRROR_HASH:=84264d6c3c3215ce30256c692a59844eefc135e7570aedf176ec671189909c69
+PKG_MIRROR_HASH:=4ee9398ba1f4a44938d00d313b6bc88223a7d598ec12555f1c29d8153a54e981
 
-PKG_MAINTAINER:=Entware team, https://entware.net
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 # for management (and signal?)
@@ -31,12 +31,13 @@ define Package/netbird/Default
   SUBMENU:=VPN
   TITLE:=A WireGuard-based mesh network (client)
   URL:=https://netbird.io/
-#  DEPENDS:=+ca-bundle +iptables
+  PROVIDES:=netbird
 endef
 
 define Package/netbird
   $(call Package/netbird/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/netbird_nohf
@@ -65,7 +66,7 @@ GO_LDFLAGS += \
 	-X 'main.date=$(PKG_SOURCE_DATE)' \
 	-X 'main.builtBy=Entware'
 
-GO_TARGET:=./client ./management ./signal
+GO_TARGET:=./client #./management ./signal
 
 define Package/netbird/install
 	$(INSTALL_DIR) $(1)/opt/etc/init.d
