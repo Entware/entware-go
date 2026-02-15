@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024-2025 Entware
+# Copyright (C) 2024-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -27,11 +27,13 @@ define Package/grpcurl/Default
   CATEGORY:=Network
   TITLE:=CLI tool to interact with gRPC servers
   URL:=https://github.com/fullstorydev/grpcurl
+  PROVIDES:=grpcurl
 endef
 
 define Package/grpcurl
   $(call Package/grpcurl/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/grpcurl_nohf
