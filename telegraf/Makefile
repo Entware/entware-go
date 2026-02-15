@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2021-2025 Entware
+# Copyright (C) 2021-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=telegraf
-PKG_VERSION:=1.34.4
+PKG_VERSION:=1.37.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=e7ce1e1e740b1983f86a0587ce67858bb67eb4d1
+PKG_SOURCE_VERSION:=3352c0d56e70ee8e60e5e1db7fe94a236a27ce45
 PKG_SOURCE_URL:=https://github.com/influxdata/telegraf
-PKG_MIRROR_HASH:=1d7bddc89a88b811e077daf6168636ab82a617577c2014413effec9e08126c68
+PKG_MIRROR_HASH:=2bc78feb582c7c032ec30a46fd44ec45937d613144e7f44ad44c658e18fb80bc
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,22 +23,23 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/telegraf/Default
-	SECTION:=utils
-	CATEGORY:=Utilities
-	TITLE:=server agent to help you collect metrics
-	URL:=https://www.influxdata.com/time-series-platform/telegraf
-	MAINTAINER:=Entware team, https://entware.net
+  SECTION:=utils
+  CATEGORY:=Utilities
+  TITLE:=server agent to help you collect metrics
+  URL:=https://www.influxdata.com/time-series-platform/telegraf
+  PROVIDES:=telegraf
 endef
 
 define Package/telegraf
-	$(call Package/telegraf/Default)
-	VARIANT:=hf
+  $(call Package/telegraf/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/telegraf_nohf
-	$(call Package/telegraf/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/telegraf/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/telegraf/description
