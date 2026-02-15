@@ -2,7 +2,7 @@
 
 ENABLED=yes
 PROCS=alertmanager
-ARGS="--config.file=/opt/etc/prometheus/alertmanager.yml --storage.path=/opt/var/lib/alertmanager"
+ARGS="--config.file=/opt/etc/prometheus/$PROCS.yml --storage.path=/opt/var/lib/$PROCS"
 PREARGS=""
 DESC=$PROCS
 PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
