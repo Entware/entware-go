@@ -1,17 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2020-2024 Entware
+# Copyright (C) 2020-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nebula
-PKG_VERSION:=1.9.5
+PKG_VERSION:=1.10.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/slackhq/nebula
-PKG_MIRROR_HASH:=a03af4045555a8c8b3d9b477b6cb1c92c0521465d1e427f59fee719aa67ff693
+PKG_MIRROR_HASH:=a7155b53f8012ebb3815657cd4b95ef899b6a0b7ab91d0efcfb886a5cbb07205
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -19,22 +23,23 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/nebula/Default
-	SECTION:=net
-	CATEGORY:=Network
-	TITLE:=a scalable overlay networking tool 
-	URL:=https://github.com/slackhq/nebula
-	MAINTAINER:=Entware team, https://entware.net
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=a scalable overlay networking tool 
+  URL:=https://github.com/slackhq/nebula
+  PROVIDES:=nebula
 endef
 
 define Package/nebula
-	$(call Package/nebula/Default)
-	VARIANT:=hf
+  $(call Package/nebula/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/nebula_nohf
-	$(call Package/nebula/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/nebula/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/nebula/description
