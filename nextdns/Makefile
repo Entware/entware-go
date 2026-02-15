@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2020-2025 Entware
+# Copyright (C) 2020-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=nextdns
-PKG_VERSION:=1.45.0
+PKG_VERSION:=1.46.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=8bf668e033843b1d0a43bb17ebafcc8d13b36a81
+PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/nextdns/nextdns
-PKG_MIRROR_HASH:=370ff6fc679b12e5cd3e15f81e90e879e01c66e7014411a01c80958429a6c18b
+PKG_MIRROR_HASH:=0fa04b754d836a67e48e587e596cb966bd8c4f6382da9cfbce2d53545c046511
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,23 +23,24 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/nextdns/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=IP Addresses and Names
-	TITLE:=NextDNS CLI Client
-	URL:=https://nextdns.io/
-	MAINTAINER:=Entware team, https://entware.net
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=IP Addresses and Names
+  TITLE:=NextDNS CLI Client
+  URL:=https://nextdns.io/
+  PROVIDES:=nextdns
 endef
 
 define Package/nextdns
-	$(call Package/nextdns/Default)
-	VARIANT:=hf
+  $(call Package/nextdns/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/nextdns_nohf
-	$(call Package/nextdns/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/nextdns/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/nextdns/description
