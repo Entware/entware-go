@@ -1,21 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-blackbox-exporter
-PKG_VERSION:=0.26.0
+PKG_VERSION:=0.28.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-02-26
-PKG_SOURCE_VERSION:=444e3d089ae1aeeed385712ef84a5fa4f0c083ec
+PKG_SOURCE_DATE:=2025-12-04
+PKG_SOURCE_VERSION:=5a059bee8d8ffa4e75947c5055fb0abeefc582e6
 PKG_SOURCE_URL:=https://github.com/prometheus/blackbox_exporter
-PKG_MIRROR_HASH:=996ca535176ce1dbb6ffa37452aae706e501a530c205aef00501b78eb4d32bd0
+PKG_MIRROR_HASH:=b2af7a40e48b41d85983d6ca7f597d29f19bcb81e56644279c3a286b58723f18
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -28,12 +29,13 @@ define Package/prometheus-blackbox-exporter/Default
   SUBMENU:=prometheus tools
   TITLE:=Blackbox prober exporter
   URL:=https://prometheus.io/
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=prometheus-blackbox-exporter
 endef
 
 define Package/prometheus-blackbox-exporter
   $(call Package/prometheus-blackbox-exporter/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/prometheus-blackbox-exporter_nohf
