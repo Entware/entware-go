@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2021-2025 Entware
+# Copyright (C) 2021-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tailscale
-PKG_VERSION:=1.82.5
+PKG_VERSION:=1.92.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=e4d64c6faf827a308ec20b39651225178e6743c0
+PKG_SOURCE_VERSION:=b1eb1a05c38c7ea682ddbfcdbd2112304f880d9e
 PKG_SOURCE_URL:=https://github.com/tailscale/tailscale
-PKG_MIRROR_HASH:=9a4996f787f17bedc1b96cbb76ccdb9d4da24b827bcefd4f8f460abc2e516e10
+PKG_MIRROR_HASH:=13b9e274cb000f9e6d45f7515922ae8f9e60e37b0daffbc567f27093af991f2c
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,24 +23,25 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/tailscale/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=VPN
-	TITLE:=Private WireGuard networks made easy
-	URL:=https://tailscale.com/
-	MAINTAINER:=Entware team, https://entware.net
-	EXTRA_DEPENDS:=ca-bundle, coreutils-nohup
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=VPN
+  TITLE:=Private WireGuard networks made easy
+  URL:=https://tailscale.com/
+  PROVIDES:=tailscale
+  EXTRA_DEPENDS:=ca-bundle, coreutils-nohup
 endef
 
 define Package/tailscale
-	$(call Package/tailscale/Default)
-	VARIANT:=hf
+  $(call Package/tailscale/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/tailscale_nohf
-	$(call Package/tailscale/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/tailscale/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/tailscale/description
