@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -16,6 +16,7 @@ PKG_MIRROR_HASH:=adc968e65987e1f18cbcd170d35287ae3ac062271cf91bfacea7fd7f81d98ab
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -28,12 +29,13 @@ define Package/prometheus-statsd-exporter/Default
   SUBMENU:=prometheus tools
   TITLE:=StatsD to Prometheus metrics exporter
   URL:=https://prometheus.io/
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=prometheus-statsd-exporter
 endef
 
 define Package/prometheus-statsd-exporter
   $(call Package/prometheus-statsd-exporter/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/prometheus-statsd-exporter_nohf
