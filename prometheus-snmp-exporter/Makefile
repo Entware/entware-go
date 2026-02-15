@@ -1,25 +1,24 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-snmp-exporter
-PKG_VERSION:=0.29.0
+PKG_VERSION:=0.30.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-04-23
-PKG_SOURCE_VERSION:=42f8f2a991516b39ed60ef67eb69263d817ecd52
+PKG_SOURCE_DATE:=2026-01-06
+PKG_SOURCE_VERSION:=48b810afbd9222b74439ad1cf7d0d7b7c0cf4290
 PKG_SOURCE_URL:=https://github.com/prometheus/snmp_exporter
-PKG_MIRROR_HASH:=68b12a59d9425736d5c0c473e719d8230e0e241f4db62950748185179aad8aea
+PKG_MIRROR_HASH:=33c4687b62e4cfec5b3975f964bd624932beab860258242c69c87169e29dcf73
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
-PKG_BUILD_DEPENDS:=net-snmp
 PKG_BUILD_PARALLEL:=1
-PKG_CGO_ENABLED:=1
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
@@ -30,12 +29,13 @@ define Package/prometheus-snmp-exporter/Default
   SUBMENU:=prometheus tools
   TITLE:=SNMP Exporter for Prometheus
   URL:=https://prometheus.io/
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=prometheus-snmp-exporter
 endef
 
 define Package/prometheus-snmp-exporter
   $(call Package/prometheus-snmp-exporter/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/prometheus-snmp-exporter_nohf
