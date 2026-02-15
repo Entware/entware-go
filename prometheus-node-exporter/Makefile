@@ -1,21 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus-node-exporter
-PKG_VERSION:=1.9.1
+PKG_VERSION:=1.10.2
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-04-01
-PKG_SOURCE_VERSION:=f2ec547b49af53815038a50265aa2adcd1275959
+PKG_SOURCE_DATE:=2025-10-25
+PKG_SOURCE_VERSION:=654f19dee6a0c41de78a8d6d870e8c742cdb43b9
 PKG_SOURCE_URL:=https://github.com/prometheus/node_exporter
-PKG_MIRROR_HASH:=22a44bfed612154afa0715a61f6b31ed2d5272fe9900a591e6b4edd1adb8abfd
+PKG_MIRROR_HASH:=36299d2e3d55fa02d89afb1bff49b6b3ff2e395139bfd95858c55da8418b6b97
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -28,12 +29,13 @@ define Package/prometheus-node-exporter/Default
   SUBMENU:=prometheus tools
   TITLE:=Exporter for machine metrics
   URL:=https://prometheus.io/
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=prometheus-node-exporter
 endef
 
 define Package/prometheus-node-exporter
   $(call Package/prometheus-node-exporter/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/prometheus-node-exporter_nohf
