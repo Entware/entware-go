@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=v2rayA
-PKG_VERSION:=2.2.6.7
+PKG_NAME:=v2raya
+PKG_VERSION:=2.2.7.4
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/v2rayA/v2rayA
-PKG_MIRROR_HASH:=0250b87c23fa02919b39044a950e1934f73c124c559cb9adcbbb00aa720ff5b5
+PKG_MIRROR_HASH:=443ac553fe410c9aa5cced0103eddbe8e5284023606060183b5e19a4a68d61dd
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
@@ -28,18 +28,20 @@ define Package/v2raya/Default
   SUBMENU:=Web Servers/Proxies
   TITLE:=A Linux web GUI client of Project V
   URL:=https://v2raya.org
-  DEPENDS:=+ca-bundle +iptables
+  PROVIDES:=v2raya
+  EXTRA_DEPENDS:=ca-bundle, iptables
 endef
 
 define Package/v2raya
   $(call Package/v2raya/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/v2raya_nohf
   $(call Package/v2raya/Default)
   VARIANT:=nohf
-  DEPENDS+=@arm
+  DEPENDS:=@arm
 endef
 
 define Package/v2raya/description
@@ -58,10 +60,10 @@ GO_TAGS:=with_gvisor
 
 WEB_FILE:=$(PKG_NAME)-web-$(PKG_VERSION).tar.gz
 define Download/v2raya-web
-	URL:=https://github.com/v2rayA/v2rayA/releases/download/v$(PKG_VERSION)/
-	URL_FILE:=web.tar.gz
-	FILE:=$(WEB_FILE)
-	HASH:=d871f119812979a20da3f57a792d7842dad4c4b528c8ec9e4a9aea29b8508147
+  URL:=https://github.com/v2rayA/v2rayA/releases/download/v$(PKG_VERSION)/
+  URL_FILE:=web.tar.gz
+  FILE:=$(WEB_FILE)
+  HASH:=985b083a75b7b34ea9c5151cbc096f6f44fa369a807fea85b435fed5229dae65
 endef
 
 define Build/Prepare
