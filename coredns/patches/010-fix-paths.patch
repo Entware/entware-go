@@ -24,7 +24,7 @@
  		{
 --- a/plugin/sign/setup.go
 +++ b/plugin/sign/setup.go
-@@ -58,7 +58,7 @@ func parse(c *caddy.Controller) (*Sign,
+@@ -64,7 +64,7 @@ func parse(c *caddy.Controller) (*Sign,
  				origin:      origins[i],
  				jitterIncep: time.Duration(float32(durationInceptionJitter) * rand.Float32()),
  				jitterExpir: time.Duration(float32(durationExpirationDayJitter) * rand.Float32()),

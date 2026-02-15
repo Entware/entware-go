@@ -48,10 +48,10 @@
  loop:loop
  forward:forward
  grpc:grpc
-@@ -73,3 +73,7 @@ whoami:whoami
- on:github.com/coredns/caddy/onevent
+@@ -74,3 +74,7 @@ on:github.com/coredns/caddy/onevent
  sign:sign
  view:view
+ nomad:nomad
 +meshname:github.com/zhoreeq/coredns-meshname
 +meship:github.com/zhoreeq/coredns-meship
 +ens:github.com/wealdtech/coredns-ens
