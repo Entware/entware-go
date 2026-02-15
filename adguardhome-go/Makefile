@@ -1,21 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2019-2025 Entware
+# Copyright (C) 2019-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.61
+PKG_VERSION:=v0.107.71
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-04-22
-PKG_SOURCE_VERSION:=937c16e50dc3a948fc355c22cf03fc63f17c68f2
+PKG_SOURCE_DATE:=2025-12-08
+PKG_SOURCE_VERSION:=42a2653d3245313b6247ada092c66e2e11c72468
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=660ccdb756dc90031f45be699da4cb2be679ba0ea03fc051d5f1b20ca46a5987
+PKG_MIRROR_HASH:=b40c3d33951a76b05ed5d02f827b5581deaa8d52968b71ff2d800ddfd9cdac3d
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_DEPENDS:=node-yarn/host
 PKG_BUILD_PARALLEL:=1
@@ -23,24 +24,25 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
-define Package/adguardhome-go/Default
+define Package/adguardhome/Default
   SECTION:=net
   CATEGORY:=Network
   TITLE:=Network-wide ads & trackers blocking DNS server
   URL:=https://adguard.com/adguard-home.html
-  MAINTAINER:=Entware team, https://entware.net
-  DEPENDS:=+ca-bundle
+  PROVIDES:=adguardhome adguardhome-go
+  EXTRA_DEPENDS:=ca-bundle
 endef
 
 define Package/adguardhome-go
-  $(call Package/adguardhome-go/Default)
+  $(call Package/adguardhome/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/adguardhome-go_nohf
-  $(call Package/adguardhome-go/Default)
+  $(call Package/adguardhome/Default)
   VARIANT:=nohf
-  DEPENDS+=@arm
+  DEPENDS:=@arm
 endef
 
 define Package/adguardhome-go/description
