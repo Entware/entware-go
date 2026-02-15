@@ -1,6 +1,6 @@
 --- a/fs/localfs/local_fs_32bit.go
 +++ b/fs/localfs/local_fs_32bit.go
-@@ -4,6 +4,6 @@
+@@ -2,6 +2,6 @@
  
  package localfs
  
