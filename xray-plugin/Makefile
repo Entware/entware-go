@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -28,11 +28,13 @@ define Package/xray-plugin/Default
   SUBMENU:=Web Servers/Proxies
   TITLE:=A SIP003 plugin based on Xray-core
   URL:=https://github.com/teddysun/xray-plugin
+  PROVIDES:=xray-plugin
 endef
 
 define Package/xray-plugin
   $(call Package/xray-plugin/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/xray-plugin_nohf
