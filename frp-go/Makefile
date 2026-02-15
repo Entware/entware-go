@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.62.1
+PKG_VERSION:=0.66.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/fatedier/frp
-PKG_MIRROR_HASH:=50cf34716e43fcdf35e08dacc104d15c7cf7ae77c8cdfff128a0f1edf2c4ff11
+PKG_MIRROR_HASH:=7ed119e5f6b0bdfee3b8c4c44c7f801e1fd57091db9c3b8535e2ce0a1af3432a
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,23 +23,24 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/frp/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=Routing and Redirection
-	TITLE:=fast reverse proxy
-	URL:=https://github.com/fatedier/frp
-	MAINTAINER:=Entware team, https://entware.net
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=Routing and Redirection
+  TITLE:=fast reverse proxy
+  URL:=https://github.com/fatedier/frp
+  PROVIDES:=frp frp-go
 endef
 
 define Package/frp-go
-	$(call Package/frp/Default)
-	VARIANT:=hf
+  $(call Package/frp/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/frp-go_nohf
-	$(call Package/frp/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/frp/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/frp-go/description
