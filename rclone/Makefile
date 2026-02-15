@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2016-2025 Entware
+# Copyright (C) 2016-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=rclone
-PKG_VERSION:=1.69.2
+PKG_VERSION:=1.72.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/rclone/rclone
-PKG_MIRROR_HASH:=054096dab1cbe03cefa200e6f43569a14024423d10e1add1539fcdcc7e5c7ab0
+PKG_MIRROR_HASH:=fcb3df250a54f23abcf06820d9dd4a6ef4706faf51587d2c8b89856ca442aaf2
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -22,23 +23,24 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/rclone/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=File Transfer
-	TITLE:=rsync for cloud storage
-	URL:=https://rclone.org
-	MAINTAINER:=Entware team, https://entware.net
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=File Transfer
+  TITLE:=rsync for cloud storage
+  URL:=https://rclone.org
+  PROVIDES:=rclone
 endef
 
 define Package/rclone
-	$(call Package/rclone/Default)
-	VARIANT:=hf
+  $(call Package/rclone/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/rclone_nohf
-	$(call Package/rclone/Default)
-	VARIANT:=nohf
-	DEPENDS:=@arm
+  $(call Package/rclone/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/rclone/description
