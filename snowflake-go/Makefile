@@ -66,5 +66,7 @@ define Package/snowflake-go/install
 	done
 endef
 
+Package/snowflake-go_nohf/install=$(Package/snowflake-go/install)
+
 $(eval $(call BuildPackage,snowflake-go))
 $(eval $(call BuildPackage,snowflake-go_nohf))
