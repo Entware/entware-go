@@ -5,17 +5,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=frp
-PKG_VERSION:=0.66.0
+PKG_VERSION:=0.67.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/fatedier/frp
-PKG_MIRROR_HASH:=7ed119e5f6b0bdfee3b8c4c44c7f801e1fd57091db9c3b8535e2ce0a1af3432a
+PKG_MIRROR_HASH:=5d4c1339c2797b4c30cf815f367aff8e9694f45f3e690c2c2899729abe6f35dc
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 PKG_MAINTAINER:=Entware team, https://entware.net
+
+PKG_BUILD_DEPENDS:=node-yarn/host
 
 PKG_BUILD_PARALLEL:=1
 
@@ -63,6 +65,12 @@ GO_VARS += GO111MODULE=on
 
 GO_TAGS:=frpc, frps
 GO_TARGET:=./cmd/frpc ./cmd/frps
+
+define Build/Compile
+	( cd $(PKG_BUILD_DIR)/web/frpc; yarn install; yarn run build; )
+	( cd $(PKG_BUILD_DIR)/web/frps; yarn install; yarn run build; )
+	$(call Build/Compile/Go)
+endef
 
 define Package/frp-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
