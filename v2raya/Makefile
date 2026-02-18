@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2raya
-PKG_VERSION:=2.2.7.4
+PKG_VERSION:=2.2.7.5
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/v2rayA/v2rayA
-PKG_MIRROR_HASH:=443ac553fe410c9aa5cced0103eddbe8e5284023606060183b5e19a4a68d61dd
+PKG_MIRROR_HASH:=ec55ecbaecedc0f76a5d926bd93d75fdf08ec4334e94d5607dbd9649cb80d23d
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
@@ -51,20 +51,20 @@ endef
 
 Package/v2raya_nohf/description=$(Package/v2raya/description)
 
+WEB_FILE:=$(PKG_NAME)-web-$(PKG_VERSION).tar.gz
+define Download/v2raya-web
+  URL:=https://github.com/v2rayA/v2rayA/releases/download/v$(PKG_VERSION)/
+  URL_FILE:=web.tar.gz
+  FILE:=$(WEB_FILE)
+  HASH:=89bff9248a9cba8b7bda6e1202ac565dbca377319423868835235deddbfb182a
+endef
+
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/conf.Version=v$(PKG_VERSION)'
 
 GO_SRC_SUBDIR:=service
 
 GO_TAGS:=with_gvisor
-
-WEB_FILE:=$(PKG_NAME)-web-$(PKG_VERSION).tar.gz
-define Download/v2raya-web
-  URL:=https://github.com/v2rayA/v2rayA/releases/download/v$(PKG_VERSION)/
-  URL_FILE:=web.tar.gz
-  FILE:=$(WEB_FILE)
-  HASH:=985b083a75b7b34ea9c5151cbc096f6f44fa369a807fea85b435fed5229dae65
-endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
