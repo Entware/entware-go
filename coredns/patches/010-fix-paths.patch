@@ -1,46 +1,11 @@
---- a/plugin/grpc/setup_test.go
-+++ b/plugin/grpc/setup_test.go
-@@ -26,7 +26,7 @@ func TestSetup(t *testing.T) {
- 		{"grpc . 127.0.0.1:8080", false, ".", nil, ""},
- 		{"grpc . [::1]:53", false, ".", nil, ""},
- 		{"grpc . [2003::1]:53", false, ".", nil, ""},
--		{"grpc . unix:///var/run/g.sock", false, ".", nil, ""},
-+		{"grpc . unix:///opt/var/run/g.sock", false, ".", nil, ""},
- 		// negative
- 		{"grpc . a27.0.0.1", true, "", nil, "not an IP"},
- 		{"grpc . 127.0.0.1 {\nblaatl\n}\n", true, "", nil, "unknown property"},
---- a/plugin/pkg/parse/host_test.go
-+++ b/plugin/pkg/parse/host_test.go
-@@ -59,8 +59,8 @@ func TestHostPortOrFile(t *testing.T) {
- 			true,
- 		},
- 		{
--			"unix:///var/run/g.sock",
--			"unix:///var/run/g.sock",
-+			"unix:///opt/var/run/g.sock",
-+			"unix:///opt/var/run/g.sock",
- 			false,
- 		},
- 		{
 --- a/plugin/sign/setup.go
 +++ b/plugin/sign/setup.go
 @@ -64,7 +64,7 @@ func parse(c *caddy.Controller) (*Sign,
  				origin:      origins[i],
- 				jitterIncep: time.Duration(float32(durationInceptionJitter) * rand.Float32()),
- 				jitterExpir: time.Duration(float32(durationExpirationDayJitter) * rand.Float32()),
+ 				jitterIncep: time.Duration(float32(durationInceptionJitter) * rand.Float32()),     // #nosec G404 -- non-cryptographic jitter.
+ 				jitterExpir: time.Duration(float32(durationExpirationDayJitter) * rand.Float32()), // #nosec G404 -- non-cryptographic jitter.
 -				directory:   "/var/lib/coredns",
 +				directory:   "/opt/var/lib/coredns",
  				stop:        make(chan struct{}),
  				signedfile:  fmt.Sprintf("db.%ssigned", origins[i]), // origins[i] is a fqdn, so it ends with a dot, hence %ssigned.
  			}
---- a/plugin/sign/setup_test.go
-+++ b/plugin/sign/setup_test.go
-@@ -20,7 +20,7 @@ func TestParse(t *testing.T) {
- 				keys:       []Pair{},
- 				origin:     "miek.nl.",
- 				dbfile:     "testdata/db.miek.nl",
--				directory:  "/var/lib/coredns",
-+				directory:  "/opt/var/lib/coredns",
- 				signedfile: "db.miek.nl.signed",
- 			},
- 		},
