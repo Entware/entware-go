@@ -1,6 +1,6 @@
 --- a/cmd/root.go
 +++ b/cmd/root.go
-@@ -132,9 +132,8 @@ as FB_DISABLE_PREVIEW_RESIZE.
+@@ -134,9 +134,8 @@ as FB_DISABLE_PREVIEW_RESIZE.
  If "--config" is not specified, File Browser will look for a configuration
  file named .filebrowser.{json, toml, yaml, yml} in the following directories:
  
@@ -13,7 +13,7 @@
  environment variables. Other configuration options live exclusively in the
 --- a/cmd/utils.go
 +++ b/cmd/utils.go
-@@ -98,10 +98,8 @@ func initViper(cmd *cobra.Command) (*vip
+@@ -97,10 +97,8 @@ func initViper(cmd *cobra.Command) (*vip
  		if err != nil {
  			return nil, err
  		}
