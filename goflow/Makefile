@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 # XXX Project archived by the owner on Feb 19, 2025.
 
@@ -18,6 +18,7 @@ PKG_MIRROR_HASH:=73cc75f17aba13ada29440c79edb7840513719141e3cd770fcc521b3576b047
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE.txt
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -30,14 +31,38 @@ define Package/goflow/Default
   SUBMENU:=prometheus tools
   TITLE:=a NetFlow/IPFIX/sFlow collector
   URL:=https://github.com/cloudflare/goflow
-  MAINTAINER:=Entware team, https://entware.net
   CONFLICTS:=netflow-exporter
 endef
+
+define Package/goflow
+  $(call Package/goflow/Default)
+  TITLE+=(full)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
+  PROVIDES:=goflow
+endef
+
+define Package/goflow_nohf
+  $(call Package/goflow/Default)
+  TITLE+=(full)
+  VARIANT:=nohf
+  PROVIDES:=goflow
+  DEPENDS:=@arm
+endef
+
+define Package/goflow/description
+  The high-scalability sFlow/NetFlow/IPFIX collector used
+  internally at Cloudflare.
+  (full)
+endef
+
+Package/goflow_nohf/description=$(Package/goflow/description)
 
 define Package/cnetflow
   $(call Package/goflow/Default)
   TITLE+=(IPFIX/NetFlow v9)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/cnetflow_nohf
@@ -59,6 +84,7 @@ define Package/cnflegacy
   $(call Package/goflow/Default)
   TITLE+=(NetFlow v5)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/cnflegacy_nohf
@@ -80,6 +106,7 @@ define Package/csflow
   $(call Package/goflow/Default)
   TITLE+=(sFlow v5)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/csflow_nohf
@@ -96,27 +123,6 @@ define Package/csflow/description
 endef
 
 Package/csflow_nohf/description=$(Package/csflow/description)
-
-define Package/goflow
-  $(call Package/goflow/Default)
-  TITLE+=(full)
-  VARIANT:=hf
-endef
-
-define Package/goflow_nohf
-  $(call Package/goflow/Default)
-  TITLE+=(full)
-  VARIANT:=nohf
-  DEPENDS:=@arm
-endef
-
-define Package/goflow/description
-  The high-scalability sFlow/NetFlow/IPFIX collector used
-  internally at Cloudflare.
-  (full)
-endef
-
-Package/goflow_nohf/description=$(Package/goflow/description)
 
 GO_LDFLAGS += \
 	-X 'main.version=$(PKG_VERSION)' \

@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024-2025 Entware
+# Copyright (C) 2024-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=filebrowser
-PKG_VERSION:=2.32.0
+PKG_VERSION:=2.59.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=3d6c5152fe22a4a47783253a3506a2930b7b6be3
+PKG_SOURCE_VERSION:=7e78ad97adce35755be97e0101dfb97882125e69
 PKG_SOURCE_URL:=https://github.com/filebrowser/filebrowser
-PKG_MIRROR_HASH:=4b74a0f53013c67fe315110856753dfcd9ed14aa1e06e7722ba574e768fabeac
+PKG_MIRROR_HASH:=d407d1610f173547fd68caa5a99ecec57ea6c977fbab5ee9be7e2f332c1db7bd
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -29,11 +29,13 @@ define Package/filebrowser/Default
   SUBMENU:=Filesystem
   TITLE:=Web File Browser
   URL:=https://filebrowser.org
+  PROVIDES:=filebrowser
 endef
 
 define Package/filebrowser
   $(call Package/filebrowser/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/filebrowser_nohf

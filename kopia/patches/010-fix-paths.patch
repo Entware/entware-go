@@ -4,8 +4,8 @@
  )
  
  func mountWebDavHelper(ctx context.Context, url, path string) error {
--	mount := exec.Command("/usr/bin/mount", "-t", "davfs", "-r", url, path)
-+	mount := exec.Command("/opt/bin/mount", "-t", "davfs", "-r", url, path)
+-	mount := exec.CommandContext(ctx, "/usr/bin/mount", "-t", "davfs", "-r", url, path)
++	mount := exec.CommandContext(ctx, "/opt/bin/mount", "-t", "davfs", "-r", url, path)
  	if err := mount.Run(); err != nil {
 -		log(ctx).Errorf("mount command failed: %v. Cowardly refusing to run with root permissions. Try \"sudo /usr/bin/mount -t davfs -r %s %s\"\n", err, url, path)
 +		log(ctx).Errorf("mount command failed: %v. Cowardly refusing to run with root permissions. Try \"sudo /opt/bin/mount -t davfs -r %s %s\"\n", err, url, path)
@@ -14,9 +14,9 @@
  	return nil
  }
  
- func unmountWebDevHelper(ctx context.Context, path string) error {
--	unmount := exec.Command("/usr/bin/umount", path)
-+	unmount := exec.Command("/opt/bin/umount", path)
+ func unmountWebDavHelper(ctx context.Context, path string) error {
+-	unmount := exec.CommandContext(ctx, "/usr/bin/umount", path)
++	unmount := exec.CommandContext(ctx, "/opt/bin/umount", path)
  	if err := unmount.Run(); err != nil {
 -		log(ctx).Errorf("umount command failed: %v. Cowardly refusing to run with root permissions. Try \"sudo /usr/bin/umount %s\"\n", err, path)
 +		log(ctx).Errorf("umount command failed: %v. Cowardly refusing to run with root permissions. Try \"sudo /opt/bin/umount %s\"\n", err, path)
@@ -25,7 +25,7 @@
  	return nil
 --- a/internal/ospath/ospath_xdg.go
 +++ b/internal/ospath/ospath_xdg.go
-@@ -12,12 +12,12 @@ func init() {
+@@ -11,12 +11,12 @@ func init() {
  	if os.Getenv("XDG_CONFIG_HOME") != "" {
  		userSettingsDir = os.Getenv("XDG_CONFIG_HOME")
  	} else {

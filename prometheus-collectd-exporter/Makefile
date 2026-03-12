@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2024 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -16,6 +16,7 @@ PKG_MIRROR_HASH:=4d2df1988a8567724e9029b0a6493c19b0f10febad62f6c3eb84997a94848eb
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -28,19 +29,20 @@ define Package/prometheus-collectd-exporter/Default
   SUBMENU:=prometheus tools
   TITLE:=Collectd Exporter
   URL:=https://prometheus.io/
-  MAINTAINER:=Entware team, https://entware.net
-  DEPENDS:=+collectd
+  PROVIDES:=prometheus-collectd-exporter
+  EXTRA_DEPENDS:=collectd
 endef
 
 define Package/prometheus-collectd-exporter
   $(call Package/prometheus-collectd-exporter/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/prometheus-collectd-exporter_nohf
   $(call Package/prometheus-collectd-exporter/Default)
   VARIANT:=nohf
-  DEPENDS+=@arm
+  DEPENDS:=@arm
 endef
 
 define Package/prometheus-collectd-exporter/description

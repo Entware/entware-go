@@ -1,20 +1,21 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=kopia
-PKG_VERSION:=0.20.0
+PKG_VERSION:=0.22.3
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=496f2d5d96a27e0913b59cebd9b2509bca1896f2
+PKG_SOURCE_VERSION:=154bf56899228e5c95fb3176b9c6901bbe4ca97b
 PKG_SOURCE_URL:=https://github.com/kopia/kopia
-PKG_MIRROR_HASH:=7ba45d14bdcd505abe227af8a1d36d6089c1c9e989fe6863d0e4d57b6b76b20a
+PKG_MIRROR_HASH:=79b25d80ff1e16437e9120749c9a54a279559124d01c50f1533799b53419c40e
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -27,12 +28,13 @@ define Package/kopia/Default
   SUBMENU:=Backup
   TITLE:=backup/restore tool
   URL:=https://kopia.io/
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=kopia
 endef
 
 define Package/kopia
   $(call Package/kopia/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/kopia_nohf

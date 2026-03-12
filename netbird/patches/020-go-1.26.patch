@@ -1,0 +1,31 @@
+--- a/go.mod
++++ b/go.mod
+@@ -1,8 +1,6 @@
+ module github.com/netbirdio/netbird
+ 
+-go 1.25
+-
+-toolchain go1.25.5
++go 1.25.5
+ 
+ require (
+ 	cunicu.li/go-rosenpass v0.4.0
+@@ -124,7 +122,7 @@ require (
+ 	gorm.io/driver/postgres v1.5.7
+ 	gorm.io/driver/sqlite v1.5.7
+ 	gorm.io/gorm v1.25.12
+-	gvisor.dev/gvisor v0.0.0-20251031020517-ecfcdd2f171c
++	gvisor.dev/gvisor v0.0.0-20260122175437-89a5d21be8f0
+ )
+ 
+ require (
+--- a/go.sum
++++ b/go.sum
+@@ -851,5 +851,5 @@ gorm.io/gorm v1.25.12 h1:I0u8i2hWQItBq1W
+ gorm.io/gorm v1.25.12/go.mod h1:xh7N7RHfYlNc5EmcI/El95gXusucDrQnHXe0+CgWcLQ=
+ gotest.tools/v3 v3.5.0 h1:Ljk6PdHdOhAb5aDMWXjDLMMhph+BpztA4v1QdqEW2eY=
+ gotest.tools/v3 v3.5.0/go.mod h1:isy3WKz7GK6uNw/sbHzfKBLvlvXwUyV06n6brMxxopU=
+-gvisor.dev/gvisor v0.0.0-20251031020517-ecfcdd2f171c h1:pfzmXIkkDgydR4ZRP+e1hXywZfYR21FA0Fbk6ptMkiA=
+-gvisor.dev/gvisor v0.0.0-20251031020517-ecfcdd2f171c/go.mod h1:/mc6CfwbOm5KKmqoV7Qx20Q+Ja8+vO4g7FuCdlVoAfQ=
++gvisor.dev/gvisor v0.0.0-20260122175437-89a5d21be8f0 h1:Lk6hARj5UPY47dBep70OD/TIMwikJ5fGUGX0Rm3Xigk=
++gvisor.dev/gvisor v0.0.0-20260122175437-89a5d21be8f0/go.mod h1:QkHjoMIBaYtpVufgwv3keYAbln78mBoCuShZrPrer1Q=

@@ -1,11 +1,11 @@
 --- a/device/queueconstants_default.go
 +++ b/device/queueconstants_default.go
-@@ -12,6 +12,6 @@ const (
+@@ -14,6 +14,6 @@ const (
  	QueueOutboundSize          = 1024
  	QueueInboundSize           = 1024
  	QueueHandshakeSize         = 1024
 -	MaxSegmentSize             = (1 << 16) - 1 // largest possible UDP datagram
 -	PreallocatedBuffersPerPool = 0             // Disable and allow for infinite memory growth
-+	MaxSegmentSize             = 1700 // largest possible UDP datagram
-+	PreallocatedBuffersPerPool = 1024            // Disable and allow for infinite memory growth
++	MaxSegmentSize             = 1700	// largest possible UDP datagram
++	PreallocatedBuffersPerPool = 1024	// Disable and allow for infinite memory growth
  )

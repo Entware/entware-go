@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2022-2024 Entware
+# Copyright (C) 2022-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -13,30 +13,35 @@ PKG_SOURCE_VERSION:=348ae97219784a32dd3c4721ad0cbc2584ee7b46
 PKG_SOURCE_URL:=https://github.com/iawia002/lux
 PKG_MIRROR_HASH:=b65af44eca517015d42f2679d7157642c759ff954a4adf044b84b55001bfc7fa
 
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
+
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/golang.mk
 
 define Package/lux/Default
-	SECTION:=net
-	CATEGORY:=Network
-	SUBMENU:=Download Manager
-	TITLE:=a fast, simple and clean video downloader
-	URL:=https://github.com/iawia002/lux
-	MAINTAINER:=Entware team, https://entware.net
-	DEPENDS:=+ffmpeg
+  SECTION:=net
+  CATEGORY:=Network
+  SUBMENU:=Download Manager
+  TITLE:=a fast, simple and clean video downloader
+  URL:=https://github.com/iawia002/lux
+  PROVIDES:=lux
+  EXTRA_DEPENDS:=ffmpeg
 endef
 
 define Package/lux
-	$(call Package/lux/Default)
-	VARIANT:=hf
+  $(call Package/lux/Default)
+  VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/lux_nohf
-	$(call Package/lux/Default)
-	VARIANT:=nohf
-	DEPENDS+=@arm
+  $(call Package/lux/Default)
+  VARIANT:=nohf
+  DEPENDS:=@arm
 endef
 
 define Package/lux/description

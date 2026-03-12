@@ -1,19 +1,19 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2025 Entware
+# Copyright (C) 2025-2026 Entware
 
 # https://github.com/Entware/Entware/issues/1000
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=coredns
-PKG_VERSION:=1.12.3
+PKG_VERSION:=1.14.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/coredns/coredns
-PKG_MIRROR_HASH:=a9c648b63cceeaeed3ceac5ea04adf2120422dbeb6ea5061c62571baea523ba1
+PKG_MIRROR_HASH:=be51352801f5455ac0a7f3c97adaa86587bb2343f50ee2779f48121c96e2f4f9
 
 PKG_MAINTAINER:=Entware team, https://entware.net
 PKG_LICENSE:=Apache-2.0
@@ -30,18 +30,20 @@ define Package/coredns/Default
   SUBMENU:=IP Addresses and Names
   TITLE:=DNS server that chains plugins
   URL:=https://coredns.io
-  DEPENDS:=+ca-bundle
+  PROVIDES:=coredns
+  EXTRA_DEPENDS:=ca-bundle
 endef
 
 define Package/coredns
   $(call Package/coredns/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/coredns_nohf
   $(call Package/coredns/Default)
   VARIANT:=nohf
-  DEPENDS+=@arm
+  DEPENDS:=@arm
 endef
 
 define Package/coredns/description

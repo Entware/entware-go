@@ -1,26 +1,27 @@
 --- a/cmd/root.go
 +++ b/cmd/root.go
-@@ -91,9 +91,9 @@ environment variables or configuration f
- If you don't set "config", it will look for a configuration file called
- .filebrowser.{json, toml, yaml, yml} in the following directories:
+@@ -134,9 +134,8 @@ as FB_DISABLE_PREVIEW_RESIZE.
+ If "--config" is not specified, File Browser will look for a configuration
+ file named .filebrowser.{json, toml, yaml, yml} in the following directories:
  
 -- ./
 +- /opt/etc/filebrowser/
  - $HOME/
 -- /etc/filebrowser/
-+- ./
  
- The precedence of the configuration values are as follows:
- 
-@@ -403,9 +403,9 @@ func initConfig() {
- 	if cfgFile == "" {
- 		home, err := homedir.Dir()
- 		checkErr(err)
+ **Note:** Only the options listed below can be set via the config file or
+ environment variables. Other configuration options live exclusively in the
+--- a/cmd/utils.go
++++ b/cmd/utils.go
+@@ -97,10 +97,8 @@ func initViper(cmd *cobra.Command) (*vip
+ 		if err != nil {
+ 			return nil, err
+ 		}
 -		v.AddConfigPath(".")
 +		v.AddConfigPath("/opt/etc/filebrowser/")
  		v.AddConfigPath(home)
 -		v.AddConfigPath("/etc/filebrowser/")
-+		v.AddConfigPath(".")
- 		v.SetConfigName(".filebrowser")
+-		v.SetConfigName(".filebrowser")
  	} else {
  		v.SetConfigFile(cfgFile)
+ 	}

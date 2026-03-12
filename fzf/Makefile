@@ -1,17 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024-2025 Entware
+# Copyright (C) 2024-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=fzf
-PKG_VERSION:=0.62.0
+PKG_VERSION:=0.67.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=d226d841a1f2b849b7e3efab2a44ecbb3e61a5a5
+PKG_SOURCE_VERSION:=2ab923f3ae04d5e915e5ff4a9cd3bd515bfd1ea5
 PKG_SOURCE_URL:=https://github.com/junegunn/fzf
-PKG_MIRROR_HASH:=a98a9b5fc1d9f5e2df163dcc6368db60467521c6b6c40789bb0983be26712716
+PKG_MIRROR_HASH:=0eaa77c90fe01009988981bcd7759ad62df3daaceddf8e12fdac1252bfcdd573
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
@@ -27,11 +27,13 @@ define Package/fzf/Default
   CATEGORY:=Utilities
   TITLE:=A command-line fuzzy finder
   URL:=https://github.com/junegunn/fzf
+  PROVIDES:=fzf
 endef
 
 define Package/fzf
   $(call Package/fzf/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/fzf_nohf

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
-#
+# Copyright (C) 2023-2026 Entware
+
 # based on fork from paihu/netflow_exporter
 
 include $(TOPDIR)/rules.mk
@@ -18,6 +18,7 @@ PKG_MIRROR_HASH:=7328cdf332521bad28448cca70eb6abba02b0b76ce078b831ac1ffadfa62286
 
 PKG_LICENSE:=
 PKG_LICENSE_FILES:=
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -30,12 +31,13 @@ define Package/netflow-exporter/Default
   SUBMENU:=prometheus tools
   TITLE:=Prometheus netflow Exporter
   URL:=https://github.com/AlfredArouna/netflow_exporter
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=netflow-exporter
 endef
 
 define Package/netflow-exporter
   $(call Package/netflow-exporter/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/netflow-exporter_nohf

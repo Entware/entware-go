@@ -1,23 +1,27 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
+
+# XXX 11.x modernc.org/libc@v1.65.0
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=grafana
-PKG_VERSION:=10.4.18
-PKG_RELEASE:=1
+PKG_VERSION:=10.4.19
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-04-25
-PKG_SOURCE_VERSION:=a33fc073bf8b395da943a32c08a1217f7a7a30e0
+PKG_SOURCE_DATE:=2025-05-22
+PKG_SOURCE_VERSION:=5e7a8b1652847effdfaf023485dc7601675da672
 PKG_SOURCE_URL:=https://github.com/grafana/grafana
-PKG_MIRROR_HASH:=39d77626c767006ebb2eedd298ff0b20382421096992f8373ea429c5e5212ec2
+PKG_MIRROR_HASH:=e2b781061e445d1467656ddcd6daf034d3ad5a88a616923c4d54a1d82b2664cd
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE LICENSING.md
+PKG_MAINTAINER:=Entware team, https://entware.net
 
-PKG_BUILD_DEPENDS:=node-yarn/host
+# ModuleNotFoundError: No module named 'distutils'
+PKG_BUILD_DEPENDS:=node-yarn/host python-setuptools/host
 PKG_BUILD_PARALLEL:=1
 PKG_CGO_ENABLED:=1
 
@@ -30,18 +34,20 @@ define Package/grafana/Default
   SUBMENU:=prometheus tools
   TITLE:=platform for monitoring and observability
   URL:=https://grafana.com
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=grafana
+  DEPENDS:=+libc +libgcc +libpthread
 endef
 
 define Package/grafana
   $(call Package/grafana/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/grafana_nohf
   $(call Package/grafana/Default)
   VARIANT:=nohf
-  DEPENDS:=@arm
+  DEPENDS+=@arm
 endef
 
 define Package/grafana/description

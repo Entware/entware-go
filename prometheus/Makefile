@@ -1,21 +1,22 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus
-PKG_VERSION:=3.4.0
+PKG_VERSION:=3.9.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-05-17
-PKG_SOURCE_VERSION:=546b1d242e209ed4228aa01a248dbf3e41e573ea
+PKG_SOURCE_DATE:=2026-01-07
+PKG_SOURCE_VERSION:=9ec59baffb547e24f1468a53eb82901e58feabd8
 PKG_SOURCE_URL:=https://github.com/prometheus/prometheus
-PKG_MIRROR_HASH:=c0aa4231235e23dc942da8b3a483c7bd917e03b522b0ee4ce38e1a40a0a5aefe
+PKG_MIRROR_HASH:=57faa7ab60fecba5e15143010d801196e8b6a2f6f2008fabd9fbc676a2b6042d
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -28,12 +29,13 @@ define Package/prometheus/Default
   SUBMENU:=prometheus tools
   TITLE:=Monitoring system and time series database
   URL:=http://prometheus.io
-  MAINTAINER:=Entware team, https://entware.net
+  PROVIDES:=prometheus
 endef
 
 define Package/prometheus
   $(call Package/prometheus/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/prometheus_nohf
@@ -63,7 +65,7 @@ define Download/prometheus-web-ui
   URL:=https://github.com/prometheus/prometheus/releases/download/v$(PKG_VERSION)/
   URL_FILE:=$(WEB_FILE)
   FILE:=$(WEB_FILE)
-  HASH:=19ceafadf839b8d64b8f0e14f591edcb076add8f789297d981b3650b4ac5d79d
+  HASH:=a6557f8849d4b1e3f882577a7eff9d22f161a10baaa4e81b8287fe1640afbc5a
 endef
 
 GO_BUILD_ARGS += -a

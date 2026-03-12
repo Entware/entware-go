@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -30,12 +30,15 @@ define Package/wireguard-ui/Default
   SUBMENU:=VPN
   TITLE:=Wireguard web interface
   URL:=https://github.com/ngoduykhanh/wireguard-ui
-  DEPENDS:=+ca-bundle +iptables +jq +wireguard-tools @!LINUX_2_6_36
+  PROVIDES:=wireguard-ui
+  DEPENDS:=@!LINUX_2_6_36
+  EXTRA_DEPENDS:=ca-bundle, iptables, jq, wireguard-tools
 endef
 
 define Package/wireguard-ui
   $(call Package/wireguard-ui/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/wireguard-ui_nohf

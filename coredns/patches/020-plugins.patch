@@ -9,7 +9,7 @@
  cancel:cancel
  tls:tls
  quic:quic
-@@ -36,15 +36,15 @@ trace:trace
+@@ -39,15 +39,15 @@ trace:trace
  ready:ready
  health:health
  pprof:pprof
@@ -28,7 +28,7 @@
  loadbalance:loadbalance
  tsig:tsig
  cache:cache
-@@ -56,15 +56,15 @@ minimal:minimal
+@@ -59,15 +59,15 @@ minimal:minimal
  template:template
  transfer:transfer
  hosts:hosts
@@ -48,10 +48,10 @@
  loop:loop
  forward:forward
  grpc:grpc
-@@ -73,3 +73,7 @@ whoami:whoami
- on:github.com/coredns/caddy/onevent
+@@ -77,3 +77,7 @@ on:github.com/coredns/caddy/onevent
  sign:sign
  view:view
+ nomad:nomad
 +meshname:github.com/zhoreeq/coredns-meshname
 +meship:github.com/zhoreeq/coredns-meship
 +ens:github.com/wealdtech/coredns-ens

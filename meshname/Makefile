@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2025 Entware
+# Copyright (C) 2025-2026 Entware
 
 # https://github.com/Entware/Entware/issues/1000
 
@@ -15,9 +15,9 @@ PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/zhoreeq/meshname
 PKG_MIRROR_HASH:=43c4277ecc75615e0f2b2ecc9eee6e7b210a48544f188cab6b28188e02d8dc4f
 
-PKG_MAINTAINER:=Entware team, https://entware.net
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
+PKG_MAINTAINER:=Entware team, https://entware.net
 
 PKG_BUILD_PARALLEL:=1
 
@@ -30,18 +30,20 @@ define Package/meshname/Default
   SUBMENU:=IP Addresses and Names
   TITLE:=universal naming system for all IPv6-based mesh networks
   URL:=https://github.com/zhoreeq/meshname
-  DEPENDS:=+ca-bundle
+  PROVIDES:=meshname
+  EXTRA_DEPENDS:=ca-bundle
 endef
 
 define Package/meshname
   $(call Package/meshname/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/meshname_nohf
   $(call Package/meshname/Default)
   VARIANT:=nohf
-  DEPENDS+=@arm
+  DEPENDS:=@arm
 endef
 
 define Package/meshname/description

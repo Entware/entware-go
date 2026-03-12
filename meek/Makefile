@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2024 Entware
+# Copyright (C) 2024-2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -25,13 +25,14 @@ include $(INCLUDE_DIR)/golang.mk
 define Package/meek/Default
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=a blocking-resistant pluggable transport (HTTPS transport)
+  TITLE:=blocking-resistant pluggable transport (HTTPS transport)
   URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/meek
 endef
 
 define Package/meek-client
   $(call Package/meek/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/meek-client_nohf
@@ -43,6 +44,7 @@ endef
 define Package/meek-server
   $(call Package/meek/Default)
   VARIANT:=hf
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/meek-server_nohf
