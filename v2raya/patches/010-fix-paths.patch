@@ -1,6 +1,6 @@
 --- a/service/common/tools.go
 +++ b/service/common/tools.go
-@@ -177,7 +177,7 @@ func FillEmpty(toFill interface{}, defau
+@@ -187,7 +187,7 @@ func FillEmpty(toFill interface{}, defau
  // IsOpenWrt return true only if the operating system SHOULD be openwrt
  func IsOpenWrt() bool {
  	if runtime.GOOS == "linux" {
@@ -9,17 +9,15 @@
  			return true
  		}
  	}
---- a/service/conf/environmentConfig.go
-+++ b/service/conf/environmentConfig.go
-@@ -66,7 +66,7 @@ func initFunc() {
- 				params.Config = "$HOME/.config/v2raya"
- 			}
- 		} else {
--			params.Config = "/etc/v2raya"
-+			params.Config = "/opt/etc/v2raya"
- 		}
+--- a/service/conf/environmentConfig_other.go
++++ b/service/conf/environmentConfig_other.go
+@@ -20,5 +20,5 @@ func defaultConfigDir(isLite bool) strin
+ 		return filepath.Join(os.TempDir(), "v2raya")
  	}
- 	// replace all dots of the filename with underlines
+ 
+-	return "/etc/v2raya"
++	return "/opt/etc/v2raya"
+ }
 --- a/service/core/v2ray/asset/asset.go
 +++ b/service/core/v2ray/asset/asset.go
 @@ -64,8 +64,8 @@ func GetV2rayLocationAsset(filename stri
