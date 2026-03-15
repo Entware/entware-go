@@ -9,7 +9,7 @@
  cancel:cancel
  tls:tls
  quic:quic
-@@ -39,15 +39,15 @@ trace:trace
+@@ -39,14 +39,14 @@ trace:trace
  ready:ready
  health:health
  pprof:pprof
@@ -21,7 +21,6 @@
 +#dnstap:dnstap
  local:local
  dns64:dns64
- acl:acl
  any:any
 -chaos:chaos
 +#chaos:chaos
