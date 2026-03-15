@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=snowflake
-PKG_VERSION:=2.11.0
+PKG_VERSION:=2.12.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake
-PKG_MIRROR_HASH:=527006b3d71134267fac3a8c86be71a99bf7dbb2f969916c60f16bec8c245294
+PKG_MIRROR_HASH:=35403a12beb5ae5d44ab9d9e068c61f11a1417411e159d74516eb2d93afb69bd
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
@@ -56,7 +56,7 @@ Package/snowflake-go_hf/description=$(Package/snowflake-go/description)
 GO_VARS += GO111MODULE=on
 GO_TARGET:=./broker ./client ./probetest ./proxy ./server
 
-BINS:=broker client probetest proxy server
+BINS:=$(subst ./,,$(GO_TARGET))
 
 define Package/snowflake-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
