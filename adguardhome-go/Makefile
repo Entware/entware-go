@@ -5,20 +5,19 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=adguardhome
-PKG_VERSION:=v0.107.71
+PKG_VERSION:=v0.107.73
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-12-08
-PKG_SOURCE_VERSION:=42a2653d3245313b6247ada092c66e2e11c72468
+PKG_SOURCE_DATE:=2026-03-10
+PKG_SOURCE_VERSION:=c003e9f9c04311a13ca7a873a8437f80711102a5
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/AdGuardHome
-PKG_MIRROR_HASH:=b40c3d33951a76b05ed5d02f827b5581deaa8d52968b71ff2d800ddfd9cdac3d
+PKG_MIRROR_HASH:=a0f729823d1aa9d3c588115d8c5aba0c43435f3fa59dae4654a2da69e7c55f5c
 
 PKG_LICENSE:=GPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE.txt
 PKG_MAINTAINER:=Entware team, https://entware.net
 
-PKG_BUILD_DEPENDS:=node-yarn/host
 PKG_BUILD_PARALLEL:=1
 
 include $(INCLUDE_DIR)/package.mk
@@ -57,18 +56,22 @@ endef
 
 Package/adguardhome-go_nohf/conffiles=$(Package/adguardhome-go/conffiles)
 
+AGH_FRONTEND:=$(PKG_NAME)-frontend-$(PKG_VERSION).tar.gz
+define Download/adguardhome-frontend
+  URL:=$(PKG_SOURCE_URL)/releases/download/$(PKG_VERSION)/
+  URL_FILE:=AdGuardHome_frontend.tar.gz
+  FILE:=$(AGH_FRONTEND)
+  HASH:=a69c540fe6959575330bdea150e31eee0c0c204985bf50e3522ce6d292e3c64e
+endef
+
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/internal/version.channel=release' \
 	-X '$(XIMPORTPATH)/internal/version.version=$(PKG_VERSION)' \
 	-X '$(XIMPORTPATH)/internal/version.committime=$(PKG_SOURCE_DATE)'
 
-define Build/Compile
-	( cd $(PKG_BUILD_DIR); \
-		NODE_OPTIONS=--openssl-legacy-provider \
-		$(MAKE) js-deps js-build; \
-	)
-	( cd $(PKG_BUILD_DIR); $(GO_BIN_MOD_TIDY); )
-	$(call Build/Compile/Go)
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	$(TAR) -xf $(DL_DIR)/$(AGH_FRONTEND) --strip-components=1 -C $(PKG_BUILD_DIR)
 endef
 
 define Package/adguardhome-go/install
@@ -82,5 +85,6 @@ endef
 
 Package/adguardhome-go_nohf/install=$(Package/adguardhome-go/install)
 
+$(eval $(call Download,adguardhome-frontend))
 $(eval $(call BuildPackage,adguardhome-go))
 $(eval $(call BuildPackage,adguardhome-go_nohf))
