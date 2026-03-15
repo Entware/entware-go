@@ -5,14 +5,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=prometheus
-PKG_VERSION:=3.9.1
+PKG_VERSION:=3.10.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2026-01-07
-PKG_SOURCE_VERSION:=9ec59baffb547e24f1468a53eb82901e58feabd8
+PKG_SOURCE_DATE:=2026-02-26
+PKG_SOURCE_VERSION:=54e010926b0a270cadb22be1113ad45fe9bcb90a
 PKG_SOURCE_URL:=https://github.com/prometheus/prometheus
-PKG_MIRROR_HASH:=57faa7ab60fecba5e15143010d801196e8b6a2f6f2008fabd9fbc676a2b6042d
+PKG_MIRROR_HASH:=45d3c630babd3edbed5a8dc2ca6e2e2be6209f8592a88fdbde691c6bfa979793
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -62,10 +62,10 @@ Package/prometheus_nohf/conffiles=$(Package/prometheus/conffiles)
 
 WEB_FILE:=$(PKG_NAME)-web-ui-$(PKG_VERSION).tar.gz
 define Download/prometheus-web-ui
-  URL:=https://github.com/prometheus/prometheus/releases/download/v$(PKG_VERSION)/
+  URL:=$(PKG_SOURCE_URL)/releases/download/v$(PKG_VERSION)/
   URL_FILE:=$(WEB_FILE)
   FILE:=$(WEB_FILE)
-  HASH:=a6557f8849d4b1e3f882577a7eff9d22f161a10baaa4e81b8287fe1640afbc5a
+  HASH:=f5ff10c517fcee50f4562f69c5be629860a365201b67c27dc4004168ce45f96a
 endef
 
 GO_BUILD_ARGS += -a
