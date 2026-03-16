@@ -77,7 +77,7 @@ GO_TAGS:= \
 	with_embedded_tor, \
 	with_grpc, \
 	with_gvisor, \
-	with_naive_outbound, \
+	$(if $(CONFIG_mips),,with_naive_outbound), \
 	with_ocm, \
 	with_quic, \
 	with_tailscale, \
