@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sing-box
-PKG_VERSION:=1.13.2
+PKG_VERSION:=1.13.3
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/SagerNet/sing-box
-PKG_MIRROR_HASH:=f8d2653d8536f1da3c70972534f1c6de36170ec37a4b75fc0b75ab2698d91cd3
+PKG_MIRROR_HASH:=c2c4ad8dbfed77bf6afbd924c592941d131775d1cde3c18e41519c7025644f07
 
 PKG_LICENSE:=GPL-3.0-or-later
 PKG_LICENSE_FILES:=LICENSE
@@ -79,6 +79,7 @@ GO_TAGS:= \
 	with_gvisor, \
 	$(if $(CONFIG_mips),,with_naive_outbound), \
 	with_ocm, \
+	$(if $(CONFIG_mips),,with_purego), \
 	with_quic, \
 	with_tailscale, \
 	with_utls, \
