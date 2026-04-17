@@ -6,7 +6,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sing-box
 PKG_VERSION:=1.13.3
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
@@ -67,6 +67,10 @@ GO_LDFLAGS += \
 
 GO_TARGET:=./cmd/sing-box
 
+ifeq ($(or $(CONFIG_aarch64),$(CONFIG_x86_64)),y)
+  GO_TAGS_EXT:=,with_naive_outbound,with_purego
+endif
+
 GO_TAGS:= \
 	badlinkname, \
 	tfogo_checklinkname0, \
@@ -77,14 +81,13 @@ GO_TAGS:= \
 	with_embedded_tor, \
 	with_grpc, \
 	with_gvisor, \
-	$(if $(CONFIG_mips),,with_naive_outbound), \
 	with_ocm, \
-	$(if $(CONFIG_mips),,with_purego), \
 	with_quic, \
 	with_tailscale, \
 	with_utls, \
 	with_v2ray_api, \
-	with_wireguard
+	with_wireguard \
+	$(GO_TAGS_EXT)
 
 define Package/sing-box-go/install
 	$(INSTALL_DIR) $(1)/opt/bin
