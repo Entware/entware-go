@@ -79,7 +79,7 @@ define Package/frp-go/install
 	$(INSTALL_CONF) $(PKG_BUILD_DIR)/conf/*.toml $(1)/opt/etc/frp
 endef
 
-Package/frp-go_nohf/install=$(Package/frp/install)
+Package/frp-go_nohf/install=$(Package/frp-go/install)
 
 $(eval $(call BuildPackage,frp-go))
 $(eval $(call BuildPackage,frp-go_nohf))
