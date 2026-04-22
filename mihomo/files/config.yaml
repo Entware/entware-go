@@ -1,0 +1,4 @@
+tproxy-port: 1181
+redir-port: 1182
+# Setup documentation:
+# https://wiki.metacubex.one/en/config/
