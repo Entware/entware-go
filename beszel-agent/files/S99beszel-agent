@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ -f "/opt/etc/beszel-agent.conf" ]; then
+	. /opt/etc/beszel-agent.conf || exit 0
+fi
+
+ENABLED=yes
+PROCS=beszel-agent
+ARGS="-listen $LISTEN_PORT"
+PREARGS=""
+DESC=$PROCS
+PATH=/opt/sbin:/opt/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[ -n "$KEY" ] && export KEY
+[ -n "$HUB_URL" ] && export HUB_URL
+[ -n "$TOKEN" ] && export TOKEN
+[ -n "$FILESYSTEM" ] && export FILESYSTEM
+[ -n "$DATA_DIR" ] && export DATA_DIR
+
+. /opt/etc/init.d/rc.func
