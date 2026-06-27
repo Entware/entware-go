@@ -1,0 +1,134 @@
+# Config file of Mihomo. This file follows standard YAML format, with comments support.
+# Read our manual for more detail at https://wiki.metacubex.one/en/config/
+
+# HTTP + SOCKS mixed proxy.
+mixed-port: 7890
+
+# Do not expose proxy to LAN by default.
+# Change to true only if you really want other devices to use this instance.
+allow-lan: false
+bind-address: 127.0.0.1
+
+mode: rule
+log-level: info
+ipv6: true
+
+# Useful for dashboards and API clients.
+# external-controller: 0.0.0.0:9090
+# secret: "change-me"
+
+# Optional web UI. mihomo can download it automatically.
+# external-ui: ui
+# external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+
+# Store selected proxy groups and fake-ip cache.
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# Better latency display and connection behavior.
+unified-delay: true
+tcp-concurrent: true
+
+# GEO data mode for GEOSITE/GEOIP rules.
+# geodata-mode: true
+# geo-auto-update: true
+# geo-update-interval: 24
+#
+# geox-url:
+#   geoip: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.dat"
+#   geosite: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat"
+#   mmdb: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb"
+#   asn: "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb"
+
+# Helps route TLS/HTTP connections by domain when possible.
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+        - 8443
+  skip-domain:
+    - "+.lan"
+    - "+.local"
+    - "+.localdomain"
+    - "+.push.apple.com"
+
+# DNS
+dns:
+  enable: true
+  listen: 127.0.0.1:1053
+  ipv6: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "*.localdomain"
+    - "localhost"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "+.pool.ntp.org"
+    - "time.*.com"
+    - "time.*.gov"
+    - "time.*.edu"
+    - "time.*.apple.com"
+
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+
+  # Used to resolve proxy server domains.
+  proxy-server-nameserver:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+
+  nameserver:
+    - https://1.1.1.1/dns-query
+    - https://8.8.8.8/dns-query
+
+  fallback:
+    - tls://1.0.0.1
+    - tls://8.8.4.4
+
+# Proxies
+proxies:
+  # Example VLESS + TCP + Reality.
+  # Replace all placeholder values.
+  # - name: example-vless-reality
+  #   type: vless
+  #   server: example.com
+  #   port: 443
+  #   uuid: 00000000-0000-0000-0000-000000000000
+  #   udp: true
+  #
+  #   tls: true
+  #   network: tcp
+  #   servername: www.example.com
+  #   flow: xtls-rprx-vision
+  #   packet-encoding: xudp
+  #   client-fingerprint: chrome
+  #   skip-cert-verify: false
+  #
+  #   reality-opts:
+  #     public-key: "REPLACE_WITH_REALITY_PUBLIC_KEY"
+  #     short-id: "REPLACE_WITH_SHORT_ID"
+
+# Proxy group
+proxy-groups:
+  - name: GLOBAL
+    type: select
+    proxies:
+      # - example-vless-reality
+      - DIRECT
+      - REJECT
