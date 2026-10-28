@@ -1,20 +1,20 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2023-2025 Entware
+# Copyright (C) 2023-2026 Entware
 
 # XXX mips(el): modernc.org/libc/**: build constraints exclude all Go files in ***
 
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=promlens
-PKG_VERSION:=0.3.0
+PKG_VERSION:=0.4.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2022-12-05
-PKG_SOURCE_VERSION:=759372f2207b1c8e46c210e822b5e8fdc92ea6a7
+PKG_SOURCE_DATE:=2026-07-10
+PKG_SOURCE_VERSION:=f53098b6371fa85fa1d4c2efeee767d1f4995590
 PKG_SOURCE_URL:=https://github.com/prometheus/promlens
-PKG_MIRROR_HASH:=0104665451f56178e00d4b936310f75b7d2de767bfce101923f332c220b7d9ac
+PKG_MIRROR_HASH:=56b76ab683a372af789ab2bf9254220c3ae6fc22b43f7dad289642dc254824b2
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
