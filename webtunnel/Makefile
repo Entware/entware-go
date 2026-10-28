@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=webtunnel
-PKG_VERSION:=0.0.6
+PKG_VERSION:=0.0.7
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel
-PKG_MIRROR_HASH:=9f081e07269d702821dc1c21b8cb3fd99705e80e7a7abdcf79952d7268f5e80c
+PKG_MIRROR_HASH:=4a51d7c572fc03b55b210ed2b5fcf4ef74a81008a91fa91e863cf2df389dddc7
 
 PKG_LICENSE:=MIT
 PKG_LICENSE_FILES:=LICENSE
