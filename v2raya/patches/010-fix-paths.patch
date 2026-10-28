@@ -20,7 +20,7 @@
  }
 --- a/service/kernel/v2ray/asset/asset.go
 +++ b/service/kernel/v2ray/asset/asset.go
-@@ -50,8 +50,8 @@ func GetV2rayLocationAsset(filename stri
+@@ -81,8 +81,8 @@ func GetV2rayLocationAsset(filename stri
  		if runtime.GOOS != "windows" {
  			searchPaths = append(
  				searchPaths,

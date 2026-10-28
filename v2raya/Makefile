@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=v2raya
-PKG_VERSION:=2.4.17
+PKG_VERSION:=2.5.10
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/v2rayA/v2rayA
-PKG_MIRROR_HASH:=0bf2bc400345a4dded94e22862bb140120a1facdac2083fba98cad38bbd665f6
+PKG_MIRROR_HASH:=a818a976372ff5dcab4558b58132657feb3ab2cfe0c31a6b6c130b1eecd09bdf
 
 PKG_LICENSE:=AGPL-3.0-only
 PKG_LICENSE_FILES:=LICENSE
@@ -56,7 +56,7 @@ define Download/v2raya-web
   URL:=$(PKG_SOURCE_URL)/releases/download/v$(PKG_VERSION)/
   URL_FILE:=web.tar.gz
   FILE:=$(WEB_FILE)
-  HASH:=19f475b43a95bcc6f71fa6228c6aaeffeaffffb9b061c8909d507001a26ca76d
+  HASH:=c25071a27f7b98eebb1a80d44b8d6a65d7533cf4cdff475ec86343d7deca5c86
 endef
 
 GO_LDFLAGS += \
