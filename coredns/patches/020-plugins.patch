@@ -9,7 +9,7 @@
  cancel:cancel
  proxyproto:proxyproto
  quic:quic
-@@ -40,14 +40,14 @@ ready:ready
+@@ -40,15 +40,15 @@ ready:ready
  health:health
  pprof:pprof
  shed:shed
@@ -21,15 +21,16 @@
 +#dnstap:dnstap
  local:local
  dns64:dns64
+ siit:siit
  any:any
 -chaos:chaos
 +#chaos:chaos
  loadbalance:loadbalance
  tsig:tsig
  rewrite:rewrite
-@@ -62,15 +62,15 @@ minimal:minimal
- template:template
+@@ -64,15 +64,15 @@ template:template
  transfer:transfer
+ dynupdate:dynupdate
  hosts:hosts
 -route53:route53
 -azure:azure
@@ -47,7 +48,7 @@
  loop:loop
  forward:forward
  grpc:grpc
-@@ -80,3 +80,7 @@ on:github.com/coredns/caddy/onevent
+@@ -82,3 +82,7 @@ on:github.com/coredns/caddy/onevent
  sign:sign
  view:view
  nomad:nomad
