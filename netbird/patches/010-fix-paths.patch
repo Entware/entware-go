@@ -1,6 +1,6 @@
 --- a/client/cmd/root.go
 +++ b/client/cmd/root.go
-@@ -120,11 +120,11 @@ func Execute() error {
+@@ -127,11 +127,11 @@ func Execute() error {
  // maps, custom DNS resolver address, Rosenpass options, auto-connect
  // disabling, lazy connection).
  func init() {
@@ -16,7 +16,7 @@
  
  	switch runtime.GOOS {
  	case "windows":
-@@ -143,7 +143,7 @@ func init() {
+@@ -150,7 +150,7 @@ func init() {
  	oldDefaultConfigPath = oldDefaultConfigPathDir + "config.json"
  	oldDefaultLogFile = oldDefaultLogFileDir + "client.log"
  
@@ -38,12 +38,12 @@
  	}
 --- a/client/iface/configurer/usp.go
 +++ b/client/iface/configurer/usp.go
-@@ -344,7 +344,7 @@ func (t *WGUSPConfigurer) Close() {
+@@ -241,7 +241,7 @@ func (c *WGUSPConfigurer) Close() {
  	}
  
  	if runtime.GOOS == "linux" {
--		sockPath := "/var/run/wireguard/" + t.deviceName + ".sock"
-+		sockPath := "/opt/var/run/wireguard/" + t.deviceName + ".sock"
+-		sockPath := "/var/run/wireguard/" + c.deviceName + ".sock"
++		sockPath := "/opt/var/run/wireguard/" + c.deviceName + ".sock"
  		if _, statErr := os.Stat(sockPath); statErr == nil {
  			_ = os.Remove(sockPath)
  		}
@@ -119,7 +119,7 @@
  
 --- a/client/ssh/server/shell.go
 +++ b/client/ssh/server/shell.go
-@@ -69,13 +69,13 @@ func getUnixUserShell(userID string) str
+@@ -75,13 +75,13 @@ func getUnixUserShell(userID string) str
  
  // getShellFromPasswd reads the shell from /etc/passwd for the given user ID
  func getShellFromPasswd(userID string) string {
@@ -135,7 +135,7 @@
  		}
  	}()
  
-@@ -95,7 +95,7 @@ func getShellFromPasswd(userID string) s
+@@ -101,7 +101,7 @@ func getShellFromPasswd(userID string) s
  	}
  
  	if err := scanner.Err(); err != nil {
@@ -144,7 +144,7 @@
  	}
  
  	return ""
-@@ -103,7 +103,7 @@ func getShellFromPasswd(userID string) s
+@@ -109,7 +109,7 @@ func getShellFromPasswd(userID string) s
  
  // prepareUserEnv prepares environment variables for user execution
  func prepareUserEnv(user *user.User, shell string) []string {
@@ -220,10 +220,10 @@
  	defaultLogFile       = defaultLogDir + "/management.log"
 --- a/signal/cmd/root.go
 +++ b/signal/cmd/root.go
-@@ -39,7 +39,7 @@ func Execute() error {
- 
+@@ -40,7 +40,7 @@ func Execute() error {
  func init() {
- 	stopCh = make(chan int)
+ 	// Buffered so a server failure before the run loop waits is not dropped.
+ 	stopCh = make(chan int, 1)
 -	defaultLogFile = "/var/log/netbird/signal.log"
 +	defaultLogFile = "/opt/var/log/netbird/signal.log"
  
@@ -231,7 +231,7 @@
  		defaultLogFile = os.Getenv("PROGRAMDATA") + "\\Netbird\\" + "signal.log"
 --- a/upload-server/server/local.go
 +++ b/upload-server/server/local.go
-@@ -15,7 +15,7 @@ import (
+@@ -18,7 +18,7 @@ import (
  )
  
  const (
