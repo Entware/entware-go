@@ -5,14 +5,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=syncthing
-PKG_VERSION:=2.1.3
+PKG_VERSION:=2.1.7
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2026-03-03
+PKG_SOURCE_DATE:=2026-10-20
+PKG_SOURCE_TIMESTAMP:=1792526078
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/syncthing/syncthing
-PKG_MIRROR_HASH:=7def592360e6e9aed1a5462fc5c4fd9c58f40b777ff529a487bb7170413fd022
+PKG_MIRROR_HASH:=372263c42bba38a5bc441ab2eb10debaa2092c8410473b2324c5894152e0299c
 
 PKG_LICENSE:=MPL-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -57,7 +58,7 @@ Package/syncthing_nohf/description=$(Package/syncthing/description)
 
 GO_LDFLAGS += \
 	-X '$(XIMPORTPATH)/lib/build.Version=v$(PKG_VERSION)' \
-	-X '$(XIMPORTPATH)/lib/build.Stamp=$(PKG_SOURCE_DATE)' \
+	-X '$(XIMPORTPATH)/lib/build.Stamp=$(PKG_SOURCE_TIMESTAMP)' \
 	-X '$(XIMPORTPATH)/lib/build.User=Entware' \
 	-X '$(XIMPORTPATH)/lib/build.Host=Entware' \
 	-X '$(XIMPORTPATH)/lib/build.Tags=noupgrade'
