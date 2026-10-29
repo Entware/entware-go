@@ -5,13 +5,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=snowflake
-PKG_VERSION:=2.14.1
+PKG_VERSION:=2.15.3
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_VERSION:=v$(PKG_VERSION)
 PKG_SOURCE_URL:=https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake
-PKG_MIRROR_HASH:=e6a0d04f1273cd58f67e6d95527cf5b33d56aecc3932044979c6f5666f2c02b7
+PKG_MIRROR_HASH:=77392a5eb908678e4ad7ff5f1c2768e1c3bba2af5a7e9fa7fbee7b5d7adb0da7
 
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
