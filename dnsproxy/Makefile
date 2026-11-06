@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
-# Copyright (C) 2019-2026 Entware
+# Copyright (C) 2026 Entware
 
 include $(TOPDIR)/rules.mk
 
@@ -12,7 +12,7 @@ PKG_SOURCE_PROTO:=git
 PKG_SOURCE_DATE:=2026-10-01
 PKG_SOURCE_VERSION:=f2a42ab8563bf782c8c131b03ef2eb44569e7c9e
 PKG_SOURCE_URL:=https://github.com/AdguardTeam/dnsproxy
-PKG_MIRROR_HASH:=090d331ac11d38b04c8ad974af3135b3380e29df7c6b51abeb75f0211af15639
+PKG_MIRROR_HASH:=6111fea0668a7f7bd94be33e5ecf631e2e52034b67143e83b9eaf2a4c857cc28
 
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
@@ -58,19 +58,19 @@ endef
 Package/dnsproxy_nohf/description=$(Package/dnsproxy/description)
 
 GO_LDFLAGS += \
-	-X '$(XIMPORTPATH)/internal/version.channel=release' \
-	-X '$(XIMPORTPATH)/internal/version.version=$(PKG_VERSION)' \
-	-X '$(XIMPORTPATH)/internal/version.committime=$(PKG_SOURCE_DATE)'
+	-X 'github.com/AdguardTeam/golibs/version.branch=release' \
+	-X 'github.com/AdguardTeam/golibs/version.committime=$(PKG_SOURCE_DATE_EPOCH)' \
+	-X 'github.com/AdguardTeam/golibs/version.revision=$(COMMIT_SHORT)' \
+	-X 'github.com/AdguardTeam/golibs/version.version=$(PKG_VERSION)'
 
 define Package/dnsproxy/install
-  $(INSTALL_DIR) $(1)/opt/bin
-  $(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/dnsproxy $(1)/opt/bin/dnsproxy
-  $(INSTALL_DIR) $(1)/opt/etc/dnsproxy
-  $(INSTALL_CONF) ./files/dnsproxy.conf $(1)/opt/etc/dnsproxy
-  $(CP) $(PKG_BUILD_DIR)/config.dist.yaml $(1)/opt/etc/dnsproxy/config.yaml
-  $(INSTALL_DIR) $(1)/opt/etc/init.d
-  $(INSTALL_BIN) ./files/S09dnsproxy $(1)/opt/etc/init.d
-
+	$(INSTALL_DIR) $(1)/opt/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/bin/dnsproxy $(1)/opt/bin/dnsproxy
+	$(INSTALL_DIR) $(1)/opt/etc/dnsproxy
+	$(INSTALL_CONF) ./files/dnsproxy.conf $(1)/opt/etc/dnsproxy
+	$(CP) $(PKG_BUILD_DIR)/config.dist.yaml $(1)/opt/etc/dnsproxy/config.yaml
+	$(INSTALL_DIR) $(1)/opt/etc/init.d
+	$(INSTALL_BIN) ./files/S09dnsproxy $(1)/opt/etc/init.d
 endef
 
 Package/dnsproxy_nohf/install=$(Package/dnsproxy/install)
