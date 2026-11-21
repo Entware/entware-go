@@ -1,0 +1,34 @@
+--- a/paths.go
++++ b/paths.go
+@@ -53,18 +53,18 @@ var (
+ // Default paths:
+ const (
+ 	// DefaultPathConfDir defines path to configuration directory
+-	DefaultPathConfDir = "/etc/ipp-usb"
++	DefaultPathConfDir = "/opt/etc/ipp-usb"
+ 
+ 	// DefaultPathLocalQuirksDir defines path to locally administered
+ 	// quirks files
+-	DefaultPathLocalQuirksDir = "/etc/ipp-usb/quirks"
++	DefaultPathLocalQuirksDir = "/opt/etc/ipp-usb/quirks"
+ 
+ 	// DefaultPathGlobalQuirksDir defines path to the "global"
+ 	// quirks files, i.e., files that comes with the ipp-usb package
+-	DefaultPathGlobalQuirksDir = "/usr/share/ipp-usb/quirks"
++	DefaultPathGlobalQuirksDir = "/opt/share/ipp-usb/quirks"
+ 
+ 	// DefaultPathProgState defines path to program state directory
+-	DefaultPathProgState = "/var/ipp-usb"
++	DefaultPathProgState = "/opt/var/ipp-usb"
+ 
+ 	// DefaultPathLockDir defines path to directory that contains
+ 	// lock files
+@@ -81,7 +81,7 @@ const (
+ 	DefaultPathDevStateDir = DefaultPathProgState + "/dev"
+ 
+ 	// DefaultPathLogDir defines path to log directory
+-	DefaultPathLogDir = "/var/log/ipp-usb"
++	DefaultPathLogDir = "/opt/var/log/ipp-usb"
+ )
+ 
+ // PathsInit initializes paths handling.

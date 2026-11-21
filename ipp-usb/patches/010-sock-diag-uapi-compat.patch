@@ -1,0 +1,24 @@
+--- a/tcpuid_linux.go
++++ b/tcpuid_linux.go
+@@ -19,7 +19,21 @@
+ // #include <linux/inet_diag.h>
+ // #include <linux/in.h>
+ // #include <linux/netlink.h>
++// #ifdef NETLINK_SOCK_DIAG
+ // #include <linux/sock_diag.h>
++// #else
++// #define SOCK_DIAG_BY_FAMILY 20
++// #define NETLINK_SOCK_DIAG NETLINK_INET_DIAG
++// struct inet_diag_req_v2 {
++//     __u8 sdiag_family;
++//     __u8 sdiag_protocol;
++//     __u8 idiag_ext;
++//     __u8 pad;
++//     __u32 idiag_states;
++//     struct inet_diag_sockid id;
++// };
++// #endif
++//
+ // #include <netinet/tcp.h>
+ // #include <stdint.h>
+ // #include <sys/socket.h>
