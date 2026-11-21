@@ -24,6 +24,7 @@ include $(INCLUDE_DIR)/golang.mk
 define Package/ipp-usb/Default
   SECTION:=net
   CATEGORY:=Network
+  SUBMENU:=Printing
   TITLE:=IPP-over-USB printer and scanner proxy
   URL:=https://github.com/OpenPrinting/ipp-usb
   DEPENDS:=+libusb-1.0 +libavahi-client +libpthread
@@ -41,6 +42,12 @@ define Package/ipp-usb_nohf
   DEPENDS+=@arm
   VARIANT:=nohf
 endef
+
+define Package/ipp-usb/description
+ ipp-usb -- HTTP reverse proxy, backed by IPP-over-USB connection to device.
+endef
+
+Package/ipp-usb_nohf/description=$(Package/ipp-usb/description)
 
 GO_TAGS:=nethttpomithttp2
 GO_BUILD_ARGS:=-mod=vendor
