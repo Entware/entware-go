@@ -1,0 +1,24 @@
+--- a/config/crowdsec-firewall-bouncer.yaml
++++ b/config/crowdsec-firewall-bouncer.yaml
+@@ -1,7 +1,7 @@
+ mode: ${BACKEND}
+ update_frequency: 10s
+ log_mode: file
+-log_dir: /var/log/
++log_dir: /opt/var/log/
+ log_level: info
+ log_compression: true
+ log_max_size: 100
+@@ -10,9 +10,9 @@ log_max_age: 30
+ api_url: http://127.0.0.1:8080/
+ api_key: ${API_KEY}
+ ## TLS Authentication
+-# cert_path: /etc/crowdsec/tls/cert.pem
+-# key_path: /etc/crowdsec/tls/key.pem
+-# ca_cert_path: /etc/crowdsec/tls/ca.crt
++# cert_path: /opt/etc/crowdsec/tls/cert.pem
++# key_path: /opt/etc/crowdsec/tls/key.pem
++# ca_cert_path: /opt/etc/crowdsec/tls/ca.crt
+ insecure_skip_verify: false
+ disable_ipv6: false
+ deny_action: DROP
